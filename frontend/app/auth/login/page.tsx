@@ -22,6 +22,7 @@ import { setUser } from "@/redux/features/authSlice";
 import AnimationWrapper from "@/components/common/page-animation";
 import { useRouter } from "next/navigation";
 import useRedirect from "@/hooks/useRedirect";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -34,10 +35,13 @@ const formSchema = z.object({
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { redirectTo } = useRedirect();
+  const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
 
   const { toast } = useToast();
   const [login, { isLoading, error, isSuccess }] = useLoginMutation();
+  useEffect(() => {
+    redirectToHomeIfLoggedIn();
+  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

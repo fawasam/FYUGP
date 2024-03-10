@@ -21,6 +21,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/features/authSlice";
 import AnimationWrapper from "@/components/common/page-animation";
 import useRedirect from "@/hooks/useRedirect";
+import { useEffect } from "react";
 
 const formSchema = z
   .object({
@@ -44,9 +45,12 @@ const formSchema = z
 
 function Register() {
   const dispatch = useDispatch();
-  const { redirectTo } = useRedirect();
+  const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   const { toast } = useToast();
   const [signup, { isLoading, error, isSuccess }] = useRegisterMutation();
+  useEffect(() => {
+    redirectToHomeIfLoggedIn();
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

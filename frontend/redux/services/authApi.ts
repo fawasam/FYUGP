@@ -26,7 +26,9 @@ interface ResetPasswordFormData {
 
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/v1/auth" }), // Adjust the base URL accordingly
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth`,
+  }), // Adjust the base URL accordingly
   endpoints: (builder) => ({
     register: builder.mutation<void, RegisterFormData>({
       query: (data) => ({

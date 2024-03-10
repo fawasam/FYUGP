@@ -10,19 +10,23 @@ const collegeSchema = mongoose.Schema(
       trim: true,
     },
     place: { type: String, required: [true, "College place is required"] },
-    pincode: { type: Number, required: [true, "College pincode is required"] },
-    phone: { type: Number },
+    pincode: { type: String, required: [true, "College pincode is required"] },
+    phone: { type: String },
+    type: { type: String, required: true },
+    email: { type: String, required: [true, "College email is required"] },
+    website: { type: String },
     departments: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Department",
+        ref: "departments",
       },
     ],
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "users",
       required: true,
     },
+    picture: String,
   },
   {
     timestamps: {

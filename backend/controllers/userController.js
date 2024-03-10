@@ -71,3 +71,15 @@ export const updateMe = asyncErrorHandler(async (req, res, next) => {
     data: { user },
   });
 });
+
+// @desc    getMe
+// @route   GET /api/v1/user/getMe
+// @access  Public
+
+export const getMe = asyncErrorHandler(async (req, res, next) => {
+  const user = req.user;
+  res.status(200).json({
+    status: "success",
+    data: { user },
+  });
+});

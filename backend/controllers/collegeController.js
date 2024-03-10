@@ -117,15 +117,34 @@ export const addcourse = asyncErrorHandler(async (req, res, next) => {
 // @access  Public
 
 export const getAllColleges = asyncErrorHandler(async (req, res, next) => {
-  const colleges = await College.find({})
-    // .populate({
-    //   path: "departments",
-    //   populate: { path: "coursesOffered", model: "Course" },
-    // })
-    .populate({
-      path: "departments.coursesOffered",
-    })
-    .exec();
+  const colleges = await College.find().populate({
+    path: "departments",
+    populate: { path: "coursesOffered" },
+  });
+  res.status(200).json({
+    status: "success",
+    result: colleges.length,
+    data: { colleges },
+  });
+});
+
+// @desc    Search  college
+// @route   GET /api/collge/search/:searchKey
+// @access  Public
+
+export const searchColleges = asyncErrorHandler(async (req, res, next) => {
+  const { searchKey } = req.params;
+  console.log(searchKey);
+  const colleges = await College.find({
+    $or: [
+      { collegename: { $regex: searchKey, $options: "i" } }, // Case-insensitive name search
+      { place: { $regex: searchKey, $options: "i" } }, // Case-insensitive place search
+      // Add more fields as needed for searching
+    ],
+  }).populate({
+    path: "departments",
+    populate: { path: "coursesOffered" },
+  });
 
   res.status(200).json({
     status: "success",

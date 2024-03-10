@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import AnimationWrapper from "@/components/common/page-animation";
 import Cards from "@/components/cards";
+import One from "@/public/one.svg";
 export default function Home() {
   return (
     <main className=" mt-24">
@@ -11,10 +12,9 @@ export default function Home() {
           <div className="sm:w-1/2 w-full space-y-6">
             <h1 className="text-6xl font-bold ">YOUR DEGREE TRACKER</h1>
             <p className="text-slate-700 text-lg leading-8">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Laudantium accusantium non dicta odio mollitia, necessitatibus
-              perspiciatis. Pariatur, labore quo corrupti libero odio nesciunt,
-              dolor enim corporis commodi culpa soluta molestiae?
+              The "TrackYourDegree" is designed to assist students in
+              monitoring, guiding and managing their academic progress during
+              their fourth year of undergraduate studies
             </p>
             <Button
               className="text-md p-6 my-4 text-center"
@@ -27,7 +27,13 @@ export default function Home() {
             </Button>
           </div>
           <div>
-            <h1>Hello</h1>
+            <Image
+              priority
+              src={One}
+              alt="Follow us on Twitter"
+              width={500}
+              height={400}
+            />
           </div>
         </div>
         <Cards />

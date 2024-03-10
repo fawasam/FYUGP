@@ -1,16 +1,20 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { loadUserFromStorage } from "../features/authSlice";
 
 interface CreateCollegeFormData {
   collegename: string;
   place: string;
-  pincode: number;
-  phone: number;
+  pincode: string;
+  phone: string;
+  picture: string;
 }
 
 export const collegeApi = createApi({
   reducerPath: "collegeApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/api/v1/college",
+    baseUrl: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/college`,
   }),
   endpoints: (builder) => ({
     createCollege: builder.mutation<void, CreateCollegeFormData>({
@@ -18,9 +22,30 @@ export const collegeApi = createApi({
         url: "/create-college",
         method: "POST",
         body: data,
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
+    getAllCollege: builder.mutation<any, any>({
+      query: (data) => ({
+        url: "",
+        method: "GET",
+        headers: {},
+      }),
+    }),
+    searchCollege: builder.mutation<any, any>({
+      query: (searchKey) => ({
+        url: `/search/${searchKey}`,
+        method: "GET",
+        headers: {},
       }),
     }),
   }),
 });
 
-export const { useCreateCollegeMutation } = collegeApi;
+export const {
+  useCreateCollegeMutation,
+  useGetAllCollegeMutation,
+  useSearchCollegeMutation,
+} = collegeApi;

@@ -10,7 +10,7 @@ const departmentSchema = mongoose.Schema(
     coursesOffered: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Course",
+        ref: "courses",
       },
     ],
   },

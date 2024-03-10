@@ -63,6 +63,10 @@ const jwtErrorHandler = (err) => {
   return new CustomError(msg, 401);
 };
 
+const MulterErrorHandler = (err) => {
+  const msg = `Please provide a valid image file`;
+  return new CustomError(msg, 401);
+};
 export const errorController = (error, req, res, next) => {
   // console.log(error);
   error.statusCode = error.statusCode || 500;
@@ -72,6 +76,7 @@ export const errorController = (error, req, res, next) => {
     devErrors(res, error);
   } else if (process.env.NODE_ENV === "production") {
     if (error.name === "CastError") error = castErrorHandler(error);
+    if (error.name === "MulterError") error = MulterErrorHandler(error);
     if (error.code === 11000) error = duplicateKeyErrorHandler(error);
     if (error.name === "ValidationError") error = validationErrorHandler(error);
     if (error.name === "TokenExpireError")

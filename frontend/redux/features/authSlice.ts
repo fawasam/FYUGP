@@ -37,9 +37,28 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<any | null>) => {
       state.userInfo = action.payload?.data?.user;
       state.isAuthenticated = !!action.payload;
-      state.userToken = action.payload.token;
+      state.userToken = action?.payload?.token;
       state.success = !!action.payload.token;
       localStorage.setItem("user", JSON.stringify(action.payload));
+    },
+    updateUser: (
+      state,
+      action: PayloadAction<{ fields: Record<string, any | null> }>
+    ) => {
+      if (state.userInfo) {
+        const { fields } = action.payload;
+        Object.keys(fields).forEach((field) => {
+          state.userInfo[field] = fields[field];
+        });
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          const parsedUser = JSON.parse(storedUser);
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ ...parsedUser, ...fields })
+          );
+        }
+      }
     },
     logout: (state: any) => {
       state.userInfo = null;
@@ -52,5 +71,5 @@ const authSlice = createSlice({
   //   extraReducers: {},
 });
 
-export const { setUser, logout } = authSlice.actions;
+export const { setUser, logout, updateUser } = authSlice.actions;
 export default authSlice.reducer;

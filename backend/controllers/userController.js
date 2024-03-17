@@ -56,7 +56,13 @@ export const updateMe = asyncErrorHandler(async (req, res, next) => {
     return next(error);
   }
 
-  const filterObj = filterReqObj(req.body, "fullname", "email", "bio");
+  const filterObj = filterReqObj(
+    req.body,
+    "fullname",
+    "email",
+    "bio",
+    "profileImage"
+  );
 
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filterObj, {
     runValidators: false,
@@ -69,6 +75,7 @@ export const updateMe = asyncErrorHandler(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: { user },
+    updatedData: { filterObj },
   });
 });
 

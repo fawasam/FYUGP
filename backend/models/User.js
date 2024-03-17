@@ -68,6 +68,10 @@ const userSchema = mongoose.Schema(
       ref: "blogs",
       default: [],
     },
+    profileImage: {
+      type: String,
+      default: "../uploads/default_dp.webp",
+    },
   },
   {
     timestamps: {

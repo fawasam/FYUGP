@@ -21,7 +21,7 @@ const SideNav = ({}) => {
   let sideBarIcon = useRef<HTMLButtonElement>(null);
   let pageStateTab = useRef<HTMLButtonElement>(null);
   const isLinkActive = (link: string) => usePathname().includes(link);
-  console.log(isLinkActive("dashboard"));
+  // console.log(isLinkActive("dashboard"));
 
   const changePageState = (e: any) => {
     let { offsetWidth, offsetLeft } = e.target;
@@ -30,14 +30,12 @@ const SideNav = ({}) => {
       activeTabLine.current.style.left = offsetLeft + "px";
     }
 
-    console.log(e.target);
     if (e.target == sideBarIcon.current) {
       setShowSideNav(true);
     } else {
       setShowSideNav(false);
     }
   };
-  console.log(page, pageState);
 
   useEffect(() => {
     setShowSideNav(false);

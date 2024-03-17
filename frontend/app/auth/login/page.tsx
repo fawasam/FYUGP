@@ -53,6 +53,8 @@ const Login = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response: any = await login(values).unwrap();
+      console.log(response);
+
       dispatch(setUser(response));
       if (response) {
         redirectTo("/");

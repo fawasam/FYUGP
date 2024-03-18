@@ -12,9 +12,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-import { Input } from "@/components/ui/input";
-import { useResetPasswordMutation } from "@/redux/services/authApi";
 import Loader from "@/components/common/Loader";
 import { useToast } from "@/components/ui/use-toast";
 import { RootState } from "@/redux/store";
@@ -24,9 +21,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import useRedirect from "@/hooks/useRedirect";
 import { usePathname } from "next/navigation";
-import Dashboard from "./dashboard/page";
+import AdminDashboard from "./dashboard/page";
+import EditProfile from "./settings/edit-profile/page";
+import AdminUsers from "./dashboard/users/page";
 
-const User = ({ params }: { params: { username: string } }) => {
+const AdminPage = ({ params }: { params: { username: string } }) => {
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   const router = useRouter();
   const pathname = usePathname();
@@ -47,23 +46,22 @@ const User = ({ params }: { params: { username: string } }) => {
     }
   }, [userData, dispatch, router]);
 
-  // Your logic to determine what to render based on the current route
   let content;
   switch (pathname) {
-    case "/profile/user/admin/dashboard":
-      content = <Dashboard />;
+    case `/profile/admin/${user.username}/dashboard`:
+      content = <AdminDashboard />;
       break;
     // case "/dashboard/notifications":
-    case "/profile/user/admin/notification":
-      content = <h1>Hii2</h1>;
+    case `/profile/admin/${user.username}/dashboard/users`:
+      content = <AdminUsers />;
       break;
-    case "/profile/user/admin/editor":
+    case "/profile/admin/editor":
       content = <h1>Hii3</h1>;
       break;
-    case "/profile/user/admin/settings/edit-profile":
-      content = <h1>Hii3</h1>;
+    case "/profile/admin/settings/edit-profile":
+      content = <EditProfile />;
       break;
-    case "/profile/user/admin/settings/change-password":
+    case "/profile/admin/settings/change-password":
       content = <h1>Hii3</h1>;
       break;
     // Add more cases for other routes
@@ -80,4 +78,4 @@ const User = ({ params }: { params: { username: string } }) => {
   );
 };
 
-export default User;
+export default AdminPage;

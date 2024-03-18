@@ -2,6 +2,10 @@ import mongoose, { Schema } from "mongoose";
 import validator from "validator";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
+import dotenv from "dotenv";
+dotenv.config({
+  path: "./config/config.env",
+});
 
 const userSchema = mongoose.Schema(
   {
@@ -60,7 +64,8 @@ const userSchema = mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["admin", "student", "parent", "college", "user"],
+      // enum: ["admin", "student", "parent", "college", "user"],
+      enum: ["superAdmin", "student", "collegeAdmin", "user"],
       default: "user",
     },
     blogs: {
@@ -70,7 +75,7 @@ const userSchema = mongoose.Schema(
     },
     profileImage: {
       type: String,
-      default: "../uploads/default_dp.webp",
+      default: `${process.env.SERVER_URL}/uploads/default_dp.webp`,
     },
   },
   {

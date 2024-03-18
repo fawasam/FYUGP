@@ -39,22 +39,31 @@ export const userApi = createApi({
         },
       }),
     }),
-    getAllUsers: builder.mutation<void, getAllUsersFormData>({
-      query: () => ({
+    getAllUsers: builder.mutation<void, any>({
+      query: (data) => ({
         url: "/users",
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
       }),
     }),
     getMe: builder.mutation<void, getMeFormData>({
       query: () => ({
         url: "/user/getMe",
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
       }),
     }),
     deleteMe: builder.mutation<void, deleteMeFormData>({
       query: () => ({
         url: "/user/deleteMe",
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
       }),
     }),
     updateMe: builder.mutation<void, updateMeFormData>({

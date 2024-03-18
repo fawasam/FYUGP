@@ -36,7 +36,7 @@ async function seedCollegeData(products) {
 }
 
 const ObjectId = mongoose.Types.ObjectId;
-const authorId = new ObjectId("65951202150f6a28b096d6cd");
+const authorId = new ObjectId("65f6e048d1e3e6b6ab6ab4dd");
 // Define your product data as an array of objects
 const collegeData = [
   {
@@ -48,7 +48,7 @@ const collegeData = [
     email: "gasckkdprincipal@gmail.com",
     website: "www.gasckkd.ac.in",
     departments: [],
-    user: "65c70c7c9dc1647a57efbf6f",
+    user: "65f6e048d1e3e6b6ab6ab4dd",
     picture: "http://localhost:3000/uploads\\1707665633053.jpg",
   },
   {
@@ -60,7 +60,7 @@ const collegeData = [
     email: "mail@farookcollege.ac.in",
     website: "https://www.farookcollege.ac.in/",
     departments: [],
-    user: "65c70c7c9dc1647a57efbf6f",
+    user: "65f6e048d1e3e6b6ab6ab4dd",
     picture: "http://localhost:3000/uploads\\1707666692067.png",
   },
   {
@@ -72,7 +72,7 @@ const collegeData = [
     email: "sjcdevagiri@yahoo.co.in",
     website: "https://www.devagiricollege.org/",
     departments: [],
-    user: "65c70c7c9dc1647a57efbf6f",
+    user: "65f6e048d1e3e6b6ab6ab4dd",
     picture: "http://localhost:3000/uploads\\1707667770160.jpg",
   },
   {
@@ -84,7 +84,7 @@ const collegeData = [
     email: "mamocollege@gmail.com",
     website: "https://www.mamocollege.org/",
     departments: [],
-    user: "65c70c7c9dc1647a57efbf6f",
+    user: "65f6e048d1e3e6b6ab6ab4dd",
     picture: "http://localhost:3000/uploads\\1707667894129.jpg",
   },
 ];

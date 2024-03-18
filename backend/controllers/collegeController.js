@@ -128,6 +128,22 @@ export const getAllColleges = asyncErrorHandler(async (req, res, next) => {
   });
 });
 
+// @desc    Get a college
+// @route   GET /api/college/id
+// @access  Public
+
+export const getACollege = asyncErrorHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const college = await College.findById(id).populate({
+    path: "departments",
+    populate: { path: "coursesOffered" },
+  });
+  res.status(200).json({
+    status: "success",
+    data: { college },
+  });
+});
+
 // @desc    Search  college
 // @route   GET /api/collge/search/:searchKey
 // @access  Public
@@ -150,5 +166,38 @@ export const searchColleges = asyncErrorHandler(async (req, res, next) => {
     status: "success",
     result: colleges.length,
     data: { colleges },
+  });
+});
+
+// @desc    updateCollege
+// @route    GET /api/collge/update-college/:id
+// @access  Public
+
+export const updateCollege = asyncErrorHandler(async (req, res, next) => {
+  const { id } = req.params;
+
+  const filterObj = filterReqObj(
+    req.body,
+    "collegename",
+    "place",
+    "pincode",
+    "phone",
+    "picture",
+    "email",
+    "website"
+  );
+
+  const updatedCollege = await College.findByIdAndUpdate(id, filterObj, {
+    runValidators: false,
+    context: "query",
+    new: true,
+  });
+
+  let college = await updatedCollege.save();
+
+  res.status(200).json({
+    status: "success",
+    data: { college },
+    updatedData: { filterObj },
   });
 });

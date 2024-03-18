@@ -53,7 +53,6 @@ const Login = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response: any = await login(values).unwrap();
-      console.log(response);
 
       dispatch(setUser(response));
       if (response) {
@@ -93,7 +92,11 @@ const Login = () => {
                 <FormItem className="sm:w-1/2 w-full m-auto">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="email" {...field} />
+                    <Input
+                      placeholder="email"
+                      icon={"fi fi-rr-envelope"}
+                      {...field}
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -107,7 +110,12 @@ const Login = () => {
                 <FormItem className="sm:w-1/2 w-full m-auto">
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="*********" {...field} type="password" />
+                    <Input
+                      placeholder="*********"
+                      {...field}
+                      type="password"
+                      icon={"fi fi-rr-lock"}
+                    />
                   </FormControl>
                   <FormMessage />
                   <div className="mt-2 w-full flex justify-end">

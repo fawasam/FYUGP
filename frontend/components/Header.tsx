@@ -11,6 +11,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { logout } from "@/redux/features/authSlice";
@@ -24,6 +34,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import useRedirect from "@/hooks/useRedirect";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -69,6 +80,23 @@ const Header = () => {
   let isAuthenticated = useSelector((state: RootState) => state.auth.userToken);
   let user = useSelector((state: RootState) => state.auth.userInfo);
 
+  const userProfile: {
+    title: string;
+    href?: string;
+  }[] = [
+    {
+      title: "Dashboard",
+      href: `/profile/${user?.role}/${user?.username}`,
+    },
+    {
+      title: "Settings",
+      href: `/profile/${user?.role}/${user?.username}/settings/edit-profile`,
+    },
+    {
+      title: "Logout",
+      href: `/`,
+    },
+  ];
   return (
     <header className="my-8 sm:w-[80%] w-[90%] m-auto pb-6 border-b">
       <div className="flex items-center justify-between ">
@@ -88,24 +116,26 @@ const Header = () => {
                         href="/"
                       >
                         <div className="mb-2 mt-4 text-lg font-medium">
-                          shadcn/ui
+                          What is FYUGP
                         </div>
                         <p className="text-sm leading-tight text-muted-foreground">
-                          Beautifully designed components built with Radix UI
-                          and Tailwind CSS.
+                          FYUGP is fourth year undergraduated programme
                         </p>
                       </a>
                     </NavigationMenuLink>
                   </li>
-                  <ListItem href="/docs" title="Introduction">
+                  <ListItem href="/docs" title="Design of CU-FYUGP">
                     Re-usable components built using Radix UI and Tailwind CSS.
                   </ListItem>
-                  <ListItem href="/docs/installation" title="Installation">
+                  <ListItem
+                    href="/docs/installation"
+                    title="Different Academic Pathways"
+                  >
                     How to install dependencies and structure your app.
                   </ListItem>
                   <ListItem
                     href="/docs/primitives/typography"
-                    title="Typography"
+                    title="Course and Credit Structure"
                   >
                     Styles for headings, paragraphs, lists...etc
                   </ListItem>
@@ -137,75 +167,144 @@ const Header = () => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <div className="flex space-x-2 items-center text-center">
-          {!isAuthenticated ? (
-            <Button>
-              <Link href={"/auth/register"}>
-                <i className="fi fi-rr-user mr-2"></i>
-                SignUp
-              </Link>
-            </Button>
-          ) : (
-            <Button>
-              <Link
-                href={`/profile/user/${user.username}`}
-                // onClick={() => dispatch(logout())}
-              >
-                <i className="fi fi-rr-user mr-2"></i>
-                {user.fullname}
-              </Link>
-            </Button>
-          )}
-          <div className="ml-10 sm:block hidden">
-            {theme === "light" ? (
-              <i className="fn" onClick={() => setTheme("dark")}></i>
-            ) : (
-              <i
-                className="fi fi-rr-sun h-6 w-6  text-xl"
-                onClick={() => setTheme("light")}
-              ></i>
-            )}
-          </div>
-          <Sheet>
-            <SheetTrigger className="sm:hidden">
-              <i className="fi fi-br-menu-burger text-xl"></i>
-            </SheetTrigger>
-            <SheetContent className="w-[400px] sm:w-[540px]">
-              <SheetHeader>
-                <SheetTitle>Are you absolutely sure?</SheetTitle>
-                <SheetDescription>
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
-                </SheetDescription>
-              </SheetHeader>
-            </SheetContent>
-          </Sheet>
-        </div>
+
+        {/* username header  */}
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <div className="flex space-x-2 items-center text-center">
+                {!isAuthenticated ? (
+                  <Button>
+                    <Link href={"/auth/register"}>
+                      <i className="fi fi-rr-user mr-2"></i>
+                      SignUp
+                    </Link>
+                  </Button>
+                ) : (
+                  <>
+                    <NavigationMenuTrigger className="text-black z-100">
+                      <Link
+                        href={`/profile/user/${user.username}`}
+                        // onClick={() => dispatch(logout())}
+                      >
+                        <div className="flex flex-row items-center justify-center">
+                          <img
+                            src={user.profileImage}
+                            alt=""
+                            className="w-6 h-6 object-cover rounded-lg"
+                          />
+                          {/* <i className="fi fi-rr-user mr-2"></i> */}
+                          <span className="ml-2">{user.fullname}</span>
+                        </div>
+                      </Link>
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid w-[200px] gap-3 p-4  md:grid-cols-1  ">
+                        {userProfile.map((component) => (
+                          <ListItem
+                            key={component.title}
+                            title={component.title}
+                            href={component?.href}
+                          ></ListItem>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </>
+                )}
+                <div className="ml-10 sm:block hidden">
+                  {theme === "light" ? (
+                    <i className="fn" onClick={() => setTheme("dark")}></i>
+                  ) : (
+                    <i
+                      className="fi fi-rr-sun h-6 w-6  text-xl"
+                      onClick={() => setTheme("light")}
+                    ></i>
+                  )}
+                </div>
+                <Sheet>
+                  <SheetTrigger className="sm:hidden">
+                    <i className="fi fi-br-menu-burger text-xl"></i>
+                  </SheetTrigger>
+                  <SheetContent className="w-[400px] sm:w-[540px]">
+                    <SheetHeader>
+                      <SheetTitle>Are you absolutely sure?</SheetTitle>
+                      <SheetDescription>
+                        This action cannot be undone. This will permanently
+                        delete your account and remove your data from our
+                        servers.
+                      </SheetDescription>
+                    </SheetHeader>
+                  </SheetContent>
+                </Sheet>
+              </div>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
     </header>
   );
 };
 
-const ListItem = React.forwardRef<
+export const ListItem = React.forwardRef<
   React.ElementRef<"a">,
   React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+>(({ className, title, children, onClick, ...props }, ref?: any) => {
+  const dispatch = useDispatch();
+  const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
+  let userData = useSelector((state: RootState) => state.auth);
+  let { userInfo: user, userToken, isAuthenticated } = userData;
+
+  const handleLogout = () => {
+    redirectTo("/");
+    dispatch(logout());
+  };
+  useEffect(() => {
+    if (!user) {
+      redirectTo("/");
+    }
+  }, [userData, dispatch]);
+
   return (
     <li>
       <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
+        {title == "Logout" ? (
+          <Dialog>
+            <DialogTrigger>
+              <Button className="ml-2">Logout</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Are you sure you want to logout?</DialogTitle>
+              </DialogHeader>
+              <DialogFooter className="sm:justify-start">
+                <DialogClose asChild>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={() => redirectTo("/")}
+                  >
+                    Close
+                  </Button>
+                </DialogClose>
+                <Button onClick={handleLogout}>Logout</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        ) : (
+          <Link
+            href={ref}
+            className={cn(
+              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+              className
+            )}
+            {...props}
+          >
+            <div className="text-sm font-medium leading-none">{title}</div>
+            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+              {children}
+            </p>
+          </Link>
+        )}
       </NavigationMenuLink>
     </li>
   );

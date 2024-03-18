@@ -44,7 +44,6 @@ const College = () => {
 
   let collegesData = useSelector((state: RootState) => state.college);
   let { collegeInfo: colleges, collegeInfo, items } = collegesData;
-  console.log(colleges.length);
 
   const getAllColleges = async () => {
     const response: any = await getAllCollege("");
@@ -85,7 +84,7 @@ const College = () => {
         <div className="flex items-center justify-center space-x-2">
           <Input
             type="text"
-            className="px-3 py-2 w-80"
+            className="px-3 py-2 w-80 "
             placeholder="Search..."
             onChange={(e: any) => setSearchKey(e.target.value)}
           />

@@ -68,9 +68,7 @@ export function Navbar() {
                     href="/"
                   >
                     <i className="fi fi-rs-angle-small-down"></i>
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      shadcn/ui
-                    </div>
+                    <div className="mb-2 mt-4 text-lg font-medium">What is</div>
                     <p className="text-sm leading-tight text-muted-foreground">
                       Beautifully designed components built with Radix UI and
                       Tailwind CSS.
@@ -78,7 +76,7 @@ export function Navbar() {
                   </a>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/docs" title="Introduction">
+              <ListItem href="/docs" title="Design of CU-FYUGP">
                 Re-usable components built using Radix UI and Tailwind CSS.
               </ListItem>
               <ListItem href="/docs/installation" title="Installation">

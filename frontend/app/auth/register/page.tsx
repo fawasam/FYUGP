@@ -104,7 +104,11 @@ function Register() {
                 <FormItem className="sm:w-1/2 w-full m-auto">
                   <FormLabel>Fullname</FormLabel>
                   <FormControl>
-                    <Input placeholder="fullname" {...field} />
+                    <Input
+                      placeholder="fullname"
+                      icon={"fi fi-rr-user"}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -117,7 +121,11 @@ function Register() {
                 <FormItem className="sm:w-1/2 w-full m-auto">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="email" {...field} />
+                    <Input
+                      placeholder="email"
+                      icon={"fi fi-rr-envelope"}
+                      {...field}
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -131,7 +139,12 @@ function Register() {
                 <FormItem className="sm:w-1/2 w-full m-auto">
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="*********" {...field} type="password" />
+                    <Input
+                      placeholder="*********"
+                      icon={"fi fi-rr-lock"}
+                      {...field}
+                      type="password"
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -145,7 +158,12 @@ function Register() {
                 <FormItem className="sm:w-1/2 w-full m-auto">
                   <FormLabel>ConfirmPassword</FormLabel>
                   <FormControl>
-                    <Input placeholder="*********" {...field} type="password" />
+                    <Input
+                      placeholder="*********"
+                      icon={"fi fi-rr-lock"}
+                      {...field}
+                      type="password"
+                    />
                   </FormControl>
 
                   <FormMessage />

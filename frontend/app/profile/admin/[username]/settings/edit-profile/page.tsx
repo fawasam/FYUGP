@@ -128,7 +128,6 @@ const EditProfile = () => {
       console.log(error?.data?.message);
     }
   };
-  console.log(user);
 
   useEffect(() => {
     if (!user) {

@@ -20,9 +20,9 @@ import Course from "../models/Course.js";
 // @access  Public
 
 export const createCollege = asyncErrorHandler(async (req, res, next) => {
-  const { collegename, place, pincode, phone, departments } = req.body;
+  const { collegename, place, pincode, phone, departments, email } = req.body;
 
-  if (!collegename || !place) {
+  if (!collegename || !place || !email) {
     const error = new CustomError("Please provide all field!", 400);
     return next(error);
   }
@@ -201,3 +201,7 @@ export const updateCollege = asyncErrorHandler(async (req, res, next) => {
     updatedData: { filterObj },
   });
 });
+
+// @desc    updateCollege
+// @route   DELETE /api/collge/delete-college/:id
+// @access  Public

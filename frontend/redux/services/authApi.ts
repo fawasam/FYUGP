@@ -24,6 +24,10 @@ interface ResetPasswordFormData {
   token: string;
 }
 
+interface GenerateCollegeCredentialsFormData {
+  email: string;
+}
+
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
@@ -33,6 +37,16 @@ export const authApi = createApi({
     register: builder.mutation<void, RegisterFormData>({
       query: (data) => ({
         url: "/signup",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    generateCollegeCredentials: builder.mutation<
+      void,
+      GenerateCollegeCredentialsFormData
+    >({
+      query: (data) => ({
+        url: "/signup/college",
         method: "POST",
         body: data,
       }),
@@ -66,4 +80,5 @@ export const {
   useLoginMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useGenerateCollegeCredentialsMutation,
 } = authApi;

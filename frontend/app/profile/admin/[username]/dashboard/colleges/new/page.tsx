@@ -22,6 +22,8 @@ import { useState } from "react";
 import { useCreateCollegeMutation } from "@/redux/services/collegeApi";
 import axios from "axios";
 import { setCollege } from "@/redux/features/collegeSlice";
+import { useRouter } from "next/navigation";
+import { useGenerateCollegeCredentialsMutation } from "@/redux/services/authApi";
 const MAX_FILE_SIZE = 10000000;
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
@@ -37,74 +39,68 @@ const formSchema = z.object({
   place: z.string().min(2, {
     message: "please enter a valid  address",
   }),
-  pincode: z.string().min(6, {
-    message: "please provide a valid pincode",
+  email: z.string().min(6, {
+    message: "please provide a valid email",
   }),
-  phone: z.string().min(10, {
-    message: "please provide a valid phone number",
-  }),
-  picture: z.any().nullable(),
 });
 
 const CreateCollege = () => {
-  const dispatch = useDispatch();
+  const router = useRouter();
   const { toast } = useToast();
+  const dispatch = useDispatch();
+  const [step, setStep] = useState(1);
+  const [userId, setUserId] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+
   const [selectedImage, setSelectedImage] = useState<
     any | string | File | null
   >(null);
   const [createCollege, { isLoading, error, isSuccess }] =
     useCreateCollegeMutation();
+  const [generateCollegeCredentials] = useGenerateCollegeCredentialsMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       collegename: "",
       place: "",
-      phone: "",
-      pincode: "",
-      picture: null,
+      email: "",
     },
   });
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setSelectedImage(file);
-    }
+  const goBack = () => {
+    router.back();
   };
 
-  const handleUpload = async () => {
-    if (selectedImage) {
-      const formData = new FormData();
-      formData.append("image", selectedImage);
-      try {
-        const response: any = await axios.post(
-          "http://localhost:3000/api/v1/upload/image",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log("Image uploaded successfully!", response.data);
-        setSelectedImage(response.data.imageUrl);
-        return response.data.imageUrl;
-      } catch (error) {
-        console.error("Image upload failed:", error);
-      }
-    }
+  const nextStep = () => {
+    setStep(step + 1);
+  };
+
+  const prevStep = () => {
+    setStep(step - 1);
+  };
+  const handleSave = () => {
+    goBack();
   };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const imageLink = await handleUpload();
-      const newValues = { ...values, picture: imageLink };
+      const newValues = { ...values };
       const response: any = await createCollege(newValues).unwrap();
+      const newValues2 = { ...newValues, college: response?.newCollege?._id };
+
+      const response2: any = await generateCollegeCredentials(
+        newValues2
+      ).unwrap();
+      console.log(response2?.data?.user);
+      setUserId(response2?.data?.user?.email);
+      setUserPassword(response2?.data?.password);
+
       dispatch(setCollege(response));
       toast({
         title: "Successfully added college",
       });
+      nextStep();
       console.log("Successfully added College");
     } catch (error: any) {
       toast({
@@ -115,112 +111,132 @@ const CreateCollege = () => {
       console.log(error?.data?.message);
     }
   };
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return (
+          <AnimationWrapper className="w-full">
+            <div className="md:w-full w-[90%] m-auto">
+              <div className="my-10 ">
+                <h1 className="text-2xl text-center underline underline-offset-8">
+                  Create College
+                </h1>
+              </div>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className=" item-center sm:w-[60%] w-[90%] m-auto grid md:grid-cols-1 gap-4  sm:grid-cols-1 grid-cols-1"
+                >
+                  <FormField
+                    control={form.control}
+                    name="collegename"
+                    render={({ field }) => (
+                      <FormItem className="w-full m-0">
+                        <FormLabel>College Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="college name"
+                            {...field}
+                            icon={"fi fi-rr-graduation-cap"}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem className="w-full m-0">
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Email"
+                            {...field}
+                            icon={"fi fi-rr-envelope"}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="place"
+                    render={({ field }) => (
+                      <FormItem className=" w-full m-0">
+                        <FormLabel>Place</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="place"
+                            {...field}
+                            icon={"fi fi-rr-map-marker"}
+                          />
+                        </FormControl>
 
-  return (
-    <AnimationWrapper className="w-full">
-      <div className="md:w-full w-[90%] m-auto">
-        <div className="my-10">
-          <h1 className="text-2xl text-center underline underline-offset-8">
-            Create College
-          </h1>
-        </div>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className=" item-center sm:w-[80%] w-[90%] m-auto grid md:grid-cols-2 gap-4  sm:grid-cols-1 grid-cols-1"
-          >
-            <FormField
-              control={form.control}
-              name="collegename"
-              render={({ field }) => (
-                <FormItem className="w-full m-0">
-                  <FormLabel>College Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="college name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="place"
-              render={({ field }) => (
-                <FormItem className=" w-full m-0">
-                  <FormLabel>Place</FormLabel>
-                  <FormControl>
-                    <Input placeholder="place" {...field} />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="pincode"
-              render={({ field }) => (
-                <FormItem className=" w-full">
-                  <FormLabel>Pincode</FormLabel>
-                  <FormControl>
-                    <Input placeholder="pincode" {...field} type="number" />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="picture"
-              render={({ field }) => (
-                <FormItem className=" w-full">
-                  <FormLabel htmlFor="picture">Images</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="picture"
-                      {...field}
-                      type="file"
-                      onChange={handleImageChange}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem className=" w-full">
-                  <FormLabel>Phone</FormLabel>
-                  <FormControl>
-                    <Input placeholder="phone" {...field} type="number" />
-                  </FormControl>
-
-                  <FormMessage />
-                  <div className="flex justify-center items-center flex-col ">
-                    <Button
-                      type="submit"
-                      size={"lg"}
-                      className="w-full my-4"
-                      // onClick={handleUpload}
-                      disabled={!selectedImage}
-                    >
-                      Create and Continue
-                      <i className="fi fi-rr-arrow-right ml-2 text-center pt-2 "></i>
-                      <span> </span>
-                      {isLoading ? <Loader white={true} /> : ""}
-                    </Button>
-                  </div>
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
-      </div>
-    </AnimationWrapper>
-  );
+                        <FormMessage />
+                        <div className="flex justify-center items-center flex-col ">
+                          <Button
+                            type="submit"
+                            size={"lg"}
+                            className="w-full my-4"
+                          >
+                            Create and Continue
+                            <i className="fi fi-rr-arrow-right ml-2 text-center pt-2 "></i>
+                            <span> </span>
+                            {isLoading ? <Loader white={true} /> : ""}
+                          </Button>
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                </form>
+              </Form>
+            </div>
+          </AnimationWrapper>
+        );
+      case 2:
+        return (
+          <AnimationWrapper className="w-full">
+            <div className="md:w-full w-[90%] m-auto">
+              <div className="my-10 ">
+                <h1 className="text-2xl text-center underline underline-offset-8">
+                  College Credential
+                </h1>
+              </div>
+              <div className=" item-center sm:w-[60%] w-[90%] m-auto grid md:grid-cols-1 gap-4  sm:grid-cols-1 grid-cols-1">
+                <span>UserId</span>
+                <Input
+                  placeholder="Email"
+                  icon={"fi fi-rr-envelope"}
+                  defaultValue={userId}
+                />
+                <span>Password</span>
+                <Input
+                  placeholder="password"
+                  type="password"
+                  defaultValue={userPassword}
+                  icon={"fi fi-rr-unlock"}
+                />
+                <div className="flex justify-center items-center flex-col ">
+                  <Button
+                    size={"lg"}
+                    className="w-full my-4"
+                    onClick={handleSave}
+                  >
+                    Save
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </AnimationWrapper>
+        );
+      default:
+        return null;
+    }
+  };
+  return <>{renderStep()}</>;
 };
 
 export default CreateCollege;

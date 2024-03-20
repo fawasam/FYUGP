@@ -55,7 +55,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-normal text-black bg-white;
+    @apply bg-background text-foreground font-normal;
   }
 
   i {

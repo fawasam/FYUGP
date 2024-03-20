@@ -12,7 +12,6 @@ const userSchema = mongoose.Schema(
     fullname: {
       type: String,
       lowercase: true,
-      required: [true, "Please enter your name."],
       minlength: [3, "fullname must be 3 letters long"],
     },
     email: {
@@ -41,6 +40,7 @@ const userSchema = mongoose.Schema(
     username: {
       type: String,
       minlength: [3, "Username must be 3 letters long"],
+      required: [true],
     },
     bio: {
       type: String,
@@ -64,14 +64,17 @@ const userSchema = mongoose.Schema(
     },
     role: {
       type: String,
-      // enum: ["admin", "student", "parent", "college", "user"],
-      enum: ["superAdmin", "student", "collegeAdmin", "user"],
+      enum: ["admin", "student", "collegeAdmin", "user"],
       default: "user",
     },
     blogs: {
       type: [Schema.Types.ObjectId],
       ref: "blogs",
       default: [],
+    },
+    college: {
+      type: Schema.Types.ObjectId,
+      ref: "colleges",
     },
     profileImage: {
       type: String,

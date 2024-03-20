@@ -15,23 +15,23 @@ import { protect, restrict } from "../controllers/authController.js";
 router.get("/", getAllColleges);
 router.get("/:id", getACollege);
 router.get("/search/:searchKey", searchColleges);
-router.post("/create-college", protect, restrict("superAdmin"), createCollege);
+router.post("/create-college", protect, restrict("admin"), createCollege);
 router.patch(
   "/update-college/:id",
   protect,
-  restrict("admin", "collegeAdmin"),
+  restrict("collegeAdmin", "admin"),
   updateCollege
 );
 router.post(
   "/add-department/:collegeId",
   protect,
-  restrict("college"),
+  restrict("collegeAdmin"),
   addDepartments
 );
 router.post(
   "/add-course/:collegeId/:departmentId",
   protect,
-  restrict("college"),
+  restrict("collegeAdmin"),
   addcourse
 );
 

@@ -1,6 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 import { departmentSchema } from "./Department.js";
-
+import dotenv from "dotenv";
+dotenv.config({
+  path: "./config/config.env",
+});
 const collegeSchema = mongoose.Schema(
   {
     collegename: {
@@ -9,12 +12,13 @@ const collegeSchema = mongoose.Schema(
       unique: [true, "Already exists college"],
       trim: true,
     },
-    place: { type: String, required: [true, "College place is required"] },
-    pincode: { type: String, required: [true, "College pincode is required"] },
-    phone: { type: String },
-    type: { type: String, required: true },
     email: { type: String, required: [true, "College email is required"] },
+    place: { type: String },
+    pincode: { type: String },
+    phone: { type: String },
+    type: { type: String },
     website: { type: String },
+    about: { type: String },
     departments: [
       {
         type: Schema.Types.ObjectId,
@@ -26,7 +30,10 @@ const collegeSchema = mongoose.Schema(
       ref: "users",
       required: true,
     },
-    picture: String,
+    picture: {
+      type: String,
+      default: `${process.env.SERVER_URL}/uploads/default_dp.webp`,
+    },
   },
   {
     timestamps: {

@@ -7,6 +7,7 @@ import CustomError from "../utils/CustomeError.js";
 import sendEmail from "../utils/email.js";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
+import { generateRandomPassword } from "../utils/generateRandomPassword.js";
 let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
 let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
 
@@ -204,3 +205,32 @@ export const restrict = (role) => {
     next();
   };
 };
+
+// @desc    Login new user
+// @route   POST /api/v1/auth/login
+// @access  Public
+
+export const generateCollegeCredentials = asyncErrorHandler(
+  async (req, res, next) => {
+    const { email, college } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "Email is required." });
+    }
+    let username = await generateUsername(email);
+    const password = generateRandomPassword();
+    let role = "collegeAdmin";
+    const user = await User.create({
+      email,
+      password,
+      username,
+      role,
+      college,
+    });
+    res.status(201).json({
+      status: "success",
+      data: { user, password },
+    });
+    // createSendResponse(newUser, 201, res);
+  }
+);

@@ -10,6 +10,8 @@ import UserRoute from "./routes/userRoute.js";
 import AuthRoute from "./routes/authRoute.js";
 import CollegeRoute from "./routes/collegeRoute.js";
 import UploadRoute from "./routes/uploadRoute.js";
+import ProgramRoute from "./routes/departmentRoute.js";
+import CourseRoute from "./routes/courseRoute.js";
 
 //app
 const app = express();
@@ -48,10 +50,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/v1/auth", AuthRoute);
 app.use("/api/v1", UserRoute);
-app.use("/api/v1/college", CollegeRoute);
+app.use("/api/v1/auth", AuthRoute);
 app.use("/api/v1/upload", UploadRoute);
+app.use("/api/v1/college", CollegeRoute);
+app.use("/api/v1/college/program", ProgramRoute);
+app.use("/api/v1/college/program/course", CourseRoute);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.all("*", (req, res, next) => {

@@ -6,9 +6,10 @@ import { loadUserFromStorage } from "../features/authSlice";
 interface CreateCollegeFormData {
   collegename: string;
   place: string;
-  pincode: string;
-  phone: string;
-  picture: string;
+  email: string;
+  pincode?: string;
+  phone?: string;
+  picture?: string;
 }
 
 export const collegeApi = createApi({

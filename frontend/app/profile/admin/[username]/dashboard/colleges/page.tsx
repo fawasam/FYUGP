@@ -41,7 +41,9 @@ const AdminColleges = () => {
     dispatch(setCollege(response?.data));
     setAllColleges(response?.data?.data?.colleges);
   };
-
+  const goBack = () => {
+    router.back();
+  };
   useEffect(() => {
     if (!user) {
       redirectTo("/");
@@ -53,14 +55,14 @@ const AdminColleges = () => {
       <div className="flex items-center justify-between text-center flex-row">
         <h1 className="max-md:hidden mb-4">All Colleges</h1>
         <Button>
-          <Link href={"/profile/admin/mynamefawas/dashboard/colleges/new"}>
+          <Link href={`/profile/admin/${user.username}/dashboard/colleges/new`}>
             {" "}
             <i className="fi fi-rr-plus mr-2"></i>New
           </Link>
         </Button>
       </div>
       <Table className="mt-10">
-        <TableCaption>A list of user who are Registered.</TableCaption>
+        <TableCaption>A list of colleges.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[200px]">College name</TableHead>
@@ -76,7 +78,14 @@ const AdminColleges = () => {
             allColleges.map((college, key) => (
               <TableRow key={key}>
                 <TableCell className="font-medium">
-                  {college?.collegename}
+                  <div className="flex flex-col ">
+                    <img
+                      src={college.picture}
+                      className="w-10 h-10 mb-2"
+                      alt={"image"}
+                    />
+                    <span>{college?.collegename}</span>
+                  </div>
                 </TableCell>
                 <TableCell>{college?.place}</TableCell>
                 <TableCell>{formateDate(college.joinedAt)}</TableCell>

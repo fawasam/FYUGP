@@ -29,6 +29,7 @@ import {
 import Loader from "@/components/common/Loader";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   collegename: z.string().min(2, {
@@ -39,6 +40,7 @@ const formSchema = z.object({
   website: z.string(),
   pincode: z.string(),
   phone: z.string(),
+  about: z.string(),
   picture: z.any().nullable(),
 });
 
@@ -57,6 +59,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
   let profileImageEle = useRef<HTMLImageElement | any | null>(null);
   let editProfileForm = useRef<HTMLFormElement>(null);
   let [updateCollege] = useUpdateCollegeMutation();
+  let bioLimit = 150;
   let {
     collegename,
     email,
@@ -66,6 +69,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
     place,
     type,
     website,
+    about,
   }: any = college;
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -78,11 +82,12 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       picture: picture,
       email: email,
       website: website,
+      about,
     },
   });
 
   const getCollege = async () => {
-    const response: any = await getACollege(params._id);
+    const response: any = await getACollege(user?.college);
     setCollege(response?.data?.data?.college);
   };
 
@@ -137,7 +142,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       const newValues = { ...values };
       console.log(newValues);
       const response: any = await updateCollege({
-        id: params._id,
+        id: user.college,
         data: newValues,
       }).unwrap();
       console.log(response);
@@ -172,11 +177,12 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       picture: picture,
       email: email,
       website: website,
+      about: about,
     });
   }, [college]);
   return (
     <AnimationWrapper className="w-full">
-      <h1 className="max-md:hidden">Edit Profile</h1>
+      <h1 className="max-md:hidden">Edit College</h1>
       <div className="flex flex-col lg:flex-row items-start py-10 gap-8 lg:gap-10">
         <div className="max-lg:center mb-5">
           <label
@@ -211,8 +217,12 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
         </div>
         {/* </div> */}
         <Form {...form}>
-          <form ref={editProfileForm} onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="w-full">
+          <form
+            ref={editProfileForm}
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full"
+          >
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 md:gap-5">
               <FormField
                 control={form.control}
                 name="collegename"
@@ -255,12 +265,34 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
                 name="email"
                 render={({ field }) => (
                   <FormItem className="w-full m-0">
-                    <FormLabel>email</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="email"
                         icon={"fi fi-rr-envelope"}
                         defaultValue={email}
+                        disabled={true}
+                        {...field}
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="about"
+                render={({ field }) => (
+                  <FormItem className="w-full m-0">
+                    <FormLabel>About</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        className="input-box h-64 lg:h-40 resize-none leading-7 mt-5 pl-5"
+                        placeholder="About"
+                        maxLength={bioLimit}
+                        defaultValue={about}
+                        // onChange={handleCharacterChange}
                         {...field}
                       />
                     </FormControl>

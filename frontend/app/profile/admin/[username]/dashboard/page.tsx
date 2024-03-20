@@ -27,25 +27,25 @@ const AdminDashboard = () => {
   }[] = [
     {
       title: "All Users",
-      href: `/profile/admin/${user?.username}/dashboard/users`,
+      href: `/profile/${user.role}/${user?.username}/dashboard/users`,
       icon: "fi fi-rr-user",
       bgColor: "#DAE9F0",
     },
     {
       title: "All Colleges",
-      href: `/profile/admin/${user?.username}/dashboard/colleges`,
+      href: `/profile/${user.role}/${user?.username}/dashboard/colleges`,
       icon: "fi fi-rr-school",
       bgColor: "#FFD3C6",
     },
     {
       title: "Enquiry",
-      href: `/profile/admin/${user?.username}/dashboard/enquiry`,
+      href: `/profile/${user.role}/${user?.username}/dashboard/enquiry`,
       icon: "fi fi-rr-comment-alt",
       bgColor: "#FFD3C6",
     },
     {
       title: "FeedBack",
-      href: `/profile/admin/${user?.username}/dashboard/feedback`,
+      href: `/profile/${user.role}/${user?.username}/dashboard/feedback`,
       icon: "fi fi-rr-user",
       bgColor: "#FFD3C6",
     },

@@ -86,7 +86,7 @@ const Header = () => {
   }[] = [
     {
       title: "Dashboard",
-      href: `/profile/${user?.role}/${user?.username}`,
+      href: `/profile/${user?.role}/${user?.username}/dashboard`,
     },
     {
       title: "Settings",
@@ -182,21 +182,16 @@ const Header = () => {
                   </Button>
                 ) : (
                   <>
-                    <NavigationMenuTrigger className="text-black z-100">
-                      <Link
-                        href={`/profile/user/${user.username}`}
-                        // onClick={() => dispatch(logout())}
-                      >
-                        <div className="flex flex-row items-center justify-center">
-                          <img
-                            src={user.profileImage}
-                            alt=""
-                            className="w-6 h-6 object-cover rounded-lg"
-                          />
-                          {/* <i className="fi fi-rr-user mr-2"></i> */}
-                          <span className="ml-2">{user.fullname}</span>
-                        </div>
-                      </Link>
+                    <NavigationMenuTrigger className=" z-100">
+                      <div className="flex flex-row items-center justify-center">
+                        <img
+                          src={user.profileImage}
+                          alt=""
+                          className="w-6 h-6 object-cover rounded-lg"
+                        />
+                        {/* <i className="fi fi-rr-user mr-2"></i> */}
+                        <span className="ml-2">{user.username}</span>
+                      </div>
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <ul className="grid w-[200px] gap-3 p-4  md:grid-cols-1  ">
@@ -211,9 +206,12 @@ const Header = () => {
                     </NavigationMenuContent>
                   </>
                 )}
-                <div className="ml-10 sm:block hidden">
+                <div className="sm:block hidden  ">
                   {theme === "light" ? (
-                    <i className="fn" onClick={() => setTheme("dark")}></i>
+                    <i
+                      className="fi fi-rr-moon h-6 w-6  text-xl"
+                      onClick={() => setTheme("dark")}
+                    ></i>
                   ) : (
                     <i
                       className="fi fi-rr-sun h-6 w-6  text-xl"

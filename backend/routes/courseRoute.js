@@ -11,7 +11,7 @@ import {
   generateCollegeCredentials,
 } from "../controllers/authController.js";
 
-router.route("/signup").post(registerUser);
+router.route("/").post(registerUser);
 router.route("/signup/college").post(generateCollegeCredentials);
 router.route("/login").post(loginUser);
 router.route("/forgotPassword").post(forgotPassword);

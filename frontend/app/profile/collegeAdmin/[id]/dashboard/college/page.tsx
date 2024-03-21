@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { ListItem } from "@/components/Header";
 import Link from "next/link";
 import { useGetACollegeMutation } from "@/redux/services/collegeApi";
+import { Badge } from "@/components/ui/badge";
 
 const AdminCollege = () => {
   const { toast } = useToast();
@@ -72,6 +73,22 @@ const AdminCollege = () => {
               quaerat officiis. Blanditiis fugiat amet cupiditate minus
               provident!
             </span>
+          </div>
+          <div className="pt-4 flex flex-col">
+            <h3 className="text-lg font-medium pb-2">DEPARTMENT</h3>
+            <div className="mr-2">
+              {college?.departments && college.departments.length > 0 ? (
+                college.departments.map((dep: any, key: any) => (
+                  <Button variant="outline" key={key} className="mr-2 ">
+                    {dep?.Dname}
+                  </Button>
+
+                  // <span key={key}>{dep?.Dname}</span>
+                ))
+              ) : (
+                <span>No departments found</span>
+              )}
+            </div>
           </div>
         </div>
       </section>

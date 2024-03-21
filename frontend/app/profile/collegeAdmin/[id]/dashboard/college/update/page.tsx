@@ -140,13 +140,10 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const newValues = { ...values };
-      console.log(newValues);
       const response: any = await updateCollege({
         id: user.college,
         data: newValues,
       }).unwrap();
-      console.log(response);
-
       // dispatch(setCollege(response));
       toast({
         title: "Successfully added college",

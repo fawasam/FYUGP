@@ -100,6 +100,16 @@ const CollegeAdminSideNav: React.FC | any = () => {
             </Link>
 
             <Link
+              href={`/profile/${user.role}/${user?.username}/dashboard/programme`}
+              onClick={(e: any) => setPageState(e.target.innerText)}
+              className={`sidebar-link + ${
+                isLinkActive("/dashboard/programme") ? "active" : " "
+              } `}
+            >
+              <i className="fi fi-rr-duplicate"></i>
+              Programme
+            </Link>
+            <Link
               href={`/profile/${user.role}/${user?.username}/dashboard/courses`}
               onClick={(e: any) => setPageState(e.target.innerText)}
               className={`sidebar-link + ${
@@ -114,16 +124,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
               </div>
               Courses
             </Link>
-            <Link
-              href={`/profile/${user.role}/${user?.username}/dashboard/programme`}
-              onClick={(e: any) => setPageState(e.target.innerText)}
-              className={`sidebar-link + ${
-                isLinkActive("/dashboard/programme") ? "active" : " "
-              } `}
-            >
-              <i className="fi fi-rr-duplicate"></i>
-              Programme
-            </Link>
+
             <Link
               href={`/profile/${user.role}/${user?.username}/dashboard/enquiry`}
               onClick={(e: any) => setPageState(e.target.innerText)}

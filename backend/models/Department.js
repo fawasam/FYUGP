@@ -7,10 +7,21 @@ const departmentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    Discipline: {
+      type: String,
+      enum: ["Humanities", "Languages", "Science", "Commerce", "Management"],
+      required: true,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
     coursesOffered: [
       {
         type: Schema.Types.ObjectId,
         ref: "courses",
+        default: null,
       },
     ],
   },

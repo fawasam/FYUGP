@@ -11,10 +11,15 @@ const courseSchema = mongoose.Schema(
       type: String,
       enum: ["1", "2", "3", "4", "5", "6", "7", "8"],
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
     department: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Department",
+        ref: "departments",
         default: null,
       },
     ],

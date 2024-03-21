@@ -40,16 +40,16 @@ const Dashboard = () => {
 
   return (
     <>
-      <AnimationWrapper className="w-full">
-        <section>
+      <AnimationWrapper className="w-full h-screen bg-accent">
+        <section className="w-[90%] m-auto md:w-[60%] ">
           <div className="flex items-center  text-center justify-center space-y-12">
             <h1 className="text-3xl font-bold space-x-3">
               👋Hello {user?.username}, this is your dashboard!
             </h1>
           </div>
 
-          <div className="mt-12 ">
-            <div className="w-[400px] h-[250px] rounded-xl bg-slate-50 shadow-xl relative">
+          <div className="mt-12  grid grid-cols-1 lg:grid-cols-2">
+            <div className="w-[400px] h-[250px] rounded-2xl bg-white shadow-xl relative">
               <div className="flex  flex-row justify-between">
                 <div>
                   <div className="  block w-28 h-28  rounded-full overflow-hidden pt-4 pl-4 ">
@@ -59,7 +59,7 @@ const Dashboard = () => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <h2 className="text-md font-light space-x-3 ml-4 mt-2">
+                  <h2 className="text-lg font-medium space-x-3 ml-4 mt-2">
                     {user?.fullname}
                   </h2>
                 </div>
@@ -68,11 +68,29 @@ const Dashboard = () => {
                   size={"sm"}
                 >
                   <i className="fi fi-rr-pencil mr-2"></i>
-                  Edit Profile
+                  Edit Your Profile
                 </Button>
               </div>
-
-              <div></div>
+              <div className="mt-2 grid grid-cols-3">
+                <div className="pl-4">
+                  <i className="fi fi-rr-home mr-2 text-sm"></i>
+                  {user?.username}
+                </div>
+                <div className="pl-4">
+                  {" "}
+                  <i className="fi fi-rr-home mr-2 text-sm"></i>
+                  {user?.username}
+                </div>
+              </div>
+              <div className="pl-4">
+                {" "}
+                <i className="fi fi-rr-home mr-2 text-sm"></i>
+                {user?.username}
+              </div>
+            </div>
+            <div>
+              <div className="w-[400px] h-[80px] mb-[20px] rounded-2xl bg-white shadow-xl relative mt-10 lg:mt-0"></div>
+              <div className="w-[400px] h-[150px] rounded-2xl bg-white shadow-xl relative"></div>
             </div>
           </div>
         </section>

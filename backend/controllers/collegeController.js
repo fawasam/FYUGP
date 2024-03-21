@@ -39,6 +39,39 @@ export const createCollege = asyncErrorHandler(async (req, res, next) => {
   }
 });
 
+// @desc    updateCollege
+// @route    GET /api/collge/update-college/:id
+// @access  Public
+
+export const updateCollege = asyncErrorHandler(async (req, res, next) => {
+  const { id } = req.params;
+
+  const filterObj = filterReqObj(
+    req.body,
+    "collegename",
+    "place",
+    "pincode",
+    "phone",
+    "picture",
+    "email",
+    "website"
+  );
+
+  const updatedCollege = await College.findByIdAndUpdate(id, filterObj, {
+    runValidators: false,
+    context: "query",
+    new: true,
+  });
+
+  let college = await updatedCollege.save();
+
+  res.status(200).json({
+    status: "success",
+    data: { college },
+    updatedData: { filterObj },
+  });
+});
+
 // @desc    Add department to college
 // @route   POST /api/users
 // @access  Public
@@ -117,10 +150,11 @@ export const addcourse = asyncErrorHandler(async (req, res, next) => {
 // @access  Public
 
 export const getAllColleges = asyncErrorHandler(async (req, res, next) => {
-  const colleges = await College.find().populate({
-    path: "departments",
-    populate: { path: "coursesOffered" },
-  });
+  const colleges = await College.find();
+  // .populate({
+  //   path: "departments",
+  //   populate: { path: "coursesOffered" },
+  // });
   res.status(200).json({
     status: "success",
     result: colleges.length,
@@ -166,39 +200,6 @@ export const searchColleges = asyncErrorHandler(async (req, res, next) => {
     status: "success",
     result: colleges.length,
     data: { colleges },
-  });
-});
-
-// @desc    updateCollege
-// @route    GET /api/collge/update-college/:id
-// @access  Public
-
-export const updateCollege = asyncErrorHandler(async (req, res, next) => {
-  const { id } = req.params;
-
-  const filterObj = filterReqObj(
-    req.body,
-    "collegename",
-    "place",
-    "pincode",
-    "phone",
-    "picture",
-    "email",
-    "website"
-  );
-
-  const updatedCollege = await College.findByIdAndUpdate(id, filterObj, {
-    runValidators: false,
-    context: "query",
-    new: true,
-  });
-
-  let college = await updatedCollege.save();
-
-  res.status(200).json({
-    status: "success",
-    data: { college },
-    updatedData: { filterObj },
   });
 });
 

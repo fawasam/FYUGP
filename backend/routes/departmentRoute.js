@@ -9,11 +9,11 @@ import {
   getAllProgram,
 } from "../controllers/departmentController.js";
 
+router.route("/").post(protect, restrict("collegeAdmin"), createProgram);
+router.get("/all", getAllProgram);
 router
-  .route("/")
-  .post(protect, restrict("collegeAdmin"), createProgram)
-  .patch(protect, restrict("collegeAdmin"), updateProgram)
-  .get(getAllProgram);
-router.route("/:id").get(getAProgram);
+  .route("/:id")
+  .get(getAProgram)
+  .patch(protect, restrict("collegeAdmin"), updateProgram);
 
 export default router;

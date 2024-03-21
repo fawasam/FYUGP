@@ -85,6 +85,10 @@ const Header = () => {
     href?: string;
   }[] = [
     {
+      title: "Profile",
+      href: `/profile/${user?.username}`,
+    },
+    {
       title: "Dashboard",
       href: `/profile/${user?.role}/${user?.username}/dashboard`,
     },

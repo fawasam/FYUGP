@@ -48,7 +48,7 @@ const AdminSideNav: React.FC | any = () => {
     <>
       <section>
         <div className="sticky top-[80px] z-30">
-          <div className="md:hidden bg-white py-1 border-b border-grey flex flex-nowrap overflow-x-auto">
+          <div className="md:hidden  py-1 border-b border-grey flex flex-nowrap overflow-x-auto">
             <button
               className="p-5 capitalize"
               ref={sideBarIcon}

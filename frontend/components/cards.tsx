@@ -8,8 +8,8 @@ import Link from "next/link";
 const Cards = () => {
   return (
     <div className="my-24 m-auto items-center">
-      <div className="grid  grid-cols-4 gap-6  m-auto ">
-        <div className="bg-[#DAF5EF] card  text-center">
+      <div className="grid  lg:grid-cols-4 md:grid-cols-2 grid-cols-1 md:gap-6  gap-2 m-auto ">
+        <div className=" card  text-center border">
           <Link href={"learn/what-is-fyugp"}>
             <div className="flex justify-center items-center flex-col w-full h-full">
               <Image
@@ -25,7 +25,7 @@ const Cards = () => {
             </div>
           </Link>
         </div>
-        <div className=" bg-[rgb(255,253,207)] card">
+        <div className="  card w-[250px] border">
           <Link href={"learn/design-of-fyugp"}>
             <div className="flex justify-center items-center flex-col w-full h-full">
               <Image
@@ -39,7 +39,7 @@ const Cards = () => {
             </div>
           </Link>
         </div>
-        <div className="bg-[rgb(254,212,255)] card">
+        <div className="card w-[250px] border">
           <Link href={"learn/different-academic-pathways"}>
             <div className="flex justify-center items-center w-full h-full flex-col text-center">
               <Image
@@ -54,7 +54,7 @@ const Cards = () => {
             </div>
           </Link>
         </div>
-        <div className="bg-[rgb(233,248,254)] card ">
+        <div className=" card  border">
           <Link href={"learn/courses-and-credits"}>
             <div className="flex justify-center items-center w-full h-full flex-col">
               <Image

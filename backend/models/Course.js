@@ -5,7 +5,16 @@ const courseSchema = mongoose.Schema(
     Cname: { type: String, required: true },
     category: {
       type: String,
-      enum: ["major", "minor", "mdc", "aec", "sec", "vac"],
+      enum: [
+        "CORE IN MAJOR ",
+        "ELECTIVE IN MAJOR",
+        "MINOR",
+        "ABILITY ENHANCEMENT COURSE",
+        "VOCATIONAL MINOR",
+        "SKILL ENHANCEMENT COURSE",
+        "VALUE ADDED COURSE",
+        "MULTI-DISCIPLINARY COURSE",
+      ],
     },
     semester: {
       type: String,

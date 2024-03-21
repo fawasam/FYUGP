@@ -72,6 +72,7 @@ const userSchema = mongoose.Schema(
       ref: "blogs",
       default: [],
     },
+    place: String,
     college: {
       type: Schema.Types.ObjectId,
       ref: "colleges",

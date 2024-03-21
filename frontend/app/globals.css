@@ -25,8 +25,53 @@
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
     --radius: 0.75rem;
+    --orangeLight: #fef5ec;
   }
-
+  :root2 {
+    --sass--gray--700: #454f5f;
+    --sass--neutral--off-white: #f6f5f3;
+    --sass--purple--900: #3e376d;
+    --sass--neutral--black: black;
+    --sass--purple--600: #746bb3;
+    --sass--gray--500: #7d8ba1;
+    --sass--gray--0: #f3f4f6;
+    --sass--purple--700: #5e53a2;
+    --sass--neutral--white: white;
+    --sass--gray--50-2: #dce0e5;
+    --sass--red--500: #e57361;
+    --sass--purple--800: #4e4587;
+    --sass--gray--200: #acb5c3;
+    --sass--red--100: #fcefee;
+    --sass--blue--100: #f0f4fa;
+    --sass--orange--100: #fef5ec;
+    --sass--purple--500: #8e86c1;
+    --sass--purple--100: #f2f2f8;
+    --sass--gray--300: #95a1b2;
+    --sass--purple--300: #c0bcdc;
+    --sass--gray--100: #c4cad4;
+    --sass--gray--900: #22272f;
+    --sass--orange--500: #f4a952;
+    --sass--gray--800: #333b47;
+    --sass--yellow--100: #fefaec;
+    --sass--yellow--500: #f4d452;
+    --sass--blue--500: #779acf;
+    --sass--purple--200: #d9d7ea;
+    --sass--gray--600: #67778e;
+    --sass--gray--400: #7d8ba1;
+    --sass--purple--400: #a7a1ce;
+    --sass--red--400: #eb9284;
+    --sass--red--300: #f1b1a7;
+    --sass--red--200: #f6d0cb;
+    --sass--blue--400: #95b1da;
+    --sass--blue--300: #b3c7e5;
+    --sass--blue--200: #d2deef;
+    --sass--yellow--400: #f6dd79;
+    --sass--yellow--300: #f9e79f;
+    --sass--yellow--200: #fbf1c6;
+    --sass--orange--400: #f6bc79;
+    --sass--orange--300: #f9cf9f;
+    --sass--orange--200: #fbe2c6;
+  }
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
@@ -65,7 +110,7 @@
     @apply w-full h-full object-cover;
   } */
   .card {
-    @apply max-w-[250px] h-[300px] rounded-md hover:scale-110 transition-all ease-in-out delay-150 text-center;
+    @apply m-auto max-w-[250px] h-[300px] rounded-md hover:scale-110 transition-all ease-in-out delay-150 text-center;
   }
   .sidebar-link {
     @apply flex gap-4 items-center py-4 pr-3 text-[#6B6B6B] hover:text-black;
@@ -75,7 +120,7 @@
     @apply text-black border-r-2 border-black pl-6 bg-[#F3F3F3]/50 -ml-6 md:rounded-tl-lg md:rounded-bl-lg max-md:border-none;
   }
   .input-box {
-    @apply w-[100%] rounded-md p-4 bg-[#F3F3F3] pl-12 border border-[#F3F3F3] focus:bg-transparent placeholder:text-black;
+    @apply w-[100%] rounded-md p-4  pl-12 border border-[#F3F3F3] focus:bg-transparent;
   }
 
   input:disabled,

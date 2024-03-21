@@ -10,6 +10,7 @@ import { loadUserFromStorage } from "@/redux/features/authSlice";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/features/authSlice";
 import { Navbar } from "@/components/Navbar";
+import Footer from "../components/Footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -37,8 +38,11 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Header />
-            {children}
             <Toaster />
+            {children}
+            <div className="static bottom-0">
+              <Footer />
+            </div>
           </ThemeProvider>
         </Providers>
       </body>

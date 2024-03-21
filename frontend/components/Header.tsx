@@ -102,7 +102,7 @@ const Header = () => {
     },
   ];
   return (
-    <header className="my-8 sm:w-[80%] w-[90%] m-auto pb-6 border-b">
+    <header className="mt-8 sm:w-[75%] w-[90%] m-auto pb-6 border-b">
       <div className="flex items-center justify-between ">
         <Link href={"/"}>
           <h2 className="font-light">TrackMyDegree</h2>

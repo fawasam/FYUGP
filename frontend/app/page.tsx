@@ -7,7 +7,7 @@ import One from "@/public/one.svg";
 export default function Home() {
   return (
     <main className=" pt-24 ">
-      <AnimationWrapper className="sm:w-[80%] w-[90%] m-auto">
+      <AnimationWrapper className="sm:w-[70%] w-[90%] m-auto min-h-[100vh]">
         <div className="flex flex-col  sm:flex-row justify-between h-1/2 m-auto w-full">
           <div className="sm:w-1/2 w-full space-y-6">
             <h1 className="text-6xl font-bold ">YOUR DEGREE TRACKER</h1>

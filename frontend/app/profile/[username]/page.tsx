@@ -40,7 +40,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <AnimationWrapper className="w-full h-screen bg-accent">
+      <AnimationWrapper className="w-full h-screen bg-accent pt-[40px] sm:pt-[100px] ">
         <section className="w-[90%] m-auto md:w-[60%] ">
           <div className="flex items-center  text-center justify-center space-y-12">
             <h1 className="text-3xl font-bold space-x-3">

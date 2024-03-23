@@ -30,6 +30,7 @@ import Loader from "@/components/common/Loader";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { Textarea } from "@/components/ui/textarea";
+import { log } from "console";
 
 const formSchema = z.object({
   collegename: z.string().min(2, {
@@ -85,6 +86,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       about,
     },
   });
+  console.log(college);
 
   const getCollege = async () => {
     const response: any = await getACollege(user?.college);
@@ -118,12 +120,12 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
         );
         console.log("Image uploaded successfully!", response.data);
         setSelectedImage(response.data.imageUrl);
-        const imageUrl = { picture: response.data.imageUrl };
+        const picture = { picture: response.data.imageUrl };
         const response2: any = await updateCollege({
-          id: params._id,
-          data: imageUrl,
+          id: college?._id,
+          data: picture,
         }).unwrap();
-        console.log(response.data.imageUrl);
+        console.log(response2);
         toast({
           title: "Profile Image Updated",
         });
@@ -144,6 +146,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
         id: user.college,
         data: newValues,
       }).unwrap();
+      await getCollege();
       // dispatch(setCollege(response));
       toast({
         title: "Successfully added college",
@@ -287,7 +290,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
                       <Textarea
                         className="input-box h-64 lg:h-40 resize-none leading-7 mt-5 pl-5"
                         placeholder="About"
-                        maxLength={bioLimit}
+                        // maxLength={bioLimit}
                         defaultValue={about}
                         // onChange={handleCharacterChange}
                         {...field}

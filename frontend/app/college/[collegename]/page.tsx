@@ -12,8 +12,7 @@ import { ListItem } from "@/components/Header";
 import Link from "next/link";
 import { useGetACollegeMutation } from "@/redux/services/collegeApi";
 import { Badge } from "@/components/ui/badge";
-
-const AdminCollege = () => {
+const page = ({ params }: { params: { collegename: string } }) => {
   const { toast } = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -24,7 +23,7 @@ const AdminCollege = () => {
   const [getACollege] = useGetACollegeMutation();
 
   const getCollegeData = async () => {
-    const response: any = await getACollege(user.college);
+    const response: any = await getACollege(params.collegename);
     setCollege(response?.data?.data?.college);
   };
   console.log(college);
@@ -36,8 +35,8 @@ const AdminCollege = () => {
     }
   }, [userData, dispatch, router]);
   return (
-    <AnimationWrapper className="w-full">
-      <section className="w-full ">
+    <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
+      <section className="max-w-[1060px] m-auto   flex-grow">
         <div className="relative">
           <img
             src={`${
@@ -64,9 +63,25 @@ const AdminCollege = () => {
         <div>
           <h1 className="text-2xl mt-4 font-bold">{college?.collegename}</h1>
           <span className="text-md  font-thin">{college?.place}</span>
+          <div className="mt-4">
+            <div>
+              <i className="fi  fi-rr-globe mr-2"></i>
+              <span>{college?.website}</span>
+            </div>
+            <div>
+              <i className="fi fi-rr-envelope mr-2"></i>
+              <span>{college?.email}</span>
+            </div>
+          </div>
           <div className="pt-4 flex flex-col">
             <h3 className="text-lg font-medium">ABOUT</h3>
-            <span className="leading-normal">{college?.about}</span>
+            <span className="leading-normal">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Explicabo distinctio reiciendis ratione quisquam beatae
+              perferendis debitis dolore quae. Commodi tempora obcaecati nemo
+              quaerat officiis. Blanditiis fugiat amet cupiditate minus
+              provident!
+            </span>
           </div>
           <div className="pt-4 flex flex-col">
             <h3 className="text-lg font-medium pb-2">DEPARTMENT</h3>
@@ -90,4 +105,4 @@ const AdminCollege = () => {
   );
 };
 
-export default AdminCollege;
+export default page;

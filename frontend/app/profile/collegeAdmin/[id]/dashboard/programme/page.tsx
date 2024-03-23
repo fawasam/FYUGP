@@ -61,13 +61,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { disciplines } from "@/utils/disciplines";
 
 const formSchema = z.object({
   Dname: z.string().min(2, {
     message: "Department name must be at least 2 characters.",
   }),
   headOfDepartment: z.string(),
-  Discipline: z.string(),
+  Discipline: z.string().min(2, {
+    message: "Please choose a Discipline ",
+  }),
 });
 
 const page = () => {
@@ -94,9 +97,9 @@ const page = () => {
   };
   const getAPrograms = async (id: any) => {
     const response: any = await getAProgram(id);
-
     setProgram(id);
     setDname(response?.data?.data?.program?.Dname);
+    //setDiscipline(response?.data?.data?.program?.Discipline);
     setHeadOfDepartment(response?.data?.data?.program?.headOfDepartment);
   };
 
@@ -111,18 +114,23 @@ const page = () => {
   const form2 = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      Dname: dname,
-      headOfDepartment: headOfDepartment,
-      Discipline: discipline,
+      Dname: "",
+      headOfDepartment: "",
+      Discipline: "",
     },
   });
+
+  console.log(form2.watch());
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const newValues = { ...values };
-      console.log(newValues);
 
       const response: any = await createProgram(newValues).unwrap();
+      setProgram("");
+      setDname("");
+      setDiscipline("");
+      setHeadOfDepartment("");
       toast({
         title: "Successfully added Program",
       });
@@ -140,6 +148,8 @@ const page = () => {
   const onUpdate = async (values: z.infer<typeof formSchema>) => {
     try {
       const newValues = { ...values };
+      console.log(newValues);
+
       const response: any = await updateProgram({
         id: program,
         data: newValues,
@@ -372,41 +382,31 @@ const page = () => {
                                   </FormItem>
                                 )}
                               />
+
                               <FormField
-                                control={form.control}
+                                control={form2.control}
                                 name="Discipline"
                                 render={({ field }) => (
-                                  <FormItem className="w-full m-0">
-                                    <FormLabel>Select the Discipline</FormLabel>
-                                    <>
-                                      <Select
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                      >
-                                        <SelectTrigger className="w-[180px]">
-                                          <SelectValue placeholder="Discipline" />
+                                  <FormItem>
+                                    <FormLabel>Discipline</FormLabel>
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select your Discipline " />
                                         </SelectTrigger>
-                                        <SelectContent>
-                                          <SelectGroup {...field}>
-                                            <SelectItem value="Humanities">
-                                              Humanities
-                                            </SelectItem>
-                                            <SelectItem value="Languages">
-                                              Languages
-                                            </SelectItem>
-                                            <SelectItem value="Science">
-                                              Science
-                                            </SelectItem>
-                                            <SelectItem value="Commerce">
-                                              Commerce
-                                            </SelectItem>
-                                            <SelectItem value="Management">
-                                              Management
-                                            </SelectItem>
-                                          </SelectGroup>
-                                        </SelectContent>
-                                      </Select>
-                                    </>
+                                      </FormControl>
+                                      <SelectContent>
+                                        {disciplines.map((dist) => (
+                                          <SelectItem value={dist}>
+                                            {dist}
+                                          </SelectItem>
+                                        ))}
+                                      </SelectContent>
+                                    </Select>
+
                                     <FormMessage />
                                   </FormItem>
                                 )}
@@ -414,9 +414,7 @@ const page = () => {
                             </div>
                           </div>
                           <DialogFooter>
-                            <DialogClose>
-                              <Button>Update Program</Button>
-                            </DialogClose>
+                            <Button>Update Program</Button>
                           </DialogFooter>
                         </form>
                       </Form>

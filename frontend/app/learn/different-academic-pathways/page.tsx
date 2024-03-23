@@ -1,5 +1,5 @@
 "use client";
-import { pathways } from "@/components/assets/pathways";
+import { pathways } from "@/utils/pathways";
 import AnimationWrapper from "@/components/common/page-animation";
 import React, { useState } from "react";
 import {

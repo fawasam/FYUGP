@@ -4,7 +4,28 @@ import { Button } from "@/components/ui/button";
 import AnimationWrapper from "@/components/common/page-animation";
 import Cards from "@/components/cards";
 import One from "@/public/one.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { useGetMeMutation } from "@/redux/services/userApi";
+import { useEffect } from "react";
+import { updateUser } from "@/redux/features/authSlice";
+
 export default function Home() {
+  const dispatch = useDispatch();
+  let userData = useSelector((state: RootState) => state.auth);
+  let { userInfo: user, userToken, isAuthenticated } = userData;
+  const [getMe] = useGetMeMutation();
+  console.log("from page" + user);
+
+  const fetchUser = async () => {
+    const response: any = await getMe(" ");
+    console.log(response);
+    dispatch(updateUser({ fields: response?.data?.data?.user }));
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
   return (
     <main className=" pt-24 ">
       <AnimationWrapper className="sm:w-[70%] w-[90%] m-auto min-h-[100vh]">

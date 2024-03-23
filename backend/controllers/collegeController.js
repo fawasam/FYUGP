@@ -54,7 +54,8 @@ export const updateCollege = asyncErrorHandler(async (req, res, next) => {
     "phone",
     "picture",
     "email",
-    "website"
+    "website",
+    "about"
   );
 
   const updatedCollege = await College.findByIdAndUpdate(id, filterObj, {

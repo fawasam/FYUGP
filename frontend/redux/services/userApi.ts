@@ -48,7 +48,7 @@ export const userApi = createApi({
         },
       }),
     }),
-    getMe: builder.mutation<void, getMeFormData>({
+    getMe: builder.mutation<void, any>({
       query: () => ({
         url: "/user/getMe",
         method: "GET",

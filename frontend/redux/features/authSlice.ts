@@ -46,6 +46,8 @@ const authSlice = createSlice({
       action: PayloadAction<{ fields: Record<string, any | null> }>
     ) => {
       if (state.userInfo) {
+        console.log(action.payload);
+
         const { fields } = action.payload;
         Object.keys(fields).forEach((field) => {
           state.userInfo[field] = fields[field];

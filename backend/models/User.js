@@ -47,12 +47,17 @@ const userSchema = mongoose.Schema(
       maxlength: [200, "Bio should not be more than 200"],
       default: "",
     },
-    active: { type: Boolean, default: true, select: false },
+    place: String,
+    district: String,
+
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetTokenExpires: Date,
-
-    account_info: {
+    degree_info: {
+      currentCollege: String,
+      pathway: { type: String },
+      discipline: { type: String },
+      courses: { type: [String], default: null },
       total_credits_earned: {
         type: Number,
         default: 0,
@@ -67,12 +72,6 @@ const userSchema = mongoose.Schema(
       enum: ["admin", "student", "collegeAdmin", "user"],
       default: "user",
     },
-    blogs: {
-      type: [Schema.Types.ObjectId],
-      ref: "blogs",
-      default: [],
-    },
-    place: String,
     college: {
       type: Schema.Types.ObjectId,
       ref: "colleges",
@@ -81,6 +80,7 @@ const userSchema = mongoose.Schema(
       type: String,
       default: `${process.env.SERVER_URL}/uploads/default_dp.webp`,
     },
+    active: { type: Boolean, default: true, select: false },
   },
   {
     timestamps: {

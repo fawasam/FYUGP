@@ -23,7 +23,10 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { Input } from "@/components/ui/input";
 import axios from "axios";
-import { useUpdateMeMutation } from "@/redux/services/userApi";
+import {
+  useGetMeMutation,
+  useUpdateMeMutation,
+} from "@/redux/services/userApi";
 import { setUser, updateUser } from "@/redux/features/authSlice";
 import useRedirect from "@/hooks/useRedirect";
 
@@ -52,6 +55,7 @@ const EditProfile = () => {
   let { fullname, email, username, joinedAt, bio, role, profileImage } = user;
 
   const [updateMe, { isLoading, error, isSuccess }] = useUpdateMeMutation();
+  const [getMe] = useGetMeMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -94,8 +98,10 @@ const EditProfile = () => {
         const response2: any = await updateMe({
           profileImage: response.data.imageUrl,
         }).unwrap();
+        const response3: any = await getMe(" ");
+        console.log(response);
+        dispatch(updateUser({ fields: response3?.data?.data?.user }));
 
-        dispatch(updateUser({ fields: response2.updatedData.filterObj }));
         toast({
           title: "Profile Image Updated",
         });
@@ -113,8 +119,10 @@ const EditProfile = () => {
     try {
       const newValues = { ...values };
       console.log(newValues);
-      const response: any = await updateMe(newValues).unwrap();
-      dispatch(updateUser({ fields: response.updatedData.filterObj }));
+      const response1: any = await updateMe(newValues).unwrap();
+      const response: any = await getMe(" ");
+      console.log(response);
+      dispatch(updateUser({ fields: response?.data?.data?.user }));
       toast({
         title: "Profile Successfully Updated",
       });

@@ -56,15 +56,30 @@ export const updateMe = asyncErrorHandler(async (req, res, next) => {
     return next(error);
   }
 
+  const { discipline, pathway, currentCollege } = req?.body;
+
   const filterObj = filterReqObj(
     req.body,
     "fullname",
     "email",
     "bio",
-    "profileImage"
+    "profileImage",
+    "place",
+    "district"
   );
+  console.log(filterObj);
+  let newData = { ...filterObj };
+  if (discipline || pathway) {
+    newData = {
+      ...filterObj,
+      "degree_info.discipline": discipline,
+      "degree_info.pathway": pathway,
+      "degree_info.currentCollege": currentCollege,
+    };
+  }
 
-  const updatedUser = await User.findByIdAndUpdate(req.user.id, filterObj, {
+  console.log(newData);
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, newData, {
     runValidators: false,
     context: "query",
     new: true,

@@ -72,7 +72,7 @@ const AdminDashboard = () => {
                   href={component.href}
                   className={`items-center py-4 justify-center select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors bg-accent hover:bg-[#DAE9F0] hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex `}
                 >
-                  <span className="w-10 h-10 rounded-full text-center bg-white flex item-center justify-center">
+                  <span className="w-10 h-10 rounded-full text-center  flex item-center justify-center">
                     <i
                       className={component.icon + " text-xl mt-2 font-bold"}
                     ></i>

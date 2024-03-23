@@ -107,7 +107,8 @@ const College = () => {
                 </>
               ) : (
                 <Link
-                  href={college._id}
+                  // href={`/college/${college?.collegename.replace(/ /g, "-")}`}
+                  href={`/college/${college?._id}`}
                   className="group flex flex-col justify-between"
                 >
                   <div className=" ">

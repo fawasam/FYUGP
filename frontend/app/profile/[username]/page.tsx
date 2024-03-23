@@ -18,6 +18,7 @@ import { RootState } from "@/redux/store";
 import useRedirect from "@/hooks/useRedirect";
 import { logout } from "@/redux/features/authSlice";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Dashboard = () => {
   const { toast } = useToast();
@@ -40,7 +41,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <AnimationWrapper className="w-full h-screen bg-accent pt-[40px] sm:pt-[100px] ">
+      <AnimationWrapper className="w-full h-full bg-accent pt-[40px] sm:pt-[100px] ">
         <section className="w-[90%] m-auto md:w-[60%] ">
           <div className="flex items-center  text-center justify-center space-y-12">
             <h1 className="text-3xl font-bold space-x-3">
@@ -49,14 +50,14 @@ const Dashboard = () => {
           </div>
 
           <div className="mt-12  grid grid-cols-1 lg:grid-cols-2">
-            <div className="w-[400px] h-[250px] rounded-2xl bg-white shadow-xl relative">
+            <div className="w-[400px] h-[250px] rounded-2xl  shadow-xl relative bg-primary-foreground">
               <div className="flex  flex-row justify-between">
                 <div>
-                  <div className="  block w-28 h-28  rounded-full overflow-hidden pt-4 pl-4 ">
+                  <div className="  block w-28 h-28  rounded-full object-cover pt-4 pl-4 ">
                     <img
                       src={user?.profileImage}
                       alt="image"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover rounded-full "
                     />
                   </div>
                   <h2 className="text-lg font-medium space-x-3 ml-4 mt-2">
@@ -67,25 +68,35 @@ const Dashboard = () => {
                   className="mt-4 mr-4 bg-[#D2EEEE] text-[#49959B] hover:bg-[#b8d5d5]"
                   size={"sm"}
                 >
-                  <i className="fi fi-rr-pencil mr-2"></i>
-                  Edit Your Profile
+                  <Link href={"/profile/user/fawasam32/settings/edit-profile"}>
+                    <i className="fi fi-rr-pencil mr-2"></i>
+                    Edit Your Profile
+                  </Link>
                 </Button>
               </div>
-              <div className="mt-2 grid grid-cols-3">
-                <div className="pl-4">
-                  <i className="fi fi-rr-home mr-2 text-sm"></i>
-                  {user?.username}
+              <div className="flex  flex-col">
+                <div className="mt-2 grid grid-cols-2">
+                  <div className="pl-4">
+                    <i className="fi fi-rs-book-bookmark text-sm mr-2 "></i>
+                    <span className="text-sm">
+                      {" "}
+                      {user?.degree_info?.currentCollege}
+                    </span>
+                  </div>
+                  <div className="\">
+                    {" "}
+                    <span className="text-sm">
+                      <i className="fi fi-rr-home mr-2 text-sm leading-5"></i>
+                      {user?.place}
+                    </span>
+                  </div>
                 </div>
-                <div className="pl-4">
-                  {" "}
-                  <i className="fi fi-rr-home mr-2 text-sm"></i>
-                  {user?.username}
+
+                <div className="pl-4 mb-4">
+                  <span className=" pr-4 text-sm leading-5">
+                    Bio : {user?.bio}
+                  </span>
                 </div>
-              </div>
-              <div className="pl-4">
-                {" "}
-                <i className="fi fi-rr-home mr-2 text-sm"></i>
-                {user?.username}
               </div>
             </div>
             <div>

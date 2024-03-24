@@ -83,31 +83,6 @@ const page = () => {
           </DialogContent>
         </Dialog>
       </div>
-
-      {/* table of content  */}
-      <Table className="mt-10">
-        <TableCaption>A list of user who are Registered.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[200px]">Department</TableHead>
-            <TableHead>Hod</TableHead>
-            <TableHead>Joined At</TableHead>
-            <TableHead className="text-right">Role</TableHead>
-          </TableRow>
-        </TableHeader>
-        {/* <TableBody>
-          {allUsers != null &&
-            allUsers.length > 0 &&
-            allUsers.map((user, key) => (
-              <TableRow key={key}>
-                <TableCell className="font-medium">{user?.username}</TableCell>
-                <TableCell>{user?.email}</TableCell>
-                <TableCell>{formateDate(user.joinedAt)}</TableCell>
-                <TableCell className="text-right">{user.role}</TableCell>
-              </TableRow>
-            ))}
-        </TableBody> */}
-      </Table>
     </AnimationWrapper>
   );
 };

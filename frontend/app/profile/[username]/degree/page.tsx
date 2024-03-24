@@ -163,6 +163,7 @@ const page = () => {
                               <Input
                                 icon={"fi fi-rr-at"}
                                 placeholder="place"
+                                defaultValue={user?.place}
                                 {...field}
                               />
                             </FormControl>
@@ -180,7 +181,7 @@ const page = () => {
                             <FormLabel>district</FormLabel>
                             <Select
                               onValueChange={field.onChange}
-                              defaultValue={field.value}
+                              defaultValue={user?.district}
                             >
                               <FormControl>
                                 <SelectTrigger>
@@ -209,6 +210,7 @@ const page = () => {
                               <Input
                                 icon={"fi fi-rr-at"}
                                 placeholder="Add college if enrolled"
+                                defaultValue={user?.degree_info?.currentCollege}
                                 {...field}
                               />
                             </FormControl>

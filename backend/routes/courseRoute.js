@@ -2,20 +2,23 @@ import express from "express";
 const router = express.Router();
 
 import {
-  registerUser,
-  loginUser,
-  forgotPassword,
-  passwordReset,
-  protect,
-  restrict,
-  generateCollegeCredentials,
-} from "../controllers/authController.js";
+  createCourse,
+  updateCourse,
+  getACourse,
+  getAllCourse,
+  getAllCourseByProgram,
+} from "../controllers/courseController.js";
+import { protect, restrict } from "../controllers/authController.js";
 
-router.route("/").post(registerUser);
-router.route("/signup/college").post(generateCollegeCredentials);
-router.route("/login").post(loginUser);
-router.route("/forgotPassword").post(forgotPassword);
-router.route("/resetPassword/:token").patch(passwordReset);
-// router.route("/logout").post(authController.logout);
+router
+  .route("/:programId")
+  .post(protect, restrict("collegeAdmin"), createCourse);
+
+router.route("/:programId").get(getAllCourseByProgram);
+router
+  .route("/:programId/:courseId")
+  .patch(protect, restrict("collegeAdmin"), updateCourse);
+router.route("/all").get(getAllCourse);
+router.route("/:id").get(getACourse);
 
 export default router;

@@ -110,3 +110,29 @@ export const getAllProgram = asyncErrorHandler(async (req, res, next) => {
     data: { programs },
   });
 });
+
+// @desc    getAllProgram offered by a college
+// @route   GET /api/v1/college/program/:id
+// @access  Public
+
+export const getAllProgramByCollege = asyncErrorHandler(
+  async (req, res, next) => {
+    const collegeId = req.params.collegeId;
+
+    const college = await College.findById(collegeId);
+
+    if (!college) {
+      const error = new CustomError("College not found", 404);
+      return next(error);
+    }
+    const programs = await Department.find({
+      _id: { $in: college.departments },
+    });
+
+    res.status(200).json({
+      status: "success",
+      result: programs.length,
+      data: { programs },
+    });
+  }
+);

@@ -48,7 +48,7 @@ const SideNav: React.FC | any = () => {
     <>
       <section>
         <div className="sticky top-[80px] z-30">
-          <div className="md:hidden bg-white py-1 border-b border-grey flex flex-nowrap overflow-x-auto">
+          <div className="md:hidden  py-1 border-b border-grey flex flex-nowrap overflow-x-auto">
             <button
               className="p-5 capitalize"
               ref={sideBarIcon}
@@ -70,7 +70,7 @@ const SideNav: React.FC | any = () => {
           </div>
           <div
             className={
-              " min-w-[200px] md:h-cover h-[calc(100vh-80px-60px)] md:sticky top-24 overflow-y-auto p-6 md:pr-0  md:border-grey md:border-r absolute max-md:top-[64px] bg-white max-md:[calc(100%+80px)] max-md:px-16 max-md:-ml-7 duration-500 no-scrollbar " +
+              " min-w-[200px] md:h-cover h-[calc(100vh-80px-60px)] md:sticky top-24 overflow-y-auto p-6 md:pr-0  md:border-grey md:border-r absolute max-md:top-[64px]  max-md:[calc(100%+80px)] max-md:px-16 max-md:-ml-7 duration-500 no-scrollbar " +
               (!showSideNav
                 ? "max-md:opacity-0 max-md:pointer-events-none "
                 : "opacity-100 pointer-events-auto")
@@ -80,20 +80,20 @@ const SideNav: React.FC | any = () => {
             <hr className="border-grey -ml-6 mb-8 mr-6" />
 
             <Link
-              href={"/profile/user/admin/dashboard"}
+              href={`/profile/${user?.role}/${user?.username}/dashboard`}
               onClick={(e: any) => setPageState(e.target.innerText)}
-              className={`sidebar-link + ${
-                isLinkActive("/dashboard") ? "active" : " "
-              } `}
+              className={`sidebar-link  `}
             >
               <i className="fi fi-rr-document"></i>
-              Course
+              Dashboard
             </Link>
 
             <Link
-              href={"/dashboard/notifications"}
+              href={`/profile/${user?.role}/${user?.username}/dashboard/degree`}
               onClick={(e: any) => setPageState(e.target.innerText)}
-              className="sidebar-link"
+              className={`sidebar-link + ${
+                isLinkActive("/degree") ? "active" : " "
+              } `}
             >
               <div className="relative">
                 <i className="fi fi-rr-bell"></i>
@@ -101,7 +101,7 @@ const SideNav: React.FC | any = () => {
                   <span className="bg-red w-2 h-2 rounded-full absolute z-10 top-0 right-0 "></span>
                 )} */}
               </div>
-              Notification
+              My degree
             </Link>
             <Link
               href={"/editor"}

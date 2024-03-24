@@ -2,11 +2,16 @@ import mongoose, { Schema } from "mongoose";
 
 const courseSchema = mongoose.Schema(
   {
-    Cname: { type: String, required: true },
+    Cname: {
+      type: String,
+      required: [true, "Please provide the course name"],
+      unique: true,
+    },
     category: {
       type: String,
+      required: [true, "Please select a category"],
       enum: [
-        "CORE IN MAJOR ",
+        "CORE IN MAJOR",
         "ELECTIVE IN MAJOR",
         "MINOR",
         "ABILITY ENHANCEMENT COURSE",
@@ -18,6 +23,7 @@ const courseSchema = mongoose.Schema(
     },
     semester: {
       type: String,
+      required: [true, "Please select a semester"],
       enum: ["1", "2", "3", "4", "5", "6", "7", "8"],
     },
     user: {
@@ -25,13 +31,11 @@ const courseSchema = mongoose.Schema(
       ref: "users",
       required: true,
     },
-    department: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "departments",
-        default: null,
-      },
-    ],
+    department: {
+      type: Schema.Types.ObjectId,
+      ref: "departments",
+      default: null,
+    },
   },
   {
     timestamps: {

@@ -23,7 +23,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const [passwordVisible, setPasswordVisible] = React.useState(false);
 
     return (
-      <div className="relative  mb-0">
+      <div className="w-full relative mb-0">
         <input
           id={id}
           name={name}

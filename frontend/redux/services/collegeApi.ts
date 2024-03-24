@@ -92,9 +92,62 @@ export const collegeApi = createApi({
         headers: {},
       }),
     }),
+    getAllProgramByCollege: builder.mutation<any, any>({
+      query: ({ id }) => ({
+        url: `/program/all/${id}`,
+        method: "GET",
+        headers: {},
+      }),
+    }),
     getAProgram: builder.mutation<any, any>({
       query: (id) => ({
         url: `/program/${id}`,
+        method: "GET",
+        headers: {},
+      }),
+    }),
+
+    //courses
+    createCourse: builder.mutation<void, { programId: string; data: any }>({
+      query: ({ programId, data }) => ({
+        url: `/program/course/:${programId}`,
+        method: "POST",
+        body: data,
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
+    updateCourse: builder.mutation<
+      any,
+      { programId: string; courseId: string; data: any }
+    >({
+      query: ({ programId, courseId, data }) => ({
+        url: `/program/course/${programId}/${courseId}`,
+        method: "PATCH",
+        body: data,
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
+    getAllCourse: builder.mutation<any, any>({
+      query: (data) => ({
+        url: "/program/course/all",
+        method: "GET",
+        headers: {},
+      }),
+    }),
+    getAllCourseByProgram: builder.mutation<any, any>({
+      query: ({ id }) => ({
+        url: `/program/course/${id}`,
+        method: "GET",
+        headers: {},
+      }),
+    }),
+    getACourse: builder.mutation<any, any>({
+      query: (id) => ({
+        url: `/program/course/${id}`,
         method: "GET",
         headers: {},
       }),
@@ -108,8 +161,16 @@ export const {
   useSearchCollegeMutation,
   useGetACollegeMutation,
   useUpdateCollegeMutation,
+
   useCreateProgramMutation,
   useUpdateProgramMutation,
   useGetAProgramMutation,
   useGetAllProgramMutation,
+  useGetAllProgramByCollegeMutation,
+
+  useCreateCourseMutation,
+  useUpdateCourseMutation,
+  useGetACourseMutation,
+  useGetAllCourseMutation,
+  useGetAllCourseByProgramMutation,
 } = collegeApi;

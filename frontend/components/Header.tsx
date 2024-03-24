@@ -85,10 +85,6 @@ const Header = () => {
     href?: string;
   }[] = [
     {
-      title: "Profile",
-      href: `/profile/${user?.username}`,
-    },
-    {
       title: "Dashboard",
       href: `/profile/${user?.role}/${user?.username}/dashboard`,
     },
@@ -110,14 +106,18 @@ const Header = () => {
         <NavigationMenu className="hidden space-x-4 sm:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Getting Started</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="">
+                <span className="dark:text-white text-gray-500 ">
+                  Getting Started
+                </span>
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
-                      <a
+                      <Link
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/"
+                        href="/learn/what-is-fyugp"
                       >
                         <div className="mb-2 mt-4 text-lg font-medium">
                           What is FYUGP
@@ -125,20 +125,23 @@ const Header = () => {
                         <p className="text-sm leading-tight text-muted-foreground">
                           FYUGP is fourth year undergraduated programme
                         </p>
-                      </a>
+                      </Link>
                     </NavigationMenuLink>
                   </li>
-                  <ListItem href="/docs" title="Design of CU-FYUGP">
+                  <ListItem
+                    href={"/learn/design-of-fyugp"}
+                    title="Design of CU-FYUGP"
+                  >
                     Re-usable components built using Radix UI and Tailwind CSS.
                   </ListItem>
                   <ListItem
-                    href="/docs/installation"
+                    href={"/learn/different-academic-pathways"}
                     title="Different Academic Pathways"
                   >
                     How to install dependencies and structure your app.
                   </ListItem>
                   <ListItem
-                    href="/docs/primitives/typography"
+                    href={"/learn/courses-and-credits"}
                     title="Course and Credit Structure"
                   >
                     Styles for headings, paragraphs, lists...etc
@@ -147,7 +150,9 @@ const Header = () => {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Colleges</NavigationMenuTrigger>
+              <NavigationMenuTrigger>
+                <span className="dark:text-white text-gray-500 ">Colleges</span>
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                   {components.map((component) => (
@@ -165,22 +170,41 @@ const Header = () => {
             <NavigationMenuItem>
               <Link href="/college" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Colleges
+                  <span className="dark:text-white text-gray-500 ">
+                    Colleges
+                  </span>
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             {user?.role == "user" ? (
-              <NavigationMenuItem>
-                <Link
-                  href={`/profile/${user?.username}/degree`}
-                  legacyBehavior
-                  passHref
-                >
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    TrackYour Degree
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
+              <>
+                <NavigationMenuItem>
+                  <Link
+                    href={`/profile/${user?.username}/degree`}
+                    legacyBehavior
+                    passHref
+                  >
+                    <NavigationMenuLink
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      <span className="dark:text-white text-gray-500 ">
+                        TrackYour Degree
+                      </span>
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Link href={`/learn/ask`} legacyBehavior passHref>
+                    <NavigationMenuLink
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      <span className="dark:text-white text-gray-500 ">
+                        Aks me
+                      </span>
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              </>
             ) : (
               ""
             )}
@@ -214,6 +238,14 @@ const Header = () => {
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <ul className="grid w-[200px] gap-3 p-4  md:grid-cols-1  ">
+                        {user?.role == "user" ? (
+                          <ListItem
+                            title="Profile"
+                            href={`/profile/${user?.username}`}
+                          ></ListItem>
+                        ) : (
+                          ""
+                        )}
                         {userProfile.map((component) => (
                           <ListItem
                             key={component.title}

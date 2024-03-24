@@ -9,6 +9,8 @@ import { RootState } from "@/redux/store";
 import { useGetMeMutation } from "@/redux/services/userApi";
 import { useEffect } from "react";
 import { updateUser } from "@/redux/features/authSlice";
+import Faq from "@/components/Faq";
+import AskQns from "@/components/AskQns";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -57,7 +59,11 @@ export default function Home() {
             />
           </div>
         </div>
-        <Cards />
+        <div>
+          <Cards />
+          <AskQns />
+          <Faq />
+        </div>
       </AnimationWrapper>
     </main>
   );

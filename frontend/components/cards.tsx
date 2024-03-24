@@ -8,10 +8,16 @@ import Link from "next/link";
 const Cards = () => {
   return (
     <div className="my-24 m-auto items-center">
+      <h2 className="my-6 text-3xl font-semibold underline-offset-1">
+        Learn through these Steps...
+      </h2>
       <div className="grid  lg:grid-cols-4 md:grid-cols-2 grid-cols-1 md:gap-6  gap-2 m-auto ">
         <div className=" card  text-center border">
           <Link href={"learn/what-is-fyugp"}>
             <div className="flex justify-center items-center flex-col w-full h-full">
+              <h1 className="text-4xl font-semibold mb-4 text-accent">
+                Step 1
+              </h1>
               <Image
                 className="object-cover items-center"
                 src={book}
@@ -28,6 +34,9 @@ const Cards = () => {
         <div className="  card w-[250px] border">
           <Link href={"learn/design-of-fyugp"}>
             <div className="flex justify-center items-center flex-col w-full h-full">
+              <h1 className="text-4xl font-semibold mb-4 text-accent">
+                Step 2
+              </h1>
               <Image
                 className="object-cover items-center"
                 src={hat}
@@ -42,6 +51,9 @@ const Cards = () => {
         <div className="card w-[250px] border">
           <Link href={"learn/different-academic-pathways"}>
             <div className="flex justify-center items-center w-full h-full flex-col text-center">
+              <h1 className="text-4xl font-semibold mb-4 text-accent">
+                Step 3
+              </h1>
               <Image
                 className="object-cover text-center"
                 // className="object-cover hover:scale-125 transition"
@@ -57,6 +69,9 @@ const Cards = () => {
         <div className=" card  border">
           <Link href={"learn/courses-and-credits"}>
             <div className="flex justify-center items-center w-full h-full flex-col">
+              <h1 className="text-4xl font-semibold mb-4 text-accent">
+                Step 4
+              </h1>
               <Image
                 className="object-cover"
                 src={pencil}

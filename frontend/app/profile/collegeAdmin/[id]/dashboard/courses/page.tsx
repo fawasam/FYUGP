@@ -1,6 +1,6 @@
 "use client";
 import AnimationWrapper from "@/components/common/page-animation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,59 +30,52 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import {
+  useGetAllCourseByProgramMutation,
+  useGetAllProgramByCollegeMutation,
+} from "@/redux/services/collegeApi";
 
 const page = () => {
   const { toast } = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
+  const [courses, setCourses] = useState<any>([]);
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
 
+  const [getAllProgramByCollege] = useGetAllProgramByCollegeMutation();
   const handleOpenDialog = () => {};
+
+  const getAllCoursesByProgram = async () => {
+    const res = await getAllProgramByCollege({ id: user?.college });
+    setCourses(res?.data?.data?.programs);
+  };
   useEffect(() => {
+    getAllCoursesByProgram();
     if (!user) {
       redirectTo("/");
     }
   }, [userData, dispatch, router]);
   return (
-    <AnimationWrapper className="w-full">
-      <div className="flex items-center justify-between text-center flex-row">
-        <h1 className="max-md:hidden mb-4">All Courses</h1>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>
-              {" "}
-              <i className="fi fi-rr-plus mr-2"></i>New
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Add Programme</DialogTitle>
-              <DialogDescription>
-                Make changes to your profile here. Click save when you're done.
-              </DialogDescription>
-            </DialogHeader>
-            <div className=" space-y-4 py-4">
-              <div className="  items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Name
-                </Label>
-                <Input id="name" value="Pedro Duarte" className="col-span-3" />
-              </div>
-              <div className=" items-center gap-4">
-                <Label htmlFor="username" className="text-right">
-                  Username
-                </Label>
-                <Input id="username" value="@peduarte" className="col-span-3" />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit">Save changes</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </div>
+    <AnimationWrapper className="w-full sm:mt-20 mt-0">
+      <section className="">
+        <h1 className="max-md:hidden mb-4 text-2xl font-semibold">
+          All Courses
+        </h1>
+        <div className="my-6 space-y-4">
+          {courses.length > 0 &&
+            courses?.map((c: any, key: any) => (
+              <Link
+                href={`/profile/collegeAdmin/${user.username}/dashboard/courses/${c._id}`}
+              >
+                <Button key={key} className="mr-2">
+                  {c?.Dname}
+                </Button>
+              </Link>
+            ))}
+        </div>
+      </section>
     </AnimationWrapper>
   );
 };

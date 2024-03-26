@@ -73,6 +73,10 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
     about,
   }: any = college;
 
+  const goBack = () => {
+    router.back();
+  };
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -152,6 +156,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
         title: "Successfully added college",
       });
       console.log("Successfully added College");
+      goBack();
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -181,10 +186,10 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
     });
   }, [college]);
   return (
-    <AnimationWrapper className="w-full">
-      <h1 className="max-md:hidden">Edit College</h1>
+    <AnimationWrapper className="w-full sm:mt-20 mt-0">
+      <h1 className="max-md:hidden  text-2xl font-semibold">Edit College</h1>
       <div className="flex flex-col lg:flex-row items-start py-10 gap-8 lg:gap-10">
-        <div className="max-lg:center mb-5">
+        <div className="max-lg:center mb-5 space-y-2">
           <label
             htmlFor="uploadImg"
             id="profileImgLable"
@@ -220,9 +225,9 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
           <form
             ref={editProfileForm}
             onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full"
+            className="w-full space-y-2"
           >
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 md:gap-5">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-1 md:gap-5 space-y-2">
               <FormField
                 control={form.control}
                 name="collegename"

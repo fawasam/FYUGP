@@ -9,10 +9,12 @@ import {
   searchColleges,
   getACollege,
   updateCollege,
+  publishCollege,
 } from "../controllers/collegeController.js";
 import { protect, restrict } from "../controllers/authController.js";
 
 router.get("/", getAllColleges);
+router.post("/:id/publish", protect, publishCollege);
 router.get("/:id", getACollege);
 router.get("/search/:searchKey", searchColleges);
 router.post("/create-college", protect, restrict("admin"), createCollege);

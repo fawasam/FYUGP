@@ -69,7 +69,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
           </div>
           <div
             className={
-              " min-w-[200px] md:h-cover h-[calc(100vh-80px-60px)] md:sticky top-24 overflow-y-auto p-6 md:pr-0  md:border-grey md:border-r absolute max-md:top-[64px]  max-md:[calc(100%+80px)] max-md:px-16 max-md:-ml-7 duration-500 no-scrollbar " +
+              " min-w-[200px] bg-background md:h-cover h-[calc(100vh-80px-60px)] md:sticky top-24 overflow-y-auto p-6 md:pr-0  md:border-grey md:border-r absolute max-md:top-[64px]  max-md:[calc(100%+80px)] max-md:px-16 max-md:-ml-7 duration-500 no-scrollbar " +
               (!showSideNav
                 ? "max-md:opacity-0 max-md:pointer-events-none "
                 : "opacity-100 pointer-events-auto")
@@ -118,9 +118,6 @@ const CollegeAdminSideNav: React.FC | any = () => {
             >
               <div className="relative">
                 <i className="fi fi-rr-book-alt"></i>
-                {/* {new_notification_available && (
-                  <span className="bg-red w-2 h-2 rounded-full absolute z-10 top-0 right-0 "></span>
-                )} */}
               </div>
               Courses
             </Link>
@@ -132,7 +129,12 @@ const CollegeAdminSideNav: React.FC | any = () => {
                 isLinkActive("/dashboard/enquiry") ? "active" : " "
               } `}
             >
-              <i className="fi fi-rr-comment-alt"></i>
+              <div className="relative">
+                <i className="fi fi-rr-comment-alt"></i>
+                {/* {new_notification_available && ( */}
+                <span className="bg-[#e57361] w-2 h-2 rounded-full absolute z-10 top-0 right-0 "></span>
+              </div>
+              {/* )} */}
               Enquiry
             </Link>
 

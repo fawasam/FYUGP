@@ -53,11 +53,20 @@ export const collegeApi = createApi({
         headers: {},
       }),
     }),
-    updateCollege: builder.mutation<any, { id: string; data: any }>({
+    updateCollege: builder.mutation<any, { id: any; data: any }>({
       query: ({ id, data }) => ({
         url: `/update-college/${id}`,
         method: "PATCH",
         body: data,
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
+    publishCollege: builder.mutation<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `/${id}/publish`,
+        method: "POST",
         headers: {
           Authorization: `Bearer ${loadUserFromStorage().token}`,
         },
@@ -110,7 +119,7 @@ export const collegeApi = createApi({
     //courses
     createCourse: builder.mutation<void, { programId: string; data: any }>({
       query: ({ programId, data }) => ({
-        url: `/program/course/:${programId}`,
+        url: `/program/course/${programId}`,
         method: "POST",
         body: data,
         headers: {
@@ -161,6 +170,7 @@ export const {
   useSearchCollegeMutation,
   useGetACollegeMutation,
   useUpdateCollegeMutation,
+  usePublishCollegeMutation,
 
   useCreateProgramMutation,
   useUpdateProgramMutation,

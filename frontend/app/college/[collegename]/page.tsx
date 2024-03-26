@@ -12,6 +12,7 @@ import { ListItem } from "@/components/Header";
 import Link from "next/link";
 import { useGetACollegeMutation } from "@/redux/services/collegeApi";
 import { Badge } from "@/components/ui/badge";
+import NoDataMessage from "@/components/common/Nodata";
 const page = ({ params }: { params: { collegename: string } }) => {
   const { toast } = useToast();
   const dispatch = useDispatch();
@@ -30,9 +31,9 @@ const page = ({ params }: { params: { collegename: string } }) => {
 
   useEffect(() => {
     getCollegeData();
-    if (!user) {
-      redirectTo("/");
-    }
+    // if (!user) {
+    //   redirectTo("/");
+    // }
   }, [userData, dispatch, router]);
   return (
     <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
@@ -47,44 +48,50 @@ const page = ({ params }: { params: { collegename: string } }) => {
             alt="image"
             className="w-full  h-[250px] object-cover rounded-sm"
           />
-          <Link
-            href={`/profile/${user.role}/${user?.username}/dashboard/college/update`}
-          >
-            <Button
-              size={"sm"}
-              variant={"outline"}
-              className=" my-4 absolute top-0 right-0  mr-4"
-            >
-              Update
-              <i className="fi fi-rs-edit ml-2 "></i>
-            </Button>
-          </Link>
         </div>
         <div>
           <h1 className="text-2xl mt-4 font-bold">{college?.collegename}</h1>
+
+          <i className="fi  fi-rr-marker mr-2"></i>
           <span className="text-md  font-thin">{college?.place}</span>
           <div className="mt-4">
-            <div>
+            <Link
+              href={college?.website ? college?.website : ""}
+              target="_blank"
+            >
               <i className="fi  fi-rr-globe mr-2"></i>
-              <span>{college?.website}</span>
-            </div>
+              <Button variant={"link"} className=" pl-0">
+                {college?.website ? college?.website : "Not provided"}
+              </Button>
+            </Link>
             <div>
-              <i className="fi fi-rr-envelope mr-2"></i>
-              <span>{college?.email}</span>
+              <Link
+                href={
+                  college?.email ? "mailto: " + college?.email : "Not provided"
+                }
+                target="_blank"
+              >
+                <i className="fi fi-rr-envelope mr-2"></i>
+                <Button variant={"link"} className=" pl-0">
+                  <span>
+                    {college?.email ? college?.email : "Not provided"}
+                  </span>
+                </Button>
+              </Link>
             </div>
           </div>
+          {college?.about ? (
+            <div className="pt-4 flex flex-col">
+              <h3 className="text-lg font-medium">ABOUT</h3>
+              <span className="leading-normal font-light">
+                {college?.about}
+              </span>
+            </div>
+          ) : (
+            ""
+          )}
           <div className="pt-4 flex flex-col">
-            <h3 className="text-lg font-medium">ABOUT</h3>
-            <span className="leading-normal">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Explicabo distinctio reiciendis ratione quisquam beatae
-              perferendis debitis dolore quae. Commodi tempora obcaecati nemo
-              quaerat officiis. Blanditiis fugiat amet cupiditate minus
-              provident!
-            </span>
-          </div>
-          <div className="pt-4 flex flex-col">
-            <h3 className="text-lg font-medium pb-2">DEPARTMENT</h3>
+            <h3 className="text-lg font-medium ">DEPARTMENT</h3>
             <div className="mr-2">
               {college?.departments && college.departments.length > 0 ? (
                 college.departments.map((dep: any, key: any) => (
@@ -95,7 +102,7 @@ const page = ({ params }: { params: { collegename: string } }) => {
                   // <span key={key}>{dep?.Dname}</span>
                 ))
               ) : (
-                <span>No departments found</span>
+                <NoDataMessage message={"No Departments found"} />
               )}
             </div>
           </div>

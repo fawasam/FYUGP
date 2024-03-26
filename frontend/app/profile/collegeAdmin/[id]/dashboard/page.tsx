@@ -54,7 +54,7 @@ const AdminDashboard = () => {
   return (
     <>
       <AnimationWrapper className="mt-20">
-        <h1 className="max-md:hidden text-3xl underline">
+        <h1 className="max-md:hidden text-2xl font-semibold ">
           College Admin Dashboard
         </h1>
         <div className="">

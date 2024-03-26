@@ -76,9 +76,8 @@ const formSchema = z.object({
   category: z.string().min(2, {
     message: "Category is required",
   }),
-  semester: z.string().min(2, {
-    message: "Please select a semester ",
-  }),
+  semester: z.string(),
+  code: z.string(),
 });
 
 const page = ({ params }: { params: { Cname: string } }) => {
@@ -86,8 +85,10 @@ const page = ({ params }: { params: { Cname: string } }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [dname, setDname] = useState("");
+  const [cname, setCname] = useState("");
   const [program, setProgram] = useState("");
   const [discipline, setDiscipline] = useState("");
+  const [code, setCode] = useState("");
   const [allPrograms, setAllPrograms] = useState<any[]>([]);
   const [allCourses, setAllCourses] = useState<any[]>([]);
   const [headOfDepartment, setHeadOfDepartment] = useState("");
@@ -99,6 +100,7 @@ const page = ({ params }: { params: { Cname: string } }) => {
   let [createCourse] = useCreateCourseMutation();
   let [updateCourse] = useUpdateCourseMutation();
   let [getAllCourseByProgram] = useGetAllCourseByProgramMutation();
+  let [getAProgram] = useGetAProgramMutation();
   let [getAllProgramByCollege] = useGetAllProgramByCollegeMutation();
 
   const getAllPrograms = async () => {
@@ -112,6 +114,7 @@ const page = ({ params }: { params: { Cname: string } }) => {
   };
   const getAPrograms = async (id: any) => {
     const response: any = await getAProgram(id);
+
     setProgram(id);
     setDname(response?.data?.data?.program?.Dname);
     setHeadOfDepartment(response?.data?.data?.program?.headOfDepartment);
@@ -122,6 +125,7 @@ const page = ({ params }: { params: { Cname: string } }) => {
       Cname: "",
       category: "",
       semester: "",
+      code: "",
     },
   });
   const form2 = useForm<z.infer<typeof formSchema>>({
@@ -130,6 +134,7 @@ const page = ({ params }: { params: { Cname: string } }) => {
       Cname: "",
       category: "",
       semester: "",
+      code: "",
     },
   });
 
@@ -140,15 +145,20 @@ const page = ({ params }: { params: { Cname: string } }) => {
       const newValues = { ...values, collegeId: user?.college };
       console.log(newValues);
 
-      // const response: any = await createProgram(newValues).unwrap();
+      const response: any = await createCourse({
+        programId: params.Cname,
+        data: newValues,
+      }).unwrap();
       setProgram("");
       setDname("");
       setDiscipline("");
       setHeadOfDepartment("");
+      console.log(response);
+
       toast({
-        title: "Successfully added Program",
+        title: "Successfully added Course",
       });
-      getAllPrograms();
+      getAllCoursesByProgram();
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -183,24 +193,16 @@ const page = ({ params }: { params: { Cname: string } }) => {
     }
   };
 
-  const getCategoryCourse = (course, category) => {
-    if (course.category === category) {
-      return course.Cname;
-    } else {
-      return "";
-    }
-  };
-
   const getCoursesByCategory = (courses: any, category: any) => {
     const filteredCourses = courses.filter(
-      (course) => course.category === category
+      (course: any) => course.category === category
     );
-    return filteredCourses.map((course) => course.Cname).join(", ");
+    return filteredCourses.map((course: any) => course.Cname).join(", ");
   };
 
   const groupCoursesBySemester = (courses: any) => {
     const groupedCourses = {};
-    courses.forEach((course) => {
+    courses.forEach((course: any) => {
       if (!groupedCourses[course.semester]) {
         groupedCourses[course.semester] = [];
       }
@@ -221,6 +223,7 @@ const page = ({ params }: { params: { Cname: string } }) => {
 
   useEffect(() => {
     getAllPrograms();
+    getAPrograms(params?.Cname);
     getAllCoursesByProgram();
     if (!user) {
       redirectTo("/");
@@ -232,15 +235,16 @@ const page = ({ params }: { params: { Cname: string } }) => {
       Cname: dname,
       category: headOfDepartment,
       semester: discipline,
+      code: code,
     });
   }, [program]);
 
   return (
-    <AnimationWrapper className="w-full ">
+    <AnimationWrapper className="w-full  sm:mt-20 mt-0">
       <div className="flex items-center justify-between text-center flex-row">
         <h1 className="max-md:hidden mb-4 text-3xl text-center">
           <i className="fi fi-rr-book-alt mr-2"></i>
-          {params?.Cname}
+          {dname}
         </h1>
         <Dialog>
           <DialogTrigger asChild>
@@ -255,8 +259,7 @@ const page = ({ params }: { params: { Cname: string } }) => {
                 <DialogHeader>
                   <DialogTitle>Add Course</DialogTitle>
                   <DialogDescription>
-                    Make changes to your profile here. Click save when you're
-                    done.
+                    A list of courses offered by {dname} department.
                   </DialogDescription>
                 </DialogHeader>
                 <div className=" space-y-4 py-4">
@@ -322,13 +325,16 @@ const page = ({ params }: { params: { Cname: string } }) => {
                               defaultValue={field.value}
                             >
                               <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Semester" />
+                                <SelectValue placeholder="semester" />
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectGroup {...field}>
                                   {[1, 2, 3, 4, 5, 6, 7, 8].map(
                                     (value, key) => (
-                                      <SelectItem value={value} key={key}>
+                                      <SelectItem
+                                        value={value.toString()}
+                                        key={key}
+                                      >
                                         {value}
                                       </SelectItem>
                                     )
@@ -354,7 +360,9 @@ const page = ({ params }: { params: { Cname: string } }) => {
 
       {/* table of content  */}
       <Table className="mt-10">
-        <TableCaption>A list of user who are Registered.</TableCaption>
+        <TableCaption>
+          A list of courses offerde by {dname} department.
+        </TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="">SEMESTER</TableHead>
@@ -505,15 +513,6 @@ const page = ({ params }: { params: { Cname: string } }) => {
                       </Form>
                     </DialogContent>
                   </Dialog>
-                  <Link
-                    href={`/profile/collegeAdmin/${user.username}/dashboard/courses/${course?.Cname}`}
-                  >
-                    <Button className="ml-2" variant={"secondary"} size={"lg"}>
-                      {" "}
-                      <i className="fi fi-rs-edit mr-2"></i>
-                      View
-                    </Button>
-                  </Link>
                 </TableCell>
               </TableRow>
             ))}

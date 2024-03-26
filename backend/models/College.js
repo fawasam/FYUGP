@@ -19,6 +19,7 @@ const collegeSchema = mongoose.Schema(
     type: { type: String },
     website: { type: String },
     about: { type: String },
+    published: { type: Boolean, default: false, required: true },
     departments: [
       {
         type: Schema.Types.ObjectId,

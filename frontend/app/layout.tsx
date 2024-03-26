@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={poppins.className}>
+      <body className={poppins.className + "min-h-[800px]"}>
         <Providers>
           <ThemeProvider
             attribute="class"

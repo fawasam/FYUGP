@@ -6,10 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import useRedirect from "@/hooks/useRedirect";
-import { logout } from "@/redux/features/authSlice";
 import { useRouter } from "next/navigation";
-import { ListItem } from "@/components/Header";
-import Link from "next/link";
 import {
   useGetACollegeMutation,
   useUpdateCollegeMutation,
@@ -20,7 +17,6 @@ import { z } from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -29,6 +25,7 @@ import {
 import Loader from "@/components/common/Loader";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   collegename: z.string().min(2, {
@@ -39,6 +36,7 @@ const formSchema = z.object({
   website: z.string(),
   pincode: z.string(),
   phone: z.string(),
+  about: z.string(),
   picture: z.any().nullable(),
 });
 
@@ -47,16 +45,16 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [college, setCollege] = useState({});
-  const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
+  const { redirectTo } = useRedirect();
   let userData = useSelector((state: RootState) => state.auth);
-  let { userInfo: user, userToken, isAuthenticated } = userData;
-  let [getACollege, isLoading] = useGetACollegeMutation();
+  let { userInfo: user } = userData;
+  let [getACollege] = useGetACollegeMutation();
   const [selectedImage, setSelectedImage] = useState<
     any | string | File | null
   >(null);
   let profileImageEle = useRef<HTMLImageElement | any | null>(null);
   let editProfileForm = useRef<HTMLFormElement>(null);
-  let [updateCollege] = useUpdateCollegeMutation();
+  let [updateCollege, { isLoading }] = useUpdateCollegeMutation();
   let {
     collegename,
     email,
@@ -66,6 +64,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
     place,
     type,
     website,
+    about,
   }: any = college;
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -85,12 +84,8 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
     const response: any = await getACollege(params._id);
     setCollege(response?.data?.data?.college);
   };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setSelectedImage(file);
-    }
+  const goBack = () => {
+    router.back();
   };
   const handleImagePreview = (e: any) => {
     let img = e.target.files[0];
@@ -135,18 +130,18 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const newValues = { ...values };
-      console.log(newValues);
       const response: any = await updateCollege({
         id: params._id,
         data: newValues,
       }).unwrap();
-      console.log(response);
 
-      // dispatch(setCollege(response));
       toast({
-        title: "Successfully added college",
+        title: "Successfully updated college",
       });
-      console.log("Successfully added College");
+      console.log("Successfully updated College");
+      if (response) {
+        goBack();
+      }
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -172,13 +167,14 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       picture: picture,
       email: email,
       website: website,
+      about: about,
     });
   }, [college]);
   return (
-    <AnimationWrapper className="w-full">
-      <h1 className="max-md:hidden">Edit Profile</h1>
-      <div className="flex flex-col lg:flex-row items-start py-10 gap-8 lg:gap-10">
-        <div className="max-lg:center mb-5">
+    <AnimationWrapper className="w-full sm:mt-20 mt-0">
+      <h1 className="max-md:hidden text-2xl font-semibold">Edit Profile</h1>
+      <div className="flex flex-col lg:flex-row items-start py-10 gap-8 lg:gap-10 justify-center">
+        <div className="max-lg:center mb-5 ">
           <label
             htmlFor="uploadImg"
             id="profileImgLable"
@@ -211,8 +207,12 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
         </div>
         {/* </div> */}
         <Form {...form}>
-          <form ref={editProfileForm} onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="w-full">
+          <form
+            ref={editProfileForm}
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full"
+          >
+            <div className="w-full space-y-4">
               <FormField
                 control={form.control}
                 name="collegename"
@@ -223,6 +223,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
                       <Input
                         placeholder="college name"
                         defaultValue={collegename}
+                        className="w-full"
                         icon={"fi fi-rr-graduation-cap"}
                         {...field}
                       />
@@ -261,6 +262,27 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
                         placeholder="email"
                         icon={"fi fi-rr-envelope"}
                         defaultValue={email}
+                        {...field}
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="about"
+                render={({ field }) => (
+                  <FormItem className="w-full m-0">
+                    <FormLabel>About</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        className="input-box h-64 lg:h-40 resize-none leading-7 mt-5 pl-5"
+                        placeholder="About"
+                        // maxLength={bioLimit}
+                        defaultValue={about}
+                        // onChange={handleCharacterChange}
                         {...field}
                       />
                     </FormControl>
@@ -336,7 +358,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
                 Update
                 <i className="fi fi-rr-arrow-right ml-2 text-center pt-2 "></i>
                 <span> </span>
-                {/* {isLoading ? <Loader white={true} /> : ""} */}
+                {isLoading ? <Loader white={true} /> : ""}
               </Button>
             </div>
           </form>

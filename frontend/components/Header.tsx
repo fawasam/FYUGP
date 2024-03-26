@@ -319,7 +319,9 @@ export const ListItem = React.forwardRef<
         {title == "Logout" ? (
           <Dialog>
             <DialogTrigger>
-              <Button className="ml-2">Logout</Button>
+              <Button className="ml-2">
+                <i className=" mr-2 fi fi-rr-sign-out-alt"></i>Logout
+              </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

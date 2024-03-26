@@ -7,6 +7,11 @@ const courseSchema = mongoose.Schema(
       required: [true, "Please provide the course name"],
       unique: true,
     },
+    code: {
+      type: String,
+      required: [true, "Please provide the course code"],
+      unique: true,
+    },
     category: {
       type: String,
       required: [true, "Please select a category"],

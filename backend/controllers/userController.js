@@ -105,3 +105,19 @@ export const getMe = asyncErrorHandler(async (req, res, next) => {
     data: { user },
   });
 });
+
+// @desc    DeleteUser
+// @route   GET /api/v1/user/:id
+// @access  Public
+
+export const deleteUser = asyncErrorHandler(async (req, res, next) => {
+  const { userId } = req.params;
+
+  const deletedUser = await User.findByIdAndDelete(userId);
+
+  console.log(deletedUser);
+  res.status(200).json({
+    status: "success",
+    data: { deletedUser },
+  });
+});

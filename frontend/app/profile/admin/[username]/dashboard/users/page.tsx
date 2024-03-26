@@ -45,8 +45,8 @@ const AdminUsers = () => {
     getAllUser();
   }, [userData, dispatch, router]);
   return (
-    <AnimationWrapper>
-      <h1 className="max-md:hidden mb-4">All User</h1>
+    <AnimationWrapper className="w-full sm:mt-20 mt-0">
+      <h1 className="max-md:hidden mb-4 text-2xl font-semibold">All User</h1>
       <Table className="mt-10">
         <TableCaption>A list of user who are Registered.</TableCaption>
         <TableHeader>

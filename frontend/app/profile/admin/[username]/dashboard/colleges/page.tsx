@@ -10,7 +10,10 @@ import { logout } from "@/redux/features/authSlice";
 import { useRouter } from "next/navigation";
 import { ListItem } from "@/components/Header";
 import Link from "next/link";
-import { useGetAllCollegeMutation } from "@/redux/services/collegeApi";
+import {
+  useGetAllCollegeMutation,
+  usePublishCollegeMutation,
+} from "@/redux/services/collegeApi";
 import { setCollege } from "@/redux/features/collegeSlice";
 import {
   Table,
@@ -31,6 +34,8 @@ const AdminColleges = () => {
   let { userInfo: user, userToken, isAuthenticated } = userData;
   const [getAllCollege, { isLoading, error, isSuccess }] =
     useGetAllCollegeMutation();
+
+  const [publishCollege] = usePublishCollegeMutation();
   const [allColleges, setAllColleges] = useState<any[]>([]);
 
   let collegesData = useSelector((state: RootState) => state.college);
@@ -44,6 +49,15 @@ const AdminColleges = () => {
   const goBack = () => {
     router.back();
   };
+
+  const handlePublish = async ({ id }: any) => {
+    const res: any = await publishCollege({ id });
+    toast({
+      title: "Successfully Changed",
+    });
+    getAllColleges();
+  };
+
   useEffect(() => {
     if (!user) {
       redirectTo("/");
@@ -51,11 +65,15 @@ const AdminColleges = () => {
     getAllColleges();
   }, [userData, dispatch, router]);
   return (
-    <AnimationWrapper>
+    <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <div className="flex items-center justify-between text-center flex-row">
-        <h1 className="max-md:hidden mb-4">All Colleges</h1>
+        <h1 className="max-md:hidden mb-4 text-2xl font-semibold">
+          All Colleges
+        </h1>
         <Button>
-          <Link href={`/profile/admin/${user.username}/dashboard/colleges/new`}>
+          <Link
+            href={`/profile/admin/${user?.username}/dashboard/colleges/new`}
+          >
             {" "}
             <i className="fi fi-rr-plus mr-2"></i>New
           </Link>
@@ -69,43 +87,83 @@ const AdminColleges = () => {
             <TableHead>Place</TableHead>
             <TableHead>Joined At</TableHead>
             <TableHead>Email</TableHead>
-            <TableHead className="text-right">Task</TableHead>
+            <TableHead className="text-center">Task</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {allColleges != null &&
-            allColleges.length > 0 &&
-            allColleges.map((college, key) => (
+            allColleges?.length > 0 &&
+            allColleges?.map((college, key) => (
               <TableRow key={key}>
                 <TableCell className="font-medium">
                   <div className="flex flex-col ">
                     <img
-                      src={college.picture}
-                      className="w-10 h-10 mb-2"
+                      src={college?.picture}
+                      className="w-20 object-cover rounded-sm h-10 mb-2"
                       alt={"image"}
                     />
                     <span>{college?.collegename}</span>
                   </div>
                 </TableCell>
                 <TableCell>{college?.place}</TableCell>
-                <TableCell>{formateDate(college.joinedAt)}</TableCell>
-                <TableCell>{college.email}</TableCell>
-                <div className="text-center flex item-center">
-                  <Link
-                    href={`/profile/admin/mynamefawas/dashboard/colleges/${college._id}/update`}
-                  >
-                    <Button
-                      variant={"outline"}
-                      className="mt-4 text-center"
-                      size={"sm"}
+                <TableCell>{formateDate(college?.joinedAt)}</TableCell>
+                <TableCell>{college?.email}</TableCell>
+                <TableCell className="text-center">
+                  <div className="block space-x-1">
+                    {college?.published ? (
+                      <Button
+                        variant={"outline"}
+                        className="mt-4 text-center"
+                        size={"sm"}
+                        onClick={() =>
+                          handlePublish({
+                            id: college._id,
+                          })
+                        }
+                      >
+                        <i className="fi fi-rr-paper-plane mr-2"></i>
+                        UnPublish
+                      </Button>
+                    ) : (
+                      <Button
+                        variant={"secondary"}
+                        className="mt-4 text-center"
+                        size={"sm"}
+                        onClick={() =>
+                          handlePublish({
+                            id: college._id,
+                          })
+                        }
+                      >
+                        <i className="fi fi-rr-paper-plane mr-2"></i>
+                        Publish
+                      </Button>
+                    )}
+
+                    <Link
+                      href={`/profile/admin/mynamefawas/dashboard/colleges/${college._id}/update`}
                     >
-                      <TableCell className="text-right">
+                      <Button
+                        variant={"outline"}
+                        className="mt-4 text-center"
+                        size={"sm"}
+                      >
                         <i className="fi fi-rs-edit mr-2"></i>
                         Update
-                      </TableCell>
-                    </Button>
-                  </Link>
-                </div>
+                      </Button>
+                    </Link>
+                    <Link href={`/college/${college._id}`}>
+                      <Button
+                        variant={"outline"}
+                        className="mt-4 text-center"
+                        size={"sm"}
+                      >
+                        <i className="fi fi-rs-edit mr-2"></i>
+                        View
+                      </Button>
+                    </Link>
+                  </div>
+                </TableCell>
               </TableRow>
             ))}
         </TableBody>

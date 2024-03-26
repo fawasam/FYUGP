@@ -193,19 +193,35 @@ export const protect = asyncErrorHandler(async (req, res, next) => {
 // @route   middleware
 // @access  Public
 
-export const restrict = (role) => {
+// export const restrict = (role) => {
+//   return (req, res, next) => {
+//     if (req?.user?.role !== role) {
+//       const error = new CustomError(
+//         "You do not have permission to perform this action",
+//         403
+//       );
+//       return next(error);
+//     }
+//     next();
+//   };
+// };
+
+export const restrict = (...roles) => {
   return (req, res, next) => {
-    if (req?.user?.role !== role) {
+    const userRole = req?.user?.role;
+
+    if (!userRole || !roles.includes(userRole)) {
+      // If the user's role is not in the provided roles, throw an error
       const error = new CustomError(
         "You do not have permission to perform this action",
         403
       );
       return next(error);
     }
+
     next();
   };
 };
-
 // @desc    Login new user
 // @route   POST /api/v1/auth/login
 // @access  Public

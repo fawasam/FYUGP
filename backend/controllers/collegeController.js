@@ -204,6 +204,25 @@ export const searchColleges = asyncErrorHandler(async (req, res, next) => {
   });
 });
 
-// @desc    updateCollege
+// @desc    publishCollege
 // @route   DELETE /api/collge/delete-college/:id
 // @access  Public
+
+export const publishCollege = asyncErrorHandler(async (req, res, next) => {
+  const { id } = req.params;
+
+  const college = await College.findById(id);
+
+  if (!college) {
+    const error = new CustomError("college not found", 404);
+    return next(error);
+  }
+
+  college.published = !college.published;
+  await college.save();
+
+  res.status(200).json({
+    status: "success",
+    data: { college },
+  });
+});

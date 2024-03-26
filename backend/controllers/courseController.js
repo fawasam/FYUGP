@@ -18,9 +18,9 @@ import { filterReqObj } from "../helpers/filterObj.js";
 
 export const createCourse = asyncErrorHandler(async (req, res, next) => {
   const programId = req.params.programId;
-  const { Cname, category, semester } = req.body;
+  const { Cname, category, semester, code } = req.body;
 
-  if (!Cname || !category || !semester) {
+  if (!Cname || !category || !semester || !code) {
     const error = new CustomError("Please provide all field!", 400);
     return next(error);
   }
@@ -69,7 +69,13 @@ export const createCourse = asyncErrorHandler(async (req, res, next) => {
 
 export const updateCourse = asyncErrorHandler(async (req, res, next) => {
   const { programId, courseId } = req.params;
-  const filterObj = filterReqObj(req.body, "Cname", "category", "semester");
+  const filterObj = filterReqObj(
+    req.body,
+    "Cname",
+    "category",
+    "semester",
+    "code"
+  );
   const college = await College.findById(req.user.college);
   const department = await Department.findById(programId);
   const course = await Course.findById(courseId);

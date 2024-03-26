@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { updateUser } from "@/redux/features/authSlice";
 import Faq from "@/components/Faq";
 import AskQns from "@/components/AskQns";
+import Enquiry from "@/components/Enquiry";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -62,7 +63,8 @@ export default function Home() {
         <div>
           <Cards />
           <AskQns />
-          <Faq />
+          <Enquiry />
+          {/* <Faq /> */}
         </div>
       </AnimationWrapper>
     </main>

@@ -58,9 +58,11 @@ const AdminDashboard = () => {
   }, [userData, dispatch, router]);
 
   return (
-    <>
-      <AnimationWrapper>
-        <h1 className="max-md:hidden">Admin Dashboard</h1>
+    <AnimationWrapper className="w-full sm:mt-20 mt-0">
+      <section className="">
+        <h1 className="max-md:hidden text-2xl font-semibold">
+          Admin Dashboard
+        </h1>
         <div className="">
           <ul className=" mt-12 grid w-[400px] gap-3 p-4 md:w-[500px] lg:grid-cols-4 md:grid-cols-2 lg:w-[900px] ">
             {components.map((component) => (
@@ -85,8 +87,8 @@ const AdminDashboard = () => {
             ))}
           </ul>
         </div>
-      </AnimationWrapper>
-    </>
+      </section>
+    </AnimationWrapper>
   );
 };
 

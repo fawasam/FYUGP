@@ -118,7 +118,7 @@ const CreateCollege = () => {
           <AnimationWrapper className="w-full">
             <div className="md:w-full w-[90%] m-auto">
               <div className="my-10 ">
-                <h1 className="text-2xl text-center underline underline-offset-8">
+                <h1 className="text-2xl font-semibold text-center underline underline-offset-8">
                   Create College
                 </h1>
               </div>

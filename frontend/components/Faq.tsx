@@ -11,10 +11,7 @@ const Faq = () => {
   return (
     <AnimationWrapper>
       <section className="flex items-center justify-center flex-col space-y-10">
-        <div>
-          <h1 className="text-4xl">FAQ</h1>
-        </div>
-        <div className="w-full">
+        <div className="w-full mt-10">
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger>Is it accessible?</AccordionTrigger>

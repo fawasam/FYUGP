@@ -70,7 +70,7 @@ const SideNav: React.FC | any = () => {
           </div>
           <div
             className={
-              " min-w-[200px] md:h-cover h-[calc(100vh-80px-60px)] md:sticky top-24 overflow-y-auto p-6 md:pr-0  md:border-grey md:border-r absolute max-md:top-[64px]  max-md:[calc(100%+80px)] max-md:px-16 max-md:-ml-7 duration-500 no-scrollbar " +
+              " min-w-[200px] md:h-cover bg-background  h-[calc(100vh-80px-60px)] md:sticky top-24 overflow-y-auto p-6 md:pr-0  md:border-grey md:border-r absolute max-md:top-[64px]  max-md:[calc(100%+80px)] max-md:px-16 max-md:-ml-7 duration-500 no-scrollbar " +
               (!showSideNav
                 ? "max-md:opacity-0 max-md:pointer-events-none "
                 : "opacity-100 pointer-events-auto")

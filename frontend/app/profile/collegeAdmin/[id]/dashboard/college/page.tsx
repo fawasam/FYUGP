@@ -10,8 +10,12 @@ import { logout } from "@/redux/features/authSlice";
 import { useRouter } from "next/navigation";
 import { ListItem } from "@/components/Header";
 import Link from "next/link";
-import { useGetACollegeMutation } from "@/redux/services/collegeApi";
+import {
+  useGetACollegeMutation,
+  usePublishCollegeMutation,
+} from "@/redux/services/collegeApi";
 import { Badge } from "@/components/ui/badge";
+import NoDataMessage from "@/components/common/Nodata";
 
 const AdminCollege = () => {
   const { toast } = useToast();
@@ -22,12 +26,19 @@ const AdminCollege = () => {
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
   const [getACollege] = useGetACollegeMutation();
-
+  const [publishCollege] = usePublishCollegeMutation();
   const getCollegeData = async () => {
     const response: any = await getACollege(user.college);
     setCollege(response?.data?.data?.college);
   };
-  console.log(college);
+
+  const handlePublish = async ({ id }: any) => {
+    const res: any = await publishCollege({ id });
+    toast({
+      title: "Successfully Changed",
+    });
+    getCollegeData();
+  };
 
   useEffect(() => {
     getCollegeData();
@@ -37,7 +48,7 @@ const AdminCollege = () => {
   }, [userData, dispatch, router]);
   return (
     <AnimationWrapper className="w-full">
-      <section className="w-full ">
+      <section className="w-full  sm:mt-20 mt-0">
         <div className="relative">
           <img
             src={`${
@@ -56,10 +67,39 @@ const AdminCollege = () => {
               variant={"outline"}
               className=" my-4 absolute top-0 right-0  mr-4"
             >
+              <i className="fi fi-rs-edit mr-2 "></i>
               Update
-              <i className="fi fi-rs-edit ml-2 "></i>
             </Button>
           </Link>
+          {college?.published ? (
+            <Button
+              variant={"default"}
+              className="mt-4 text-center  my-4 absolute top-12 right-0  mr-4"
+              size={"sm"}
+              onClick={() =>
+                handlePublish({
+                  id: college._id,
+                })
+              }
+            >
+              <i className="fi fi-rr-paper-plane mr-2"></i>
+              UnPublish
+            </Button>
+          ) : (
+            <Button
+              variant={"default"}
+              className="mt-4 text-center  my-4 absolute top-12 right-0  mr-4"
+              size={"sm"}
+              onClick={() =>
+                handlePublish({
+                  id: college._id,
+                })
+              }
+            >
+              <i className="fi fi-rr-paper-plane mr-2"></i>
+              Publish
+            </Button>
+          )}
         </div>
         <div>
           <h1 className="text-2xl mt-4 font-bold">{college?.collegename}</h1>
@@ -80,7 +120,7 @@ const AdminCollege = () => {
                   // <span key={key}>{dep?.Dname}</span>
                 ))
               ) : (
-                <span>No departments found</span>
+                <NoDataMessage message={"No departments found"} />
               )}
             </div>
           </div>

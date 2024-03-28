@@ -12,6 +12,7 @@ import { ListItem } from "@/components/Header";
 import Link from "next/link";
 import { useGetACollegeMutation } from "@/redux/services/collegeApi";
 import { Badge } from "@/components/ui/badge";
+
 import NoDataMessage from "@/components/common/Nodata";
 const page = ({ params }: { params: { collegename: string } }) => {
   const { toast } = useToast();
@@ -27,7 +28,6 @@ const page = ({ params }: { params: { collegename: string } }) => {
     const response: any = await getACollege(params.collegename);
     setCollege(response?.data?.data?.college);
   };
-  console.log(college);
 
   useEffect(() => {
     getCollegeData();
@@ -92,12 +92,20 @@ const page = ({ params }: { params: { collegename: string } }) => {
           )}
           <div className="pt-4 flex flex-col">
             <h3 className="text-lg font-medium ">DEPARTMENT</h3>
-            <div className="mr-2">
+            <div className="mr-2 mt-2">
               {college?.departments && college.departments.length > 0 ? (
                 college.departments.map((dep: any, key: any) => (
-                  <Button variant="outline" key={key} className="mr-2 ">
-                    {dep?.Dname}
-                  </Button>
+                  <Link
+                    href={`/college/${params.collegename}/${dep?.Dname.replace(
+                      /\s+/g,
+                      "-"
+                    )}`}
+                    key={key}
+                  >
+                    <Button variant="outline" className="mr-2 ">
+                      {dep?.Dname}
+                    </Button>
+                  </Link>
 
                   // <span key={key}>{dep?.Dname}</span>
                 ))

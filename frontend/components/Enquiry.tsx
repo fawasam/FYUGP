@@ -77,7 +77,7 @@ const Enquiry = () => {
 
   return (
     <AnimationWrapper className="w-full">
-      <section className="my-36  bg-acccent flex items-center justify-center flex-col md:flex-row space-y-10">
+      <section className="my-10  bg-acccent flex items-center justify-center flex-col md:flex-row space-y-10">
         <div className="w-full flex items-center justify-center">
           <Image src={email} alt="image" className=" w-[300px] md:w-[400px] " />
         </div>

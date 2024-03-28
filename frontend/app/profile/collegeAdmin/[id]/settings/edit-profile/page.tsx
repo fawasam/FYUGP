@@ -180,7 +180,7 @@ const EditProfile = () => {
                 <div className="w-full">
                   <div className="grid grid-cols-1 md:grid-cols-2 md:gap-5">
                     <div>
-                      <InputBox
+                      <Input
                         name={"username"}
                         type={"text"}
                         value={username}
@@ -190,7 +190,7 @@ const EditProfile = () => {
                       />
                     </div>
                     <div>
-                      <InputBox
+                      <Input
                         name={"email"}
                         type={"email"}
                         value={email}

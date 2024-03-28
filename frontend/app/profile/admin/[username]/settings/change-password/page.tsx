@@ -1,25 +1,16 @@
 "use client";
 import AnimationWrapper from "@/components/common/page-animation";
-import { Button } from "@/components/ui/button";
 import React, { useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { useUpdatePasswordMutation } from "@/redux/services/userApi";
 import { useDispatch } from "react-redux";
 import { useToast } from "@/components/ui/use-toast";
 import useRedirect from "@/hooks/useRedirect";
 import Loader from "@/components/common/Loader";
+import ChangePasswordForm from "@/components/forms/ChangePasswordForm";
 
 const formSchema = z
   .object({
@@ -53,6 +44,7 @@ const ChangePassword = () => {
       confirmPassword: "",
     },
   });
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response: any = await updatePassword(values).unwrap();
@@ -75,71 +67,12 @@ const ChangePassword = () => {
 
   return (
     <AnimationWrapper>
-      <h1 className="max-md:hidden">Change Password</h1>
       <Form {...form}>
-        <div className="py-10 w-full md:max-w-[400px] ">
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name="currentPassword"
-              render={({ field }) => (
-                <FormItem className=" w-full m-auto mb-6">
-                  <FormLabel className="my-4">Current Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Current Password"
-                      type="password"
-                      icon={"fi fi-rr-unlock"}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem className=" w-full m-auto mb-6">
-                  <FormLabel>New Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="New Password"
-                      type="password"
-                      icon={"fi fi-rr-unlock"}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem className=" w-full m-auto mb-6">
-                  <FormLabel>Confirm Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Confirm Password"
-                      type="password"
-                      icon={"fi fi-rr-unlock"}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button size={"lg"} className="w-full mt-4">
-              Update Password
-              <span> </span>
-              {isLoading ? <Loader white={true} /> : ""}
-            </Button>
-          </form>
-        </div>
+        <ChangePasswordForm
+          form={form}
+          onSubmit={onSubmit}
+          isLoading={isLoading}
+        />
       </Form>
     </AnimationWrapper>
   );

@@ -142,14 +142,14 @@ export const collegeApi = createApi({
     }),
     getAllCourse: builder.mutation<any, any>({
       query: (data) => ({
-        url: "/program/course/all",
+        url: "/program/course/all-course",
         method: "GET",
         headers: {},
       }),
     }),
     getAllCourseByProgram: builder.mutation<any, any>({
       query: ({ id }) => ({
-        url: `/program/course/${id}`,
+        url: `/program/course/all/${id}`,
         method: "GET",
         headers: {},
       }),

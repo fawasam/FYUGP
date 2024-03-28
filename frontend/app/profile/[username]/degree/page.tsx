@@ -75,6 +75,13 @@ const page = () => {
   const [updateMe] = useUpdateMeMutation();
   const [getMe] = useGetMeMutation();
 
+  let {
+    fullname,
+    place,
+    district,
+    degree_info: { discipline, pathway, currentCollege },
+  } = user;
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -114,6 +121,19 @@ const page = () => {
     }
   }, [dispatch, router]);
 
+  useEffect(() => {
+    form.reset({
+      fullname,
+      place,
+      district,
+      currentCollege,
+      pathway,
+      discipline,
+    });
+  }, [user]);
+
+  console.log(form.watch());
+
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -144,7 +164,7 @@ const page = () => {
                               <Input
                                 icon={"fi fi-rr-at"}
                                 placeholder="fullname"
-                                defaultValue={user.fullname}
+                                defaultValue={fullname}
                                 {...field}
                               />
                             </FormControl>
@@ -163,7 +183,7 @@ const page = () => {
                               <Input
                                 icon={"fi fi-rr-at"}
                                 placeholder="place"
-                                defaultValue={user?.place}
+                                defaultValue={place}
                                 {...field}
                               />
                             </FormControl>
@@ -181,7 +201,7 @@ const page = () => {
                             <FormLabel>district</FormLabel>
                             <Select
                               onValueChange={field.onChange}
-                              defaultValue={user?.district}
+                              defaultValue={district}
                             >
                               <FormControl>
                                 <SelectTrigger>
@@ -210,7 +230,7 @@ const page = () => {
                               <Input
                                 icon={"fi fi-rr-at"}
                                 placeholder="Add college if enrolled"
-                                defaultValue={user?.degree_info?.currentCollege}
+                                defaultValue={currentCollege}
                                 {...field}
                               />
                             </FormControl>
@@ -234,11 +254,7 @@ const page = () => {
                   <Button
                     className="btn-dark w-auto px-10  mt-4 ml-2"
                     onClick={() => {
-                      // form.trigger([
-                      //   "fullname",
-                      //   "place",
-                      //   "district",
-                      // ]);
+                      // form.trigger(["fullname", "place", "district"]);
                       // const emailState = form.getFieldState("fullname");
                       // const nameState = form.getFieldState("place");
                       // const yearState = form.getFieldState("district");
@@ -284,6 +300,7 @@ const page = () => {
                               <RadioGroup
                                 onValueChange={field.onChange}
                                 defaultValue={field.value}
+                                // value={pathway}
                                 className="flex flex-col space-y-1"
                               >
                                 {pathways.map((path) => (
@@ -321,9 +338,9 @@ const page = () => {
                     className="btn-dark w-auto px-10  mt-4 ml-2"
                     type="submit"
                     onClick={() => {
-                      // form.trigger(["pathway"]);
-                      // const pathwayState = form.getFieldState("pathway");
-                      // if (!pathwayState.isDirty || pathwayState.invalid) return;
+                      form.trigger(["pathway"]);
+                      const pathwayState = form.getFieldState("pathway");
+                      if (!pathwayState.isDirty || pathwayState.invalid) return;
                       nextStep();
                     }}
                   >
@@ -362,6 +379,7 @@ const page = () => {
                                 onValueChange={field.onChange}
                                 defaultValue={field.value}
                                 className="flex flex-col space-y-1"
+                                // value={discipline}
                               >
                                 {disciplines.map((discipline) => (
                                   <FormItem
@@ -398,11 +416,11 @@ const page = () => {
                     <Button
                       className="btn-dark w-auto px-10  mt-4 ml-2"
                       onClick={() => {
-                        // form.trigger(["discipline"]);
-                        // const disciplineState =
-                        //   form.getFieldState("discipline");
-                        // if (!disciplineState.isDirty || disciplineState.invalid)
-                        //   return;
+                        form.trigger(["discipline"]);
+                        const disciplineState =
+                          form.getFieldState("discipline");
+                        if (!disciplineState.isDirty || disciplineState.invalid)
+                          return;
                         handleSubmit();
                       }}
                     >

@@ -176,6 +176,22 @@ const Header = () => {
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link href="/faq" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <span className="dark:text-white text-gray-500 ">FAQ</span>
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link href="/contact" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <span className="dark:text-white text-gray-500 ">
+                    Contact
+                  </span>
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
             {user?.role == "user" ? (
               <>
                 <NavigationMenuItem>

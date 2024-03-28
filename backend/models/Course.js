@@ -2,19 +2,17 @@ import mongoose, { Schema } from "mongoose";
 
 const courseSchema = mongoose.Schema(
   {
-    Cname: {
-      type: String,
-      required: [true, "Please provide the course name"],
-      unique: true,
-    },
-    code: {
-      type: String,
+    course: {
+      type: [
+        {
+          courseCode: { type: String, required: true, unique: true },
+          courseName: { type: String, required: true },
+        },
+      ],
       required: [true, "Please provide the course code"],
-      unique: true,
     },
     category: {
       type: String,
-      required: [true, "Please select a category"],
       enum: [
         "CORE IN MAJOR",
         "ELECTIVE IN MAJOR",

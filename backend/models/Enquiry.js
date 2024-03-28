@@ -15,6 +15,10 @@ const enquirySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  mail: {
+    type: String,
+    required: true,
+  },
   message: {
     type: String,
     required: true,

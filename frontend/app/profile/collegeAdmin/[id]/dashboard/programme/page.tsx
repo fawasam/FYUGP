@@ -101,7 +101,7 @@ const page = () => {
     const response: any = await getAProgram(id);
     setProgram(id);
     setDname(response?.data?.data?.program?.Dname);
-    //setDiscipline(response?.data?.data?.program?.Discipline);
+    setDiscipline(response?.data?.data?.program?.Discipline);
     setHeadOfDepartment(response?.data?.data?.program?.headOfDepartment);
   };
 
@@ -137,6 +137,7 @@ const page = () => {
         title: "Successfully added Program",
       });
       getAllPrograms();
+      form.reset();
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -162,6 +163,7 @@ const page = () => {
       setProgram("");
       setDname("");
       setHeadOfDepartment("");
+      form.reset();
       getAllPrograms();
     } catch (error: any) {
       toast({

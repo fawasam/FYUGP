@@ -11,6 +11,7 @@ import { generateRandomPassword } from "../utils/generateRandomPassword.js";
 import { Department } from "../models/Department.js";
 import College from "../models/College.js";
 import { filterReqObj } from "../helpers/filterObj.js";
+import mongoose from "mongoose";
 let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
 let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
 
@@ -91,7 +92,22 @@ export const updateProgram = asyncErrorHandler(async (req, res, next) => {
 
 export const getAProgram = asyncErrorHandler(async (req, res, next) => {
   const { id } = req.params;
-  const program = await Department.findById(id);
+  const isId = mongoose.Types.ObjectId.isValid(id);
+  let program;
+  if (isId) {
+    program = await Department.findById(id).populate({
+      path: "coursesOffered",
+    });
+  } else {
+    program = await Department.findOne({ Dname: id }).populate({
+      path: "coursesOffered",
+    });
+  }
+
+  if (!program) {
+    const error = new CustomError("Program not found", 404);
+    return next(error);
+  }
   res.status(200).json({
     status: "success",
     data: { program },

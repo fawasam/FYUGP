@@ -21,6 +21,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useGetAllUsersMutation } from "@/redux/services/userApi";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
 
 const AdminUsers = () => {
   const { toast } = useToast();
@@ -54,7 +63,9 @@ const AdminUsers = () => {
             <TableHead className="w-[200px]">User</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Joined At</TableHead>
-            <TableHead className="text-right">Role</TableHead>
+            <TableHead>Role</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead className="text-right">Task</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -64,8 +75,23 @@ const AdminUsers = () => {
               <TableRow key={key}>
                 <TableCell className="font-medium">{user?.username}</TableCell>
                 <TableCell>{user?.email}</TableCell>
-                <TableCell>{formateDate(user.joinedAt)}</TableCell>
-                <TableCell className="text-right">{user.role}</TableCell>
+                <TableCell>{formateDate(user?.joinedAt)}</TableCell>
+                <TableCell>{user?.role}</TableCell>
+                <TableCell>{user?.active ? "Active" : "Deactivated"}</TableCell>
+                <TableCell className="text-right">
+                  <Menubar>
+                    <MenubarMenu>
+                      <MenubarTrigger className="text-center ml-0">
+                        {" "}
+                        <i className="fi fi-rr-menu-dots-vertical"></i>
+                      </MenubarTrigger>
+                      <MenubarContent>
+                        <MenubarItem>Deativate</MenubarItem>
+                        <MenubarItem>Delete</MenubarItem>
+                      </MenubarContent>
+                    </MenubarMenu>
+                  </Menubar>
+                </TableCell>
               </TableRow>
             ))}
         </TableBody>

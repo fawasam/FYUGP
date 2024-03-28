@@ -18,9 +18,9 @@ import { filterReqObj } from "../helpers/filterObj.js";
 
 export const createCourse = asyncErrorHandler(async (req, res, next) => {
   const programId = req.params.programId;
-  const { Cname, category, semester, code } = req.body;
+  const { course, category, semester } = req.body;
 
-  if (!Cname || !category || !semester || !code) {
+  if (!course || !category || !semester) {
     const error = new CustomError("Please provide all field!", 400);
     return next(error);
   }
@@ -37,9 +37,14 @@ export const createCourse = asyncErrorHandler(async (req, res, next) => {
     return next(error);
   }
 
-  const existingCourse = department?.coursesOffered?.find(
-    (course) => course.Cname === Cname
-  );
+  const existingCourse = await Course.findOne({
+    "course.courseCode": course[0].courseCode,
+  });
+  if (existingCourse) {
+    return res
+      .status(400)
+      .json({ error: "Course with the same course code already exists." });
+  }
 
   if (existingCourse) {
     const error = new CustomError(
@@ -71,7 +76,7 @@ export const updateCourse = asyncErrorHandler(async (req, res, next) => {
   const { programId, courseId } = req.params;
   const filterObj = filterReqObj(
     req.body,
-    "Cname",
+    "course",
     "category",
     "semester",
     "code"
@@ -112,6 +117,7 @@ export const updateCourse = asyncErrorHandler(async (req, res, next) => {
 
 export const getACourse = asyncErrorHandler(async (req, res, next) => {
   const { id } = req.params;
+  console.log("Hello");
   const course = await Course.findById(id);
   res.status(200).json({
     status: "success",
@@ -157,3 +163,50 @@ export const getAllCourseByProgram = asyncErrorHandler(
     });
   }
 );
+
+export const mergeSimilarCourse = asyncErrorHandler(async (req, res, next) => {
+  // Query documents with the same semester and category
+  const documents = await Course.aggregate([
+    {
+      $group: {
+        _id: { semester: "$semester", category: "$category" },
+        docs: { $push: "$$ROOT" },
+      },
+    },
+  ]);
+  console.log(documents);
+
+  // Construct merged documents
+  const mergedDocuments = documents.map(({ _id, docs }) => {
+    const mergedDoc = {
+      Cname: [],
+      code: [],
+      category: _id.category,
+      semester: _id.semester,
+      user: null,
+      department: null,
+      joinedAt: null,
+      updatedAt: null,
+    };
+
+    docs.forEach((doc) => {
+      mergedDoc.Cname.push(...doc.Cname);
+      mergedDoc.code.push(...doc.code);
+      mergedDoc.user = doc.user;
+      mergedDoc.department = doc.department;
+      mergedDoc.joinedAt = doc.joinedAt;
+      mergedDoc.updatedAt = doc.updatedAt;
+    });
+
+    return mergedDoc;
+  });
+
+  res.status(200).json({
+    status: "success",
+    // result: course.length,
+    data: { mergedDocuments },
+  });
+
+  //console.error(error);
+  //res.status(500).json({ message: "Internal server error" });
+});

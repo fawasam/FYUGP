@@ -76,17 +76,19 @@ const formSchema = z.object({
   semester: z.string(),
 });
 
-const page = ({ params }: { params: { Cname: string } }) => {
+const page = ({ params }: { params: { program: string } }) => {
   const { toast } = useToast();
+  let depName = params.program.split("-").join(" ");
+  console.log(depName);
   const router = useRouter();
   const [dname, setDname] = useState("");
   const [cname, setCname] = useState("");
   const [category, setCategory] = useState("");
   const [semester, setSemester] = useState("");
   const [program, setProgram] = useState("");
-  const [courseId, setCourseId] = useState("");
   const [code, setCode] = useState("");
   const [allCourses, setAllCourses] = useState<any[]>([]);
+  const [headOfDepartment, setHeadOfDepartment] = useState("");
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
@@ -100,27 +102,31 @@ const page = ({ params }: { params: { Cname: string } }) => {
 
   const getAllPrograms = async () => {
     const response: any = await getAllProgramByCollege({ id: user?.college });
-    setAllCourses(response?.data?.data?.programs);
+    setAllPrograms(response?.data?.data?.programs);
   };
   const getAllCoursesByProgram = async () => {
     const response: any = await getAllCourseByProgram({ id: params?.Cname });
+
     setAllCourses(response?.data?.data?.course);
-  };
-  const getACourses = async (id: any) => {
-    resetData();
-    const response: any = await getACourse(id);
-    setProgram(id);
-    setCname(response?.data?.data?.course?.course[0]?.courseName);
-    setCode(response?.data?.data?.course?.course[0]?.courseCode);
-    setCategory(response?.data?.data?.course?.category);
-    setCourseId(response?.data?.data?.course?._id);
-    setSemester(response?.data?.data?.course?.semester);
   };
   const getAPrograms = async (id: any) => {
     const response: any = await getAProgram(id);
+
+    setProgram(id);
     setDname(response?.data?.data?.program?.Dname);
+    setCategory(response?.data?.data?.program?.headOfDepartment);
+    setSemester(response?.data?.data?.program?.headOfDepartment);
   };
   const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      courseCode: "",
+      courseName: "",
+      category: "",
+      semester: "",
+    },
+  });
+  const form2 = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       courseCode: "",
@@ -150,7 +156,11 @@ const page = ({ params }: { params: { Cname: string } }) => {
         programId: params.Cname,
         data: newValues,
       }).unwrap();
-      resetData();
+      form.reset();
+      setCname("");
+      setCode("");
+      setCategory("");
+      setSemester("");
       console.log(response);
 
       toast({
@@ -164,33 +174,22 @@ const page = ({ params }: { params: { Cname: string } }) => {
         description: error?.data?.message,
       });
       console.log(error?.data?.message);
-      console.log(error);
     }
   };
   const onUpdate = async (values: z.infer<typeof formSchema>) => {
     try {
-      // const newValues = { ...values };
-      let newValues = {
-        course: [
-          {
-            courseCode: values.courseCode,
-            courseName: values.courseName,
-          },
-        ],
-        category: values.category,
-        semester: values.semester,
-        collegeId: user?.college,
-      };
+      const newValues = { ...values };
       console.log(newValues);
-      const response: any = await updateCourse({
-        programId: params.Cname,
-        courseId: courseId,
-        data: newValues,
-      }).unwrap();
+      // const response: any = await updateProgram({
+      //   id: program,
+      //   data: newValues,
+      // }).unwrap();
       toast({
         title: "Successfully updated Program",
       });
-      resetData();
+      setProgram("");
+      setDname("");
+      setHeadOfDepartment("");
       getAllPrograms();
     } catch (error: any) {
       toast({
@@ -200,6 +199,36 @@ const page = ({ params }: { params: { Cname: string } }) => {
       });
       console.log(error?.data?.message);
     }
+  };
+
+  const getCoursesByCategory = (courses: any, category: any) => {
+    const filteredCourses = courses.filter(
+      (course: any) => course.category === category
+    );
+    return filteredCourses
+      .map((course: any) => `(${course.code}) ${course.Cname}`)
+      .join(", ");
+  };
+
+  const groupCoursesBySemester = (courses: any) => {
+    const groupedCourses = {};
+    courses.forEach((course: any) => {
+      if (!groupedCourses[course.semester]) {
+        groupedCourses[course.semester] = [];
+      }
+      groupedCourses[course.semester].push(course);
+    });
+    return Object.values(groupedCourses);
+  };
+
+  const getTotalCourses = (courses: any) => {
+    let uniqueCnames = [];
+    courses.forEach((course: any) => {
+      if (!uniqueCnames.includes(course.Cname)) {
+        uniqueCnames.push(course.Cname);
+      }
+    });
+    return uniqueCnames.length;
   };
 
   console.log(form.watch());
@@ -214,23 +243,15 @@ const page = ({ params }: { params: { Cname: string } }) => {
   }, [userData, router, program]);
 
   useEffect(() => {
-    form.reset({
-      courseCode: code,
-      courseName: cname,
+    form2.reset({
+      course: cname,
       category: category,
       semester: semester,
+      code: code,
     });
-  }, [courseId, code, cname, category, semester]);
+  }, [program]);
+  console.log(allCourses);
 
-  const resetData = () => {
-    setProgram("");
-    setCourseId("");
-    setCname("");
-    setCode("");
-    setCategory("");
-    setSemester("");
-    form.reset();
-  };
   return (
     <AnimationWrapper className="w-full  sm:mt-20 mt-0">
       <div className="flex items-center justify-between text-center flex-row">
@@ -398,9 +419,14 @@ const page = ({ params }: { params: { Cname: string } }) => {
         <TableHeader>
           <TableRow>
             <TableHead className="">SEMESTER</TableHead>
-            <TableHead>COURSE CODE</TableHead>
-            <TableHead>COURSE NAME</TableHead>
-            <TableHead>CATEGORY</TableHead>
+            <TableHead>CJ</TableHead>
+            <TableHead>EJ</TableHead>
+            <TableHead>MN</TableHead>
+            <TableHead>VN</TableHead>
+            <TableHead>AEC</TableHead>
+            <TableHead>SEC</TableHead>
+            <TableHead>VAC</TableHead>
+            <TableHead>MDC</TableHead>
             <TableHead>Total courses</TableHead>
             <TableHead className="text-right">Task</TableHead>
           </TableRow>
@@ -408,35 +434,41 @@ const page = ({ params }: { params: { Cname: string } }) => {
         <TableBody>
           {allCourses != null &&
             allCourses.length > 0 &&
-            allCourses?.map((course, key) => (
+            groupCoursesBySemester(allCourses).map((course: any, key: any) => (
               <TableRow key={key}>
                 <TableCell className="font-medium">
-                  {course?.semester}
+                  {course[0]?.semester}
                 </TableCell>
-                {course?.course?.map((c: any, key: any) => (
-                  <>
-                    <TableCell className="font-medium">
-                      {c?.courseCode}
-                    </TableCell>
-                    <TableCell className="font-medium">
-                      {c?.courseName}
-                    </TableCell>
-                  </>
-                ))}
-                <TableCell className="font-medium">
-                  {course?.category}
+                <TableCell>
+                  {getCoursesByCategory(course, "CORE IN MAJOR")}
                 </TableCell>
-                <TableCell className="font-medium">
-                  {/* {getTotalCourses(course)} */}
+                <TableCell>
+                  {getCoursesByCategory(course, "ELECTIVE IN MAJOR")}
                 </TableCell>
-
+                <TableCell>{getCoursesByCategory(course, "MINOR")}</TableCell>
+                <TableCell>
+                  {getCoursesByCategory(course, "VOCATIONAL MINOR")}
+                </TableCell>
+                <TableCell>
+                  {getCoursesByCategory(course, "ABILITY ENHANCEMENT COURSE")}
+                </TableCell>
+                <TableCell>
+                  {getCoursesByCategory(course, "SKILL ENHANCEMENT COURSE")}
+                </TableCell>
+                <TableCell>
+                  {getCoursesByCategory(course, "VALUE ADDED COURSE")}
+                </TableCell>
+                <TableCell>
+                  {getCoursesByCategory(course, "MULTI-DISCIPLINARY COURSE")}
+                </TableCell>
+                <TableCell>{getTotalCourses(course)}</TableCell>
                 <TableCell className="text-right">
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button
                         variant={"outline"}
                         size={"lg"}
-                        onClick={() => getACourses(course?._id)}
+                        onClick={() => getAPrograms(course?._id)}
                       >
                         {" "}
                         <i className="fi fi-rs-edit mr-2"></i>
@@ -444,9 +476,9 @@ const page = ({ params }: { params: { Cname: string } }) => {
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[900px]">
-                      <Form {...form}>
+                      <Form {...form2}>
                         <form
-                          onSubmit={form.handleSubmit(onUpdate)}
+                          onSubmit={form2.handleSubmit(onUpdate)}
                           className="w-full"
                         >
                           <DialogHeader>
@@ -462,13 +494,12 @@ const page = ({ params }: { params: { Cname: string } }) => {
                                 {/* code  */}
                                 <FormField
                                   control={form.control}
-                                  name="courseCode"
+                                  name="code"
                                   render={({ field }) => (
                                     <FormItem className="w-full m-0">
                                       <FormLabel>Enter Course Code</FormLabel>
                                       <FormControl>
                                         <Input
-                                          defaultValue={code}
                                           placeholder="Course Code"
                                           icon={"fi fi-rr-graduation-cap"}
                                           {...field}
@@ -481,13 +512,12 @@ const page = ({ params }: { params: { Cname: string } }) => {
                                 {/* cname  */}
                                 <FormField
                                   control={form.control}
-                                  name="courseName"
+                                  name="Cname"
                                   render={({ field }) => (
                                     <FormItem className="w-full m-0">
                                       <FormLabel>Enter Course Name</FormLabel>
                                       <FormControl>
                                         <Input
-                                          defaultValue={cname}
                                           placeholder="Course Name"
                                           icon={"fi fi-rr-graduation-cap"}
                                           {...field}
@@ -509,7 +539,6 @@ const page = ({ params }: { params: { Cname: string } }) => {
                                       <Select
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
-                                        value={semester}
                                       >
                                         <SelectTrigger className="w-full">
                                           <SelectValue placeholder="semester" />
@@ -545,7 +574,6 @@ const page = ({ params }: { params: { Cname: string } }) => {
                                       <Select
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
-                                        value={category}
                                       >
                                         <SelectTrigger className="w-full">
                                           <SelectValue placeholder="Category" />

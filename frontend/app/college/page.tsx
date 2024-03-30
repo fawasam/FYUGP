@@ -46,11 +46,6 @@ const College = () => {
   let collegesData = useSelector((state: RootState) => state.college);
   let { collegeInfo: colleges, collegeInfo, items } = collegesData;
 
-  const getAllColleges = async () => {
-    const response: any = await getAllCollege("");
-    dispatch(setCollege(response?.data));
-  };
-
   const handleSearch = async (e: any) => {
     if (searchKey == "") {
       toast({
@@ -62,6 +57,11 @@ const College = () => {
     }
   };
   useEffect(() => {
+    const getAllColleges = async () => {
+      const response: any = await getAllCollege("");
+      dispatch(setCollege(response?.data));
+    };
+
     getAllColleges();
 
     clearTimeout(typingTimeout);

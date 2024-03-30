@@ -26,6 +26,7 @@ import axios from "axios";
 import { useUpdateMeMutation } from "@/redux/services/userApi";
 import { setUser, updateUser } from "@/redux/features/authSlice";
 import useRedirect from "@/hooks/useRedirect";
+import Image from "next/image";
 
 const formSchema = z.object({
   fullname: z.string().min(2, {

@@ -35,7 +35,7 @@ import {
   useGetAllProgramByCollegeMutation,
 } from "@/redux/services/collegeApi";
 
-const page = () => {
+const Courses = () => {
   const { toast } = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -80,4 +80,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Courses;

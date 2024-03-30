@@ -36,9 +36,9 @@ export default function Home() {
           <div className="sm:w-1/2 w-full space-y-6">
             <h1 className="text-6xl font-bold ">YOUR DEGREE TRACKER</h1>
             <p className="text-slate-700 text-lg leading-8">
-              The "TrackYourDegree" is designed to assist students in
-              monitoring, guiding and managing their academic progress during
-              their fourth year of undergraduate studies
+              The TrackYourDegree is designed to assist students in monitoring,
+              guiding and managing their academic progress during their fourth
+              year of undergraduate studies
             </p>
             <Button
               className="text-md p-6 my-4 text-center"

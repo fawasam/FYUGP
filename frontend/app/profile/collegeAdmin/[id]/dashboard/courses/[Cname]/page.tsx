@@ -76,7 +76,7 @@ const formSchema = z.object({
   semester: z.string(),
 });
 
-const page = ({ params }: { params: { Cname: string } }) => {
+const SingleCourse = ({ params }: { params: { Cname: string } }) => {
   const { toast } = useToast();
   const router = useRouter();
   const [dname, setDname] = useState("");
@@ -588,4 +588,4 @@ const page = ({ params }: { params: { Cname: string } }) => {
   );
 };
 
-export default page;
+export default SingleCourse;

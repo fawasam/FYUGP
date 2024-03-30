@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -20,7 +19,6 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/features/authSlice";
 import AnimationWrapper from "@/components/common/page-animation";
-import { useRouter } from "next/navigation";
 import useRedirect from "@/hooks/useRedirect";
 import { useEffect } from "react";
 
@@ -38,10 +36,10 @@ const Login = () => {
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
 
   const { toast } = useToast();
-  const [login, { isLoading, error, isSuccess }] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   useEffect(() => {
     redirectToHomeIfLoggedIn();
-  }, []);
+  }, [redirectToHomeIfLoggedIn]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

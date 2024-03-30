@@ -76,7 +76,7 @@ const formSchema = z.object({
   semester: z.string(),
 });
 
-const page = ({ params }: { params: { program: string } }) => {
+const SingleCourse2 = ({ params }: { params: { program: string } }) => {
   const { toast } = useToast();
   let depName = params.program.split("-").join(" ");
   console.log(depName);
@@ -616,4 +616,4 @@ const page = ({ params }: { params: { program: string } }) => {
   );
 };
 
-export default page;
+export default SingleCourse2;

@@ -64,7 +64,7 @@ const formSchema = z.object({
   }),
 });
 
-const page = () => {
+const ProfileDegree = () => {
   const { toast } = useToast();
   const dispatch = useDispatch();
   const [step, setStep] = useState(1);
@@ -474,4 +474,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ProfileDegree;

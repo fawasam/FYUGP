@@ -14,6 +14,7 @@ import { useGetACollegeMutation } from "@/redux/services/collegeApi";
 import { Badge } from "@/components/ui/badge";
 
 import NoDataMessage from "@/components/common/Nodata";
+import Image from "next/image";
 
 const SingleCollege = ({ params }: { params: { collegename: string } }) => {
   const { toast } = useToast();
@@ -32,15 +33,12 @@ const SingleCollege = ({ params }: { params: { collegename: string } }) => {
 
   useEffect(() => {
     getCollegeData();
-    // if (!user) {
-    //   redirectTo("/");
-    // }
-  }, [userData, dispatch, router]);
+  }, []);
   return (
     <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
       <section className="max-w-[1060px] m-auto   flex-grow">
         <div className="relative">
-          <img
+          <Image
             src={`${
               college?.picture
                 ? college?.picture

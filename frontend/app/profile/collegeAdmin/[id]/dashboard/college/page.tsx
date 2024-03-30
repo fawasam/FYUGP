@@ -29,6 +29,10 @@ const AdminCollege = () => {
   const [getACollege] = useGetACollegeMutation();
   const [publishCollege] = usePublishCollegeMutation();
 
+  const getCollegeData = async () => {
+    const response: any = await getACollege(user.college);
+    setCollege(response?.data?.data?.college);
+  };
   const handlePublish = async ({ id }: any) => {
     const res: any = await publishCollege({ id });
     toast({
@@ -38,15 +42,11 @@ const AdminCollege = () => {
   };
 
   useEffect(() => {
-    const getCollegeData = async () => {
-      const response: any = await getACollege(user.college);
-      setCollege(response?.data?.data?.college);
-    };
     getCollegeData();
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch, router, user, redirectTo getACollege]);
+  }, [userData, dispatch, router, user, redirectTo, getACollege]);
   return (
     <AnimationWrapper className="w-full">
       <section className="w-full  sm:mt-20 mt-0">

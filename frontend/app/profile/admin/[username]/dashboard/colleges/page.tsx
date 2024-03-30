@@ -45,6 +45,11 @@ const AdminColleges = () => {
     router.back();
   };
 
+  const getAllColleges = async () => {
+    const response: any = await getAllCollege("");
+    dispatch(setCollege(response?.data));
+    setAllColleges(response?.data?.data?.colleges);
+  };
   const handlePublish = async ({ id }: any) => {
     const res: any = await publishCollege({ id });
     toast({
@@ -54,11 +59,6 @@ const AdminColleges = () => {
   };
 
   useEffect(() => {
-    const getAllColleges = async () => {
-      const response: any = await getAllCollege("");
-      dispatch(setCollege(response?.data));
-      setAllColleges(response?.data?.data?.colleges);
-    };
     if (!user) {
       redirectTo("/");
     }

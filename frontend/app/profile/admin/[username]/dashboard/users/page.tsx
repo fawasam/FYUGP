@@ -42,11 +42,11 @@ const AdminUsers = () => {
 
   let [getAllUsers] = useGetAllUsersMutation();
 
+  const getAllUser = async () => {
+    const response: any = await getAllUsers("");
+    setAllUsers(response?.data?.data?.users);
+  };
   useEffect(() => {
-    const getAllUser = async () => {
-      const response: any = await getAllUsers("");
-      setAllUsers(response?.data?.data?.users);
-    };
     if (!user) {
       redirectTo("/");
     }

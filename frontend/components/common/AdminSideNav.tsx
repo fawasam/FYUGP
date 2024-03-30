@@ -20,7 +20,7 @@ const AdminSideNav: React.FC | any = () => {
   let activeTabLine = useRef<HTMLHRElement>(null);
   let sideBarIcon = useRef<HTMLButtonElement>(null);
   let pageStateTab = useRef<HTMLButtonElement>(null);
-  const isLinkActive = (link: string) => usePathname().includes(link);
+  const isLinkActive = (link: string) => page.includes(link);
   // console.log(isLinkActive("dashboard"));
 
   const changePageState = (e: any) => {

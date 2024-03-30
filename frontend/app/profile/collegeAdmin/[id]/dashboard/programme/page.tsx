@@ -74,7 +74,7 @@ const formSchema = z.object({
   }),
 });
 
-const page = () => {
+const Programme = () => {
   const { toast } = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -446,4 +446,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Programme;

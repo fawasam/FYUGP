@@ -220,6 +220,7 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
     getAllProgramByCollege,
     getAllCourseByProgram,
     getAProgram,
+    params?.Cname,
   ]);
 
   useEffect(() => {
@@ -229,7 +230,7 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
       category: category,
       semester: semester,
     });
-  }, []);
+  }, [form, code, cname, category, semester]);
 
   const resetData = () => {
     setProgram("");

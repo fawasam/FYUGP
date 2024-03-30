@@ -156,7 +156,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch, router, user, redirectTo]);
+  }, [userData, dispatch, router, user, redirectTo, getACollege]);
   useEffect(() => {
     // Reset the form with updated default values whenever college state changes
     form.reset({
@@ -169,7 +169,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       website: website,
       about: about,
     });
-  }, [college]);
+  }, []);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <h1 className="max-md:hidden text-2xl font-semibold">Edit Profile</h1>

@@ -117,7 +117,7 @@ const College = () => {
                     <div className=" ">
                       <div className="border w-full h-[200px]  overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                         {college?.picture ? (
-                          <img
+                          <Image
                             src={college?.picture}
                             alt={college?.collegename}
                             className="object-cover w-full h-full  group-hover:opacity-75 border"

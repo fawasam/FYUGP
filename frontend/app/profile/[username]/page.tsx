@@ -92,15 +92,15 @@ const Dashboard = () => {
               <div className="flex  flex-col">
                 <div className="mt-2 grid grid-cols-2">
                   <div className="pl-4">
-                    <i className="fi fi-rs-book-bookmark text-sm mr-2 "></i>
-                    <span className="text-sm">
+                    <i className="fi fi-rs-book-bookmark text-sm  "></i>
+                    <span className=" text-md font-thin">
                       {" "}
                       {user?.degree_info?.currentCollege}
                     </span>
                   </div>
                   <div className="\">
                     {" "}
-                    <span className="text-sm">
+                    <span className="text-md font-thin">
                       <i className="fi fi-rr-home mr-2 text-sm leading-5"></i>
                       {user?.place}
                     </span>
@@ -108,14 +108,25 @@ const Dashboard = () => {
                 </div>
 
                 <div className="pl-4 mb-4">
-                  <span className=" pr-4 text-sm leading-5">
-                    Bio : {user?.bio}
+                  <span className=" pr-4 text-md font-thin leading-5">
+                    <i className="fi fi-rr-quote-right mr-2 text-sm leading-5"></i>
+                    {user?.bio}
                   </span>
                 </div>
               </div>
             </div>
             <div>
-              <div className="w-[400px] h-[80px] mb-[20px] rounded-2xl bg-white shadow-xl relative mt-10 lg:mt-0"></div>
+              <div className="w-[400px] h-[80px] mb-[20px] rounded-2xl  shadow-xl relative  lg:mt-0 mt-10  bg-primary-foreground">
+                <div className="p-4">
+                  <h2 className="text-md font-thin">
+                    Your Pathway : <span>{user?.degree_info?.pathway}</span>
+                  </h2>
+                  <h2 className="text-md font-thin">
+                    Your Discipline :{" "}
+                    <span>{user?.degree_info?.discipline}</span>
+                  </h2>
+                </div>
+              </div>
               <div className="w-[400px] h-[150px] rounded-2xl bg-white shadow-xl relative"></div>
             </div>
           </div>
@@ -149,7 +160,11 @@ const Dashboard = () => {
               <TableBody>
                 {Courses != null &&
                   Courses.length > 0 &&
-                  Courses.map((data, key) => (
+                  Courses.filter(
+                    (course) =>
+                      course.pathway === user?.degree_info?.pathway &&
+                      course.discipline === user?.degree_info?.discipline
+                  ).map((data, key) => (
                     <>
                       {data?.courses?.map((course: any, key2: any) => (
                         <TableRow key={key + "-" + key2}>
@@ -204,7 +219,11 @@ const Dashboard = () => {
                   <TableBody>
                     {Courses != null &&
                       Courses.length > 0 &&
-                      Courses.map((data, key) => (
+                      Courses.filter(
+                        (course) =>
+                          course.pathway === user?.degree_info?.pathway &&
+                          course.discipline === user?.degree_info?.discipline
+                      ).map((data, key) => (
                         <>
                           {data?.courses_after_six_sem?.map(
                             (course: any, key2: any) => (

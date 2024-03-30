@@ -17,7 +17,7 @@ import book from "@/components/assets/cards/book.svg";
 import Image from "next/image";
 import Link from "next/link";
 
-const page = () => {
+const WhatIsFYUGP = () => {
   const [expanded, setExpanded] = useState(false);
 
   const toggleExpansion = () => {
@@ -99,4 +99,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default WhatIsFYUGP;

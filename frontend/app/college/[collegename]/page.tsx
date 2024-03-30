@@ -14,7 +14,8 @@ import { useGetACollegeMutation } from "@/redux/services/collegeApi";
 import { Badge } from "@/components/ui/badge";
 
 import NoDataMessage from "@/components/common/Nodata";
-const page = ({ params }: { params: { collegename: string } }) => {
+
+const SingleCollege = ({ params }: { params: { collegename: string } }) => {
   const { toast } = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -120,4 +121,4 @@ const page = ({ params }: { params: { collegename: string } }) => {
   );
 };
 
-export default page;
+export default SingleCollege;

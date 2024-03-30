@@ -52,16 +52,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Categories } from "@/utils/Categories";
 
 const formSchema = z.object({
   courseCode: z.string().min(2, {
@@ -76,7 +66,7 @@ const formSchema = z.object({
   semester: z.string(),
 });
 
-const page = ({ params }: { params: { program: string } }) => {
+const CollegeProgram = ({ params }: { params: { program: string } }) => {
   const { toast } = useToast();
   let depName = params.program.split("-").join(" ");
   const router = useRouter();
@@ -239,4 +229,4 @@ const page = ({ params }: { params: { program: string } }) => {
   );
 };
 
-export default page;
+export default CollegeProgram;

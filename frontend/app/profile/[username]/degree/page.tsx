@@ -85,12 +85,12 @@ const page = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullname: "",
-      place: "",
-      district: "",
-      currentCollege: "",
-      pathway: "",
-      discipline: "",
+      fullname,
+      place,
+      district,
+      currentCollege,
+      pathway,
+      discipline,
     },
   });
 
@@ -107,13 +107,25 @@ const page = () => {
   };
 
   const handleSubmit = async () => {
-    const value: any = form.watch();
-    const response1: any = await updateMe(value).unwrap();
-    const response: any = await getMe(" ");
-    console.log(response);
-    dispatch(updateUser({ fields: response?.data?.data?.user }));
+    try {
+      const value: any = form.watch();
+      const response1: any = await updateMe(value).unwrap();
+      const response: any = await getMe(" ");
+      console.log(response);
+      dispatch(updateUser({ fields: response?.data?.data?.user }));
+      toast({
+        title: "Successfully Updated profile",
+      });
+      router.push(`/profile/${user?.username}`);
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: error?.data?.message,
+      });
+      console.log(error?.data?.message);
+    }
   };
-  console.log(form.watch());
 
   useEffect(() => {
     if (!user) {
@@ -254,15 +266,21 @@ const page = () => {
                   <Button
                     className="btn-dark w-auto px-10  mt-4 ml-2"
                     onClick={() => {
-                      // form.trigger(["fullname", "place", "district"]);
-                      // const emailState = form.getFieldState("fullname");
-                      // const nameState = form.getFieldState("place");
-                      // const yearState = form.getFieldState("district");
+                      form.trigger(["fullname", "place", "district"]);
+                      const emailState = form.getFieldState("fullname");
+                      const nameState = form.getFieldState("place");
+                      const yearState = form.getFieldState("district");
+
+                      // console.log( emailState);
+                      // console.log( nameState);
+                      // console.log(yearState);
+                      // console.log(emailState.isTouched);
 
                       // if (!emailState.isDirty || emailState.invalid) return;
                       // if (!nameState.isDirty || nameState.invalid) return;
                       // if (!yearState.isDirty || yearState.invalid) return;
 
+                      // If all fields are valid, proceed to next step
                       nextStep();
                     }}
                   >
@@ -340,7 +358,7 @@ const page = () => {
                     onClick={() => {
                       form.trigger(["pathway"]);
                       const pathwayState = form.getFieldState("pathway");
-                      if (!pathwayState.isDirty || pathwayState.invalid) return;
+                      // if (!pathwayState.isDirty || pathwayState.invalid) return;
                       nextStep();
                     }}
                   >
@@ -419,8 +437,8 @@ const page = () => {
                         form.trigger(["discipline"]);
                         const disciplineState =
                           form.getFieldState("discipline");
-                        if (!disciplineState.isDirty || disciplineState.invalid)
-                          return;
+                        // if (!disciplineState.isDirty || disciplineState.invalid)
+                        //   return;
                         handleSubmit();
                       }}
                     >

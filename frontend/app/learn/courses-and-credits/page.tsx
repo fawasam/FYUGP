@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import book from "@/components/assets/cards/hat.svg";
 import Image from "next/image";
 
-const page = () => {
+const CourseAndCredits = () => {
   const [expanded, setExpanded] = useState(false);
 
   const toggleExpansion = () => {
@@ -91,4 +91,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default CourseAndCredits;

@@ -80,8 +80,8 @@ function ForgotPassword() {
                 render={({ field }) => (
                   <FormItem className="sm:w-1/2 w-full m-auto">
                     <p className="font-light text-sm mb-4 text-left">
-                      Enter email address associated with your account and we'll
-                      send you a link to reset your password
+                      Enter email address associated with your account and we
+                      will send you a link to reset your password
                     </p>
                     <FormLabel>Email</FormLabel>
                     <FormControl>

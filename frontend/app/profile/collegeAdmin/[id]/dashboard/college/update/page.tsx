@@ -90,7 +90,6 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       about,
     },
   });
-  console.log(college);
 
   const getCollege = async () => {
     const response: any = await getACollege(user?.college);

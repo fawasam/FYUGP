@@ -12,7 +12,7 @@ import Link from "next/link";
 import AnimationWrapper from "@/components/common/page-animation";
 import { Input } from "@/components/ui/input";
 
-const page = () => {
+const AskQns = () => {
   const { toast } = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -71,4 +71,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default AskQns;

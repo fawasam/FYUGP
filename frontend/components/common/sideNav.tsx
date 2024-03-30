@@ -10,7 +10,7 @@ const SideNav: React.FC | any = () => {
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
-  const page = usePathname().split("/").pop();
+  const page: any = usePathname().split("/").pop();
 
   const [pageState, setPageState] = useState<string | any>(
     page?.replace("-", " ")

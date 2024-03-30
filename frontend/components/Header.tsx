@@ -35,6 +35,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import useRedirect from "@/hooks/useRedirect";
+import Image from "next/image";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -243,7 +244,7 @@ const Header = () => {
                   <>
                     <NavigationMenuTrigger className=" z-100">
                       <div className="flex flex-row items-center justify-center">
-                        <img
+                        <Image
                           src={user.profileImage}
                           alt=""
                           className="w-6 h-6 object-cover rounded-lg"

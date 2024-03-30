@@ -208,7 +208,7 @@ const Programme = () => {
                 <DialogHeader>
                   <DialogTitle>Add Programme</DialogTitle>
                   <DialogDescription>
-                    Make changes to your profile here. Click save when you're
+                    Make changes to your profile here. Click save when you are
                     done.
                   </DialogDescription>
                 </DialogHeader>
@@ -345,7 +345,7 @@ const Programme = () => {
                             <DialogTitle>Add Programme</DialogTitle>
                             <DialogDescription>
                               Make changes to your Program here. Click save when
-                              you're done.
+                              you are done.
                             </DialogDescription>
                           </DialogHeader>
                           <div className=" space-y-4 py-4">
@@ -405,8 +405,8 @@ const Programme = () => {
                                         </SelectTrigger>
                                       </FormControl>
                                       <SelectContent>
-                                        {disciplines.map((dist) => (
-                                          <SelectItem value={dist}>
+                                        {disciplines.map((dist, key) => (
+                                          <SelectItem value={dist} key={key}>
                                             {dist}
                                           </SelectItem>
                                         ))}

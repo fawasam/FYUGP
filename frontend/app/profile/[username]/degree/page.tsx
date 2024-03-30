@@ -222,7 +222,9 @@ const ProfileDegree = () => {
                               </FormControl>
                               <SelectContent>
                                 {districts.map((dist) => (
-                                  <SelectItem value={dist}>{dist}</SelectItem>
+                                  <SelectItem key={dist} value={dist}>
+                                    {dist}
+                                  </SelectItem>
                                 ))}
                               </SelectContent>
                             </Select>

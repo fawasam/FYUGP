@@ -145,7 +145,7 @@ const EditProfile = () => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch]);
+  }, [user]);
 
   return (
     <AnimationWrapper className="w-full sm:mt-16 mt-0">

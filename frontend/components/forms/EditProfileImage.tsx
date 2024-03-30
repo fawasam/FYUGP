@@ -9,6 +9,7 @@ import {
   useUpdateMeMutation,
 } from "@/redux/services/userApi";
 import { useToast } from "@/components/ui/use-toast";
+import Image from "next/image";
 
 const EditProfileImage = () => {
   const [updatedProfileImg, setupdatedProfileImg] = useState<
@@ -74,7 +75,7 @@ const EditProfileImage = () => {
         <div className="w-full h-full absolute top-0 left-0 flex items-center justify-center text-white bg-black/30 opacity-0 hover:opacity-100 cursor-pointer">
           Upload Image
         </div>
-        <img src={`${user.profileImage}`} alt="" ref={profileImageEle} />
+        <Image src={`${user.profileImage}`} alt="image" ref={profileImageEle} />
       </label>
 
       <input

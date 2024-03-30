@@ -485,7 +485,7 @@ const SingleCourse2 = ({ params }: { params: { program: string } }) => {
                             <DialogTitle>Edit Course</DialogTitle>
                             <DialogDescription>
                               Make changes to your profile here. Click save when
-                              you're done.
+                              you are done.
                             </DialogDescription>
                           </DialogHeader>
                           <div className=" space-y-4 py-4">

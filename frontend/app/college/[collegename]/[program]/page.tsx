@@ -137,7 +137,7 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
     if (!user) {
       redirectTo("/");
     }
-  }, [depName, user, getAProgram, redirectTo]);
+  }, [depName, user, getAPrograms, redirectTo]);
 
   useEffect(() => {
     form.reset({

@@ -45,7 +45,7 @@ const User = ({ params }: { params: { username: string } }) => {
     if (!user) {
       redirectTo("/");
     }
-  }, [user]);
+  }, [user, redirectTo]);
 
   // Your logic to determine what to render based on the current route
   let content;

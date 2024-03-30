@@ -133,7 +133,7 @@ const EditProfile = () => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch]);
+  }, [userData, dispatch, user, redirectTo]);
 
   return (
     <AnimationWrapper>

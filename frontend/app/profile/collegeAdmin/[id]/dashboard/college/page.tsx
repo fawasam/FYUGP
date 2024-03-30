@@ -45,7 +45,7 @@ const AdminCollege = () => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch, router]);
+  }, [userData, dispatch, router, user, redirectTo]);
   return (
     <AnimationWrapper className="w-full">
       <section className="w-full  sm:mt-20 mt-0">

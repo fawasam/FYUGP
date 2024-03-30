@@ -55,7 +55,7 @@ const AdminDashboard = () => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch, router]);
+  }, [userData, dispatch, router, app, redirectTo]);
 
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">

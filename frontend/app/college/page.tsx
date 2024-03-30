@@ -73,7 +73,7 @@ const College = () => {
 
       setTypingTimeout(timeoutId);
     }
-  }, [searchKey]);
+  }, [searchKey, getAllColleges, typingTimeout]);
   return (
     <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
       <section className="max-w-[1060px] m-auto   flex-grow   ">
@@ -141,7 +141,9 @@ const College = () => {
                 )}
               </div>
             ) : (
-              <NoDataMessage message={"No college data available"} />
+              <div key={i}>
+                <NoDataMessage message={"No college data available"} />
+              </div>
             )
           )}
         </div>

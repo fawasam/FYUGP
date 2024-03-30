@@ -240,7 +240,7 @@ const SingleCourse2 = ({ params }: { params: { program: string } }) => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, router, program]);
+  }, [userData, router, program, , user, redirectTo]);
 
   useEffect(() => {
     form2.reset({

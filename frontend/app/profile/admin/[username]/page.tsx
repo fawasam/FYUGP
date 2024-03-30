@@ -44,7 +44,7 @@ const AdminPage = ({ params }: { params: { username: string } }) => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch, router]);
+  }, [userData, dispatch, router, user, redirectTo]);
 
   let content;
   switch (pathname) {

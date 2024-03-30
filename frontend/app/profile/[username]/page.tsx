@@ -29,6 +29,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Courses } from "@/utils/Courses";
+import Image from "next/image";
 
 const Dashboard = () => {
   const { toast } = useToast();
@@ -52,7 +53,7 @@ const Dashboard = () => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch, router]);
+  }, [userData, dispatch, router, user, redirectTo]);
 
   return (
     <>
@@ -69,7 +70,7 @@ const Dashboard = () => {
               <div className="flex  flex-row justify-between">
                 <div>
                   <div className="  block w-28 h-28  rounded-full object-cover pt-4 pl-4 ">
-                    <img
+                    <Image
                       src={user?.profileImage}
                       alt="image"
                       className="w-full h-full object-cover rounded-full "

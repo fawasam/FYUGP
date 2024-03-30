@@ -49,7 +49,7 @@ const AdminDashboard = () => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch, router]);
+  }, [userData, dispatch, router, user, redirectTo]);
 
   return (
     <>

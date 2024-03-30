@@ -211,7 +211,7 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
     if (!user) {
       redirectTo("/");
     }
-  }, []);
+  }, [user, redirectTo]);
 
   useEffect(() => {
     form.reset({

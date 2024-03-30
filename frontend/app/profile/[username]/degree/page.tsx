@@ -131,7 +131,7 @@ const ProfileDegree = () => {
     if (!user) {
       redirectTo("/");
     }
-  }, [dispatch, router]);
+  }, [dispatch, router, user, redirectTo]);
 
   useEffect(() => {
     form.reset({
@@ -142,7 +142,7 @@ const ProfileDegree = () => {
       pathway,
       discipline,
     });
-  }, [user]);
+  }, [fullname, place, district, currentCollege, pathway, discipline, form]);
 
   console.log(form.watch());
 

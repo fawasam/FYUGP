@@ -36,7 +36,7 @@ const Dashboard = () => {
     if (!user) {
       redirectTo("/");
     }
-  }, [user]);
+  }, [user, redirectTo]);
 
   return (
     <>

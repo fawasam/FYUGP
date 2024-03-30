@@ -179,7 +179,7 @@ const Programme = () => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, router, program]);
+  }, [userData, router, program, user, redirectTo]);
 
   useEffect(() => {
     form2.reset({

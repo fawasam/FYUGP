@@ -328,7 +328,7 @@ export const ListItem = React.forwardRef<
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch]);
+  }, [userData, dispatch, user, redirectTo]);
 
   return (
     <li>

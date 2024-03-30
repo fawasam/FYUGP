@@ -52,7 +52,7 @@ const AdminUsers = () => {
       redirectTo("/");
     }
     getAllUser();
-  }, [userData, dispatch, router]);
+  }, [userData, dispatch, router, user, redirectTo]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <h1 className="max-md:hidden mb-4 text-2xl font-semibold">All User</h1>

@@ -156,7 +156,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch, router]);
+  }, [userData, dispatch, router, user, redirectTo]);
   useEffect(() => {
     // Reset the form with updated default values whenever college state changes
     form.reset({

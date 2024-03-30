@@ -88,11 +88,6 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
   let [getAllCourseByProgram] = useGetAllCourseByProgramMutation();
   let [getAProgram] = useGetAProgramMutation();
 
-  const getAPrograms = async (id: any) => {
-    const response: any = await getAProgram(id);
-    setAllCourses(response?.data?.data?.program?.coursesOffered);
-    setProgram(id);
-  };
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -133,11 +128,16 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
   };
 
   useEffect(() => {
+    const getAPrograms = async (id: any) => {
+      const response: any = await getAProgram(id);
+      setAllCourses(response?.data?.data?.program?.coursesOffered);
+      setProgram(id);
+    };
     getAPrograms(depName);
     if (!user) {
       redirectTo("/");
     }
-  }, [depName, user]);
+  }, [depName, user, redirectTo]);
 
   useEffect(() => {
     form.reset({

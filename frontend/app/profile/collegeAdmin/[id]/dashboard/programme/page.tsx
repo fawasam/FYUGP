@@ -93,10 +93,6 @@ const Programme = () => {
   let [updateProgram] = useUpdateProgramMutation();
   let [getAllProgramByCollege] = useGetAllProgramByCollegeMutation();
 
-  const getAllPrograms = async () => {
-    const response: any = await getAllProgramByCollege({ id: user?.college });
-    setAllPrograms(response?.data?.data?.programs);
-  };
   const getAPrograms = async (id: any) => {
     const response: any = await getAProgram(id);
     setProgram(id);
@@ -175,11 +171,17 @@ const Programme = () => {
     }
   };
   useEffect(() => {
+    const getAllPrograms = async () => {
+      const response: any = await getAllProgramByCollege({
+        id: user?.college,
+      });
+      setAllPrograms(response?.data?.data?.programs);
+    };
     getAllPrograms();
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, router, program, user, redirectTo]);
+  }, [userData, router, program, user, redirectTo, getAllProgramByCollege]);
 
   useEffect(() => {
     form2.reset({

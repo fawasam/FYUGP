@@ -31,6 +31,7 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { Textarea } from "@/components/ui/textarea";
 import { log } from "console";
+import Image from "next/image";
 
 const formSchema = z.object({
   collegename: z.string().min(2, {
@@ -90,11 +91,6 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       about,
     },
   });
-
-  const getCollege = async () => {
-    const response: any = await getACollege(user?.college);
-    setCollege(response?.data?.data?.college);
-  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -166,6 +162,10 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
     }
   };
   useEffect(() => {
+    const getCollege = async () => {
+      const response: any = await getACollege(user?.college);
+      setCollege(response?.data?.data?.college);
+    };
     getCollege();
     if (!user) {
       redirectTo("/");
@@ -196,7 +196,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
             <div className="w-full h-full absolute top-0 left-0 flex items-center justify-center text-white bg-black/30 opacity-0 hover:opacity-100 cursor-pointer">
               Upload Image
             </div>
-            <img
+            <Image
               src={`${picture}`}
               alt=""
               ref={profileImageEle}

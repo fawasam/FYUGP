@@ -98,14 +98,6 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
   let [getAProgram] = useGetAProgramMutation();
   let [getAllProgramByCollege] = useGetAllProgramByCollegeMutation();
 
-  const getAllPrograms = async () => {
-    const response: any = await getAllProgramByCollege({ id: user?.college });
-    setAllCourses(response?.data?.data?.programs);
-  };
-  const getAllCoursesByProgram = async () => {
-    const response: any = await getAllCourseByProgram({ id: params?.Cname });
-    setAllCourses(response?.data?.data?.course);
-  };
   const getACourses = async (id: any) => {
     resetData();
     const response: any = await getACourse(id);
@@ -116,10 +108,7 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
     setCourseId(response?.data?.data?.course?._id);
     setSemester(response?.data?.data?.course?.semester);
   };
-  const getAPrograms = async (id: any) => {
-    const response: any = await getAProgram(id);
-    setDname(response?.data?.data?.program?.Dname);
-  };
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -205,13 +194,33 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
   console.log(form.watch());
 
   useEffect(() => {
+    const getAllPrograms = async () => {
+      const response: any = await getAllProgramByCollege({
+        id: user?.college,
+      });
+      setAllCourses(response?.data?.data?.programs);
+    };
+    const getAllCoursesByProgram = async () => {
+      const response: any = await getAllCourseByProgram({ id: params?.Cname });
+      setAllCourses(response?.data?.data?.course);
+    };
+    const getAPrograms = async (id: any) => {
+      const response: any = await getAProgram(id);
+      setDname(response?.data?.data?.program?.Dname);
+    };
     getAllPrograms();
     getAPrograms(params?.Cname);
     getAllCoursesByProgram();
     if (!user) {
       redirectTo("/");
     }
-  }, [user, redirectTo]);
+  }, [
+    user,
+    redirectTo,
+    getAllProgramByCollege,
+    getAllCourseByProgram,
+    getAProgram,
+  ]);
 
   useEffect(() => {
     form.reset({

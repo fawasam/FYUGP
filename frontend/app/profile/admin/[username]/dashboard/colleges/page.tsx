@@ -41,11 +41,6 @@ const AdminColleges = () => {
   let collegesData = useSelector((state: RootState) => state.college);
   let { collegeInfo: colleges, collegeInfo, items } = collegesData;
 
-  const getAllColleges = async () => {
-    const response: any = await getAllCollege("");
-    dispatch(setCollege(response?.data));
-    setAllColleges(response?.data?.data?.colleges);
-  };
   const goBack = () => {
     router.back();
   };
@@ -58,17 +53,17 @@ const AdminColleges = () => {
     getAllColleges();
   };
 
-  useEffect(
-    () => {
-      if (!user) {
-        redirectTo("/");
-      }
-      getAllColleges();
-    },
-    [userData, dispatch, router],
-    user,
-    redirectTo
-  );
+  useEffect(() => {
+    const getAllColleges = async () => {
+      const response: any = await getAllCollege("");
+      dispatch(setCollege(response?.data));
+      setAllColleges(response?.data?.data?.colleges);
+    };
+    if (!user) {
+      redirectTo("/");
+    }
+    getAllColleges();
+  }, [userData, dispatch, router, user, redirectTo, getAllCollege]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <div className="flex items-center justify-between text-center flex-row">

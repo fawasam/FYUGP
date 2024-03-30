@@ -26,6 +26,7 @@ import axios from "axios";
 import { useUpdateMeMutation } from "@/redux/services/userApi";
 import { setUser, updateUser } from "@/redux/features/authSlice";
 import useRedirect from "@/hooks/useRedirect";
+import Image from "next/image";
 
 const formSchema = z.object({
   fullname: z.string().min(2, {
@@ -152,7 +153,7 @@ const EditProfile = () => {
                 <div className="w-full h-full absolute top-0 left-0 flex items-center justify-center text-white bg-black/30 opacity-0 hover:opacity-100 cursor-pointer">
                   Upload Image
                 </div>
-                <img src={`${profileImage}`} alt="" ref={profileImageEle} />
+                <Image src={`${profileImage}`} alt="" ref={profileImageEle} />
               </label>
 
               <input

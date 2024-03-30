@@ -47,16 +47,16 @@ const Courses = () => {
   const [getAllProgramByCollege] = useGetAllProgramByCollegeMutation();
   const handleOpenDialog = () => {};
 
-  const getAllCoursesByProgram = async () => {
-    const res = await getAllProgramByCollege({ id: user?.college });
-    setCourses(res?.data?.data?.programs);
-  };
   useEffect(() => {
+    const getAllCoursesByProgram = async () => {
+      const res = await getAllProgramByCollege({ id: user?.college });
+      setCourses(res?.data?.data?.programs);
+    };
     getAllCoursesByProgram();
     if (!user) {
       redirectTo("/");
     }
-  }, [user, getAllCoursesByProgram, redirectTo]);
+  }, [user, getAllProgramByCollege, redirectTo]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <section className="">
@@ -68,10 +68,9 @@ const Courses = () => {
             courses?.map((c: any, key: any) => (
               <Link
                 href={`/profile/collegeAdmin/${user.username}/dashboard/courses/${c._id}`}
+                key={key}
               >
-                <Button key={key} className="mr-2">
-                  {c?.Dname}
-                </Button>
+                <Button className="mr-2">{c?.Dname}</Button>
               </Link>
             ))}
         </div>

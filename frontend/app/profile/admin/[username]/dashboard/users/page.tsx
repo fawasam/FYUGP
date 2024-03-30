@@ -42,17 +42,16 @@ const AdminUsers = () => {
 
   let [getAllUsers] = useGetAllUsersMutation();
 
-  const getAllUser = async () => {
-    const response: any = await getAllUsers("");
-    setAllUsers(response?.data?.data?.users);
-  };
-
   useEffect(() => {
+    const getAllUser = async () => {
+      const response: any = await getAllUsers("");
+      setAllUsers(response?.data?.data?.users);
+    };
     if (!user) {
       redirectTo("/");
     }
     getAllUser();
-  }, [userData, dispatch, router, user, redirectTo]);
+  }, [userData, dispatch, router, user, redirectTo, getAllUsers]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <h1 className="max-md:hidden mb-4 text-2xl font-semibold">All User</h1>

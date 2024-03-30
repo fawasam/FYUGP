@@ -56,12 +56,11 @@ const College = () => {
       dispatch(setCollege(response?.data));
     }
   };
+  const getAllColleges = async () => {
+    const response: any = await getAllCollege("");
+    dispatch(setCollege(response?.data));
+  };
   useEffect(() => {
-    const getAllColleges = async () => {
-      const response: any = await getAllCollege("");
-      dispatch(setCollege(response?.data));
-    };
-
     getAllColleges();
 
     clearTimeout(typingTimeout);
@@ -73,7 +72,7 @@ const College = () => {
 
       setTypingTimeout(timeoutId);
     }
-  }, [searchKey, getAllColleges, typingTimeout]);
+  }, [searchKey, getAllCollege, typingTimeout]);
   return (
     <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
       <section className="max-w-[1060px] m-auto   flex-grow   ">

@@ -30,9 +30,12 @@ const CourseAndCredits = () => {
           <div className="flex justify-center items-center">
             <Image
               priority
+              width={200}
+              height={200}
               src={book}
               alt="Follow us on Twitter"
               className="w-[200px] h-[100px] text-center"
+              // fill
             />
           </div>
           <h1 className="md:text-[48px] text-[36px] font-bold tracking-tighter text-center">

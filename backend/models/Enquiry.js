@@ -5,7 +5,6 @@ const enquirySchema = new mongoose.Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "users",
-    required: true,
   },
   college: {
     type: Schema.Types.ObjectId,
@@ -15,7 +14,7 @@ const enquirySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  mail: {
+  email: {
     type: String,
     required: true,
   },

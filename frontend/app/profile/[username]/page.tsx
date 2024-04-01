@@ -1,16 +1,7 @@
 "use client";
 import AnimationWrapper from "@/components/common/page-animation";
 import React, { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-  DialogClose,
-} from "@/components/ui/dialog";
+
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,20 +31,17 @@ const Dashboard = () => {
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
 
+  console.log(user);
+
   const handleShow = () => {
     setShow(!show);
-  };
-  let {} = user;
-  const handleLogout = () => {
-    redirectTo("/");
-    dispatch(logout());
   };
 
   useEffect(() => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch, router, user, redirectTo]);
+  }, [userData, dispatch, router, user]);
 
   return (
     <>
@@ -70,9 +58,10 @@ const Dashboard = () => {
               <div className="flex  flex-row justify-between">
                 <div>
                   <div className="  block w-28 h-28  rounded-full object-cover pt-4 pl-4 ">
-                    <Image
+                    <img
                       src={user?.profileImage}
                       alt="image"
+                      // fill
                       className="w-full h-full object-cover rounded-full "
                     />
                   </div>

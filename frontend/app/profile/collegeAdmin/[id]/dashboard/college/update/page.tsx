@@ -196,9 +196,10 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
             <div className="w-full h-full absolute top-0 left-0 flex items-center justify-center text-white bg-black/30 opacity-0 hover:opacity-100 cursor-pointer">
               Upload Image
             </div>
-            <Image
+            <img
               src={`${picture}`}
               alt=""
+              // fill
               ref={profileImageEle}
               className="h-full object-cover"
             />

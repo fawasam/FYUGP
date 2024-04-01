@@ -75,7 +75,12 @@ const EditProfileImage = () => {
         <div className="w-full h-full absolute top-0 left-0 flex items-center justify-center text-white bg-black/30 opacity-0 hover:opacity-100 cursor-pointer">
           Upload Image
         </div>
-        <Image src={`${user.profileImage}`} alt="image" ref={profileImageEle} />
+        <img
+          src={`${user.profileImage}`}
+          alt="image"
+          ref={profileImageEle}
+          // fill
+        />
       </label>
 
       <input

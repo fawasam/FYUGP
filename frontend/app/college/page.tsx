@@ -96,7 +96,7 @@ const College = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-12">
-          {colleges.length === 0 ? <h2>No college Data</h2> : null}
+          {colleges?.length === 0 ? <h2>No college Data</h2> : null}
           {colleges?.map((college: any, i: number) =>
             college?.published ? (
               <div key={i}>
@@ -117,10 +117,12 @@ const College = () => {
                     <div className=" ">
                       <div className="border w-full h-[200px]  overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                         {college?.picture ? (
-                          <Image
+                          <img
                             src={college?.picture}
                             alt={college?.collegename}
                             className="object-cover w-full h-full  group-hover:opacity-75 border"
+
+                            // width={100}
                           />
                         ) : (
                           ""

@@ -46,17 +46,18 @@ const AdminCollege = () => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch, router, user, redirectTo, getACollege]);
+  }, [userData, dispatch, router, user, getACollege]);
   return (
     <AnimationWrapper className="w-full">
       <section className="w-full  sm:mt-20 mt-0">
         <div className="relative">
-          <Image
+          <img
             src={`${
               college?.picture
                 ? college?.picture
                 : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCNw7r0CbmQXzKBodXPHKi4HdYZ_Wd9esyqHHrR8lVxA&s"
             }`}
+            // fill
             alt="image"
             className="w-full  h-[250px] object-cover rounded-sm"
           />

@@ -170,18 +170,18 @@ const Programme = () => {
       console.log(error?.data?.message);
     }
   };
+  const getAllPrograms = async () => {
+    const response: any = await getAllProgramByCollege({
+      id: user?.college,
+    });
+    setAllPrograms(response?.data?.data?.programs);
+  };
   useEffect(() => {
-    const getAllPrograms = async () => {
-      const response: any = await getAllProgramByCollege({
-        id: user?.college,
-      });
-      setAllPrograms(response?.data?.data?.programs);
-    };
     getAllPrograms();
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, router, program, user, redirectTo, getAllProgramByCollege]);
+  }, [userData, router, program, user, getAllProgramByCollege]);
 
   useEffect(() => {
     form2.reset({

@@ -39,10 +39,9 @@ import Image from "next/image";
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
+    title: "Colleges",
+    href: "/college",
+    description: "Colleges under Calicut University",
   },
   {
     title: "Hover Card",
@@ -152,7 +151,7 @@ const Header = () => {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuTrigger>
-                <span className="dark:text-white text-gray-500 ">Colleges</span>
+                <span className="dark:text-white text-gray-500 ">Degree</span>
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
@@ -168,7 +167,8 @@ const Header = () => {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            {/* colleges  */}
+            {/* <NavigationMenuItem>
               <Link href="/college" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   <span className="dark:text-white text-gray-500 ">
@@ -176,7 +176,7 @@ const Header = () => {
                   </span>
                 </NavigationMenuLink>
               </Link>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
             <NavigationMenuItem>
               <Link href="/faq" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -248,6 +248,8 @@ const Header = () => {
                           src={user.profileImage}
                           alt=""
                           className="w-6 h-6 object-cover rounded-lg"
+                          width={6}
+                          height={6}
                         />
                         {/* <i className="fi fi-rr-user mr-2"></i> */}
                         <span className="ml-2">{user.username}</span>
@@ -328,7 +330,7 @@ export const ListItem = React.forwardRef<
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch, user, redirectTo]);
+  }, [userData, dispatch, user]);
 
   return (
     <li>

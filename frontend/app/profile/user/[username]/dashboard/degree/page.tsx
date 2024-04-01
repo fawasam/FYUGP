@@ -51,7 +51,7 @@ const Dashboard = () => {
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch, router, user, redirectTo]);
+  }, [userData, dispatch, router, user]);
 
   return (
     <>

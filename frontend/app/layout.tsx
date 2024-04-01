@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/features/authSlice";
 import { Navbar } from "@/components/Navbar";
 import Footer from "../components/Footer";
+import { BreadcrumbSeperator } from "@/components/common/Breadcrumb";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -39,6 +40,9 @@ export default function RootLayout({
           >
             <Header />
             <Toaster />
+            {/* <div className="mt-8 sm:w-[75%] w-[90%] m-auto pb-6 ">
+              <BreadcrumbSeperator />
+            </div> */}
             {children}
             <div className="static bottom-0">
               <Footer />

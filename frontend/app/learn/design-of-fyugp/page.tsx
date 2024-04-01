@@ -15,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import book from "@/components/assets/cards/pencil.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 const DesignOfUg = () => {
   const [expanded, setExpanded] = useState(false);
@@ -30,6 +31,8 @@ const DesignOfUg = () => {
           <div className="flex justify-center items-center">
             <Image
               priority
+              width={200}
+              height={200}
               src={book}
               alt="Follow us on Twitter"
               className="w-[200px] h-[100px] text-center"
@@ -48,43 +51,74 @@ const DesignOfUg = () => {
           </div>
           <div className=""></div>
         </div>
-        <div className="grid lg:grid-cols-5  grid-cols-1 sm:grid-cols-2 gap-4 pt-[5rem]">
-          {pathways.map((path, key) => (
-            <div
-              className="w-full flex justify-center items-center flex-col"
-              onClick={toggleExpansion}
-              key={key}
-            >
-              <>
-                <Drawer>
-                  <DrawerTrigger key={key}>
-                    <div className=" flex justify-center items-center h-[220px] w-[200px] bg-accent rounded-3xl  text-center">
-                      <h1>{path?.title}</h1>
-                    </div>
-                  </DrawerTrigger>
-                  <DrawerContent>
-                    <DrawerHeader>
-                      <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                      <DrawerDescription>
-                        This action cannot be undone.
-                      </DrawerDescription>
-                    </DrawerHeader>
-                    <DrawerFooter>
-                      <Button>Submit</Button>
-                      <DrawerClose>
-                        <Button variant="outline">Cancel</Button>
-                      </DrawerClose>
-                    </DrawerFooter>
-                  </DrawerContent>
-                </Drawer>
-
-                <div className="flex jusify-center item-center text-center flex-col mt-2">
-                  <div className="text-lg font-medium">{path?.title}</div>
-                  {/* <p>{path?.description}</p> */}
-                </div>
-              </>
-            </div>
-          ))}
+        <div className="my-6">
+          <h2 className="learn-text ">
+            The design of the Calicut University's Four Year Undergraduate
+            Program (CU-FYUGP) includes various components and options for
+            students to tailor their academic journey based on their interests
+            and goals. Here are some key aspects of the design
+          </h2>
+          <span className="learn-text">
+            <br />
+            <br />
+            <b>1. Program Duration</b> : The CU-FYUGP is a four-year
+            undergraduate program designed to provide students with a
+            comprehensive educational experience over four academic years.{" "}
+            <br />
+            <br />
+            <b>2. Program Options</b> : <br />
+            Three-Year UG Degree: Students can choose to exit after three years
+            and will be awarded a UG Degree in the Major discipline upon meeting
+            specific credit requirements.
+            <br /> Four-Year UG Degree (Honours): Students completing the full
+            four-year program with a specific number of credits and meeting
+            course requirements will be awarded a UG Honours Degree in the Major
+            discipline.
+            <br />
+            Four-Year UG Degree (Honours with Research): This option is for
+            students interested in research careers. They undertake a research
+            project or dissertation in the major discipline in the fourth year,
+            in addition to completing the required credits for the Honours
+            degree .
+            <br />
+            <br />
+            <b>3. Credit Structure : </b>
+            The program has a credit-based framework where students earn credits
+            by completing courses and other academic requirements. The credit
+            distribution is outlined for different components of the program .
+            <br />
+            <br />
+            <b>4. Infrastructure Requirement : </b>
+            Departments offering the Four-Year UG Degree (Honours with Research)
+            must have specific infrastructure, including access to research
+            facilities, library resources, and faculty members recognized as
+            Ph.D. supervisors .
+            <br />
+            <br />
+            <b>5. Research Component : </b>
+            Students opting for the Honours with Research option are required to
+            undertake research projects or dissertations under the guidance of
+            recognized research guides. The outcomes of their research work may
+            be published or presented in academic forums .
+            <br />
+            <br />
+            <b>6. Curriculum Components : </b>
+            The curriculum of the four-year program is structured into different
+            components with suggested credit distributions for an exit at the
+            end of the third year .
+            <br />
+            <br /> Overall, the design of the CU-FYUGP offers students
+            flexibility, academic rigor, and opportunities for research and
+            specialization within a four-year undergraduate program
+          </span>
+        </div>
+        <div className="flex justify-end items-center mt-[40px]">
+          <Button>
+            <Link href={"/learn/different-academic-pathways"}>
+              Academic Pathways{" "}
+              <i className="fi fi-rr-arrow-right ml-2 text-center "></i>
+            </Link>
+          </Button>
         </div>
       </section>
     </AnimationWrapper>

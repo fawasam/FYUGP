@@ -56,7 +56,7 @@ const Courses = () => {
     if (!user) {
       redirectTo("/");
     }
-  }, [user, getAllProgramByCollege, redirectTo]);
+  }, [user, getAllProgramByCollege]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <section className="">

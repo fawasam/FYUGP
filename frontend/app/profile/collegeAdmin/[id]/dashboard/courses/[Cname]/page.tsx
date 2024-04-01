@@ -216,7 +216,6 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
     }
   }, [
     user,
-    redirectTo,
     getAllProgramByCollege,
     getAllCourseByProgram,
     getAProgram,

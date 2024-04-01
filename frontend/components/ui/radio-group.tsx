@@ -28,7 +28,7 @@ const RadioGroupItem = React.forwardRef<
     <RadioGroupPrimitive.Item
       ref={ref}
       className={cn(
-        "aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-[28px]",
+        "aspect-square w-5 h-5 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-[28px]",
         className
       )}
       {...props}
@@ -42,3 +42,18 @@ const RadioGroupItem = React.forwardRef<
 RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName;
 
 export { RadioGroup, RadioGroupItem };
+
+// <div className=" flex-wrap flex-col rounded-md border w-50 h-50">
+//   <label className="cursor-pointer">
+//     <input type="radio" className="peer sr-only" name="pricing" />
+//     <div className="w-40 max-w-xl rounded-md bg-white p-5 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-sky-600 peer-checked:ring-blue-400 peer-checked:ring-offset-2">
+//       <div className="flex flex-col gap-1">
+//         <div className="flex items-center justify-between">
+//           <p className="text-sm font-semibold uppercase text-gray-500">
+//             {discipline}
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   </label>
+// </div>;

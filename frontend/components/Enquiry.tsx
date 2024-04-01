@@ -35,6 +35,9 @@ const formSchema = z.object({
   message: z.string().email({
     message: "please enter a message",
   }),
+  email: z.string().email({
+    message: "please enter your mail address",
+  }),
 });
 
 const Enquiry = () => {
@@ -50,6 +53,7 @@ const Enquiry = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       subject: "",
+      email: "",
       message: "",
     },
   });
@@ -79,7 +83,14 @@ const Enquiry = () => {
     <AnimationWrapper className="w-full">
       <section className="my-10  bg-acccent flex items-center justify-center flex-col md:flex-row space-y-10">
         <div className="w-full flex items-center justify-center">
-          <Image src={email} alt="image" className=" w-[300px] md:w-[400px] " />
+          <Image
+            src={email}
+            alt="image"
+            width={300}
+            height={200}
+            className=" w-[300px] md:w-[400px] "
+            // fill
+          />
         </div>
         <div className="w-full">
           <Form {...form}>

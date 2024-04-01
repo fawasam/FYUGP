@@ -16,6 +16,7 @@ const Loader: FC<LoaderProps> = ({ white }: LoaderProps) => {
           src={spinnerWhite}
           alt={"spinner"}
           width={20}
+          height={20}
         />
       ) : (
         <Image
@@ -23,6 +24,7 @@ const Loader: FC<LoaderProps> = ({ white }: LoaderProps) => {
           src={spinner}
           alt={"spinner"}
           width={20}
+          height={20}
         />
       )}
     </>

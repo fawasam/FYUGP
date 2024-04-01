@@ -317,26 +317,40 @@ const ProfileDegree = () => {
                         render={({ field }) => (
                           <FormItem className="space-y-3">
                             <FormControl>
-                              <RadioGroup
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                                // value={pathway}
-                                className="flex flex-col space-y-1"
-                              >
+                              <div className="flex flex-wrap gap-4">
                                 {pathways.map((path) => (
                                   <FormItem
-                                    className="flex items-center space-x-3 space-y-0"
+                                    className="flex  items-center justify-center flex-row space-x-3 space-y-0"
                                     key={path.title}
                                   >
-                                    <FormControl>
-                                      <RadioGroupItem value={path.title} />
-                                    </FormControl>
-                                    <FormLabel className="font-normal text-[18px] ">
-                                      {path.title}
-                                    </FormLabel>
+                                    <div className="flex-col rounded-md border w-full text-center  h-50">
+                                      <label className="cursor-pointer">
+                                        <input
+                                          type="radio"
+                                          className="peer sr-only"
+                                          name="pathway"
+                                          value={path.title}
+                                          onChange={(e) => {
+                                            field.onChange(e);
+                                          }}
+                                          defaultChecked={
+                                            form.watch().pathway === path.title
+                                          }
+                                        />
+                                        <div className="w-40 max-w-xl rounded-md bg-white p-5 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-sky-600 peer-checked:ring-blue-400 peer-checked:ring-offset-2">
+                                          <div className="flex flex-col gap-1">
+                                            <div className="flex items-center justify-between">
+                                              <p className="text-sm font-semibold uppercase text-gray-500">
+                                                {path.title}
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </label>
+                                    </div>
                                   </FormItem>
                                 ))}
-                              </RadioGroup>
+                              </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -377,7 +391,7 @@ const ProfileDegree = () => {
             <section className="max-w-[1060px] m-auto   flex-grow">
               <div className="flex justify-between items-center  text-center m-auto">
                 <div className="flex justify-end">
-                  <h3 className="text-[36px] font-normal  tracking-tight py-[60px]">
+                  <h3 className="text-[36px] font-semibold  tracking-tight py-[60px]">
                     Please choose a Discipline
                   </h3>
                 </div>
@@ -388,33 +402,49 @@ const ProfileDegree = () => {
               <Form {...form}>
                 <form action="">
                   <div className="w-full space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+                    <div className="">
                       <FormField
                         control={form.control}
                         name="discipline"
+                        defaultValue={discipline}
                         render={({ field }) => (
                           <FormItem className="space-y-3">
                             <FormControl>
-                              <RadioGroup
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                                className="flex flex-col space-y-1"
-                                // value={discipline}
-                              >
-                                {disciplines.map((discipline) => (
+                              <div className="flex flex-wrap gap-4">
+                                {disciplines?.map((discipline) => (
                                   <FormItem
-                                    className="flex items-center space-x-3 space-y-0"
+                                    className="flex  items-center justify-center flex-row space-x-3 space-y-0"
                                     key={discipline}
                                   >
-                                    <FormControl>
-                                      <RadioGroupItem value={discipline} />
-                                    </FormControl>
-                                    <FormLabel className="font-normal text-[18px] ">
-                                      {discipline}
-                                    </FormLabel>
+                                    <div className=" flex-wrap flex-col rounded-md border w-50 h-50">
+                                      <label className="cursor-pointer">
+                                        <input
+                                          type="radio"
+                                          className="peer sr-only"
+                                          name="discipline"
+                                          value={discipline}
+                                          onChange={(e) => {
+                                            field.onChange(e);
+                                          }}
+                                          defaultChecked={
+                                            form.watch().discipline ===
+                                            discipline
+                                          }
+                                        />
+                                        <div className="w-40 max-w-xl rounded-md bg-white p-5 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-sky-600 peer-checked:ring-blue-400 peer-checked:ring-offset-2">
+                                          <div className="flex flex-col gap-1">
+                                            <div className="flex items-center justify-between">
+                                              <p className="text-sm font-semibold uppercase text-gray-500">
+                                                {discipline}
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </label>
+                                    </div>
                                   </FormItem>
                                 ))}
-                              </RadioGroup>
+                              </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

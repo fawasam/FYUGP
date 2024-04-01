@@ -76,7 +76,8 @@ const Cards = () => {
                 className="object-cover"
                 src={pencil}
                 alt={"pencil.svg"}
-                width={90}
+                width={100}
+                height={100}
               />
               <h2 className="font-thin mt-6">
                 Courses and Credit Structure of FYUGP

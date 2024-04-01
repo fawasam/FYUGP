@@ -27,6 +27,7 @@ const AskQns = () => {
           src={img}
           alt={"image"}
           width={200}
+          height={200}
           className="flex item-center"
         />
       </div>

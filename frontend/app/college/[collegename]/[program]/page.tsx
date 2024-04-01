@@ -107,7 +107,7 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
   };
 
   const groupCoursesBySemester = (courses: any) => {
-    const groupedCourses = {};
+    const groupedCourses: any = {};
     courses.forEach((course: any) => {
       if (!groupedCourses[course.semester]) {
         groupedCourses[course.semester] = [];
@@ -118,7 +118,7 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
   };
   const getTotalCourses = (courses: any) => {
     let uniqueCnames: any = [];
-    courses.forEach((c: any) => {
+    courses?.forEach((c: any) => {
       if (!uniqueCnames.includes(c)) {
         uniqueCnames.push(c);
       }
@@ -126,18 +126,17 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
 
     return uniqueCnames.length;
   };
-
+  const getAPrograms = async (id: any) => {
+    const response: any = await getAProgram(id);
+    setAllCourses(response?.data?.data?.program?.coursesOffered);
+    setProgram(id);
+  };
   useEffect(() => {
-    const getAPrograms = async (id: any) => {
-      const response: any = await getAProgram(id);
-      setAllCourses(response?.data?.data?.program?.coursesOffered);
-      setProgram(id);
-    };
     getAPrograms(depName);
     if (!user) {
       redirectTo("/");
     }
-  }, [depName, user, redirectTo, getAProgram]);
+  }, [user, getAProgram]);
 
   useEffect(() => {
     form.reset({
@@ -147,6 +146,8 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
       semester: semester,
     });
   }, [form, category, semester]);
+
+  console.log(allCourses);
 
   return (
     <AnimationWrapper className="w-full  sm:mt-20 mt-0">
@@ -222,6 +223,30 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
                   </TableRow>
                 )
               )}
+          </TableBody>
+        </Table>
+
+        {/* second table  */}
+        <Table className="mt-10">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="">SEMESTER</TableHead>
+              <TableHead>COURSE CODE</TableHead>
+              <TableHead>COURSE NAME</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {allCourses != null &&
+              allCourses?.length > 0 &&
+              allCourses?.map((course: any, key: any) => (
+                <TableRow key={key}>
+                  <TableCell className="font-medium">
+                    {course?.semester}
+                  </TableCell>
+                  <TableCell>{course?.course[0]?.courseCode}</TableCell>
+                  <TableCell>{course?.course[0]?.courseName}</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </section>

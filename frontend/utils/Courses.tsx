@@ -1,7 +1,7 @@
 export const Courses: any[] = [
   //science
   {
-    pathway: "Single Major Pathway",
+    pathway: "Single Major",
     discipline: "Science",
     courses: [
       {
@@ -128,7 +128,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: " Major with multiple Disciplines  Pathway",
+    pathway: " Major with multiple Disciplines ",
     discipline: "Science",
     courses: [
       {
@@ -254,7 +254,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: "Major with Minor Pathway",
+    pathway: "Major with Minor",
     discipline: "Science",
     courses: [
       {
@@ -382,7 +382,7 @@ export const Courses: any[] = [
   },
 
   {
-    pathway: "Major with Vocational Minor Pathway",
+    pathway: "Major with Vocational Minor",
     discipline: "Science",
     courses: [
       {
@@ -510,7 +510,7 @@ export const Courses: any[] = [
   },
 
   {
-    pathway: "Double Major Pathway",
+    pathway: "Double Major",
     discipline: "Science",
     courses: [
       {
@@ -638,7 +638,7 @@ export const Courses: any[] = [
   },
   // Commerce
   {
-    pathway: "Single Major Pathway",
+    pathway: "Single Major",
     discipline: "Commerce",
     courses: [
       {
@@ -765,7 +765,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: " Major with multiple Disciplines  Pathway",
+    pathway: " Major with multiple Disciplines ",
     discipline: "Commerce",
     courses: [
       {
@@ -892,7 +892,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: "Major with Minor Pathway",
+    pathway: "Major with Minor",
     discipline: "Commerce",
     courses: [
       {
@@ -1020,7 +1020,7 @@ export const Courses: any[] = [
   },
 
   {
-    pathway: "Major with Vocational Minor Pathway",
+    pathway: "Major with Vocational Minor",
     discipline: "Commerce",
     courses: [
       {
@@ -1148,7 +1148,7 @@ export const Courses: any[] = [
   },
 
   {
-    pathway: "Double Major Pathway",
+    pathway: "Double Major",
     discipline: "Commerce",
     courses: [
       {
@@ -1278,7 +1278,7 @@ export const Courses: any[] = [
   // Management
 
   {
-    pathway: "Single Major Pathway",
+    pathway: "Single Major",
     discipline: "Management",
     courses: [
       {
@@ -1405,7 +1405,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: " Major with multiple Disciplines  Pathway",
+    pathway: " Major with multiple Disciplines ",
     discipline: "Management",
     courses: [
       {
@@ -1532,7 +1532,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: "Major with Minor Pathway",
+    pathway: "Major with Minor",
     discipline: "Management",
     courses: [
       {
@@ -1660,7 +1660,7 @@ export const Courses: any[] = [
   },
 
   {
-    pathway: "Major with Vocational Minor Pathway",
+    pathway: "Major with Vocational Minor",
     discipline: "Management",
     courses: [
       {
@@ -1788,7 +1788,7 @@ export const Courses: any[] = [
   },
 
   {
-    pathway: "Double Major Pathway",
+    pathway: "Double Major",
     discipline: "Management",
     courses: [
       {
@@ -1918,7 +1918,7 @@ export const Courses: any[] = [
   // Humanities
 
   {
-    pathway: "Single Major Pathway",
+    pathway: "Single Major",
     discipline: "Humanities",
     courses: [
       {
@@ -2045,7 +2045,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: " Major with multiple Disciplines  Pathway",
+    pathway: " Major with multiple Disciplines ",
     discipline: "Humanities",
     courses: [
       {
@@ -2172,7 +2172,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: "Major with Minor Pathway",
+    pathway: "Major with Minor",
     discipline: "Humanities",
     courses: [
       {
@@ -2301,7 +2301,7 @@ export const Courses: any[] = [
   },
 
   {
-    pathway: "Major with Vocational Minor Pathway",
+    pathway: "Major with Vocational Minor",
     discipline: "Humanities",
     courses: [
       {
@@ -2429,7 +2429,7 @@ export const Courses: any[] = [
   },
 
   {
-    pathway: "Double Major Pathway",
+    pathway: "Double Major",
     discipline: "Humanities",
     courses: [
       {
@@ -2558,7 +2558,7 @@ export const Courses: any[] = [
 
   // Languages
   {
-    pathway: "Single Major Pathway",
+    pathway: "Single Major",
     discipline: "Languages",
     courses: [
       {
@@ -2685,7 +2685,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: " Major with multiple Disciplines  Pathway",
+    pathway: " Major with multiple Disciplines ",
     discipline: "Languages",
     courses: [
       {
@@ -2812,7 +2812,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: "Major with Minor Pathway",
+    pathway: "Major with Minor",
     discipline: "Languages",
     courses: [
       {
@@ -2940,7 +2940,7 @@ export const Courses: any[] = [
   },
 
   {
-    pathway: "Major with Vocational Minor Pathway",
+    pathway: "Major with Vocational Minor",
     discipline: "Languages",
     courses: [
       {
@@ -3068,7 +3068,7 @@ export const Courses: any[] = [
   },
 
   {
-    pathway: "Double Major Pathway",
+    pathway: "Double Major",
     discipline: "Languages",
     courses: [
       {

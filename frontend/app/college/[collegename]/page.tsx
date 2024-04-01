@@ -12,7 +12,7 @@ import { ListItem } from "@/components/Header";
 import Link from "next/link";
 import { useGetACollegeMutation } from "@/redux/services/collegeApi";
 import { Badge } from "@/components/ui/badge";
-
+import { Skeleton } from "@/components/ui/skeleton";
 import NoDataMessage from "@/components/common/Nodata";
 import Image from "next/image";
 
@@ -33,23 +33,28 @@ const SingleCollege = ({ params }: { params: { collegename: string } }) => {
 
   useEffect(() => {
     getCollegeData();
-  });
+  }, [getACollege]);
   return (
     <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
       <section className="max-w-[1060px] m-auto   flex-grow">
-        <div className="relative">
-          <Image
-            src={`${
-              college?.picture
-                ? college?.picture
-                : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCNw7r0CbmQXzKBodXPHKi4HdYZ_Wd9esyqHHrR8lVxA&s"
-            }`}
-            alt="image"
-            className="w-full  h-[250px] object-cover rounded-sm"
-          />
+        <div className="relative w-full h-[250px]">
+          {college?.picture ? (
+            <Image
+              src={college?.picture}
+              alt="image"
+              className="w-full  h-[250px] object-cover rounded-sm"
+              fill
+            />
+          ) : (
+            <Skeleton className=" w-full h-[250px] rounded-sm" />
+          )}
         </div>
-        <div>
-          <h1 className="text-2xl mt-4 font-bold">{college?.collegename}</h1>
+        <div className="w-full">
+          {college?.collegename ? (
+            <h1 className="text-2xl mt-4 font-bold">{college?.collegename}</h1>
+          ) : (
+            <Skeleton className=" w-[20px] h-[20px] rounded-sm ,mt-4" />
+          )}
 
           <i className="fi  fi-rr-marker mr-2"></i>
           <span className="text-md  font-thin">{college?.place}</span>

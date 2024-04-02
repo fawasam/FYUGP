@@ -150,7 +150,7 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
   console.log(allCourses);
 
   return (
-    <AnimationWrapper className="w-full  sm:mt-20 mt-0">
+    <AnimationWrapper className="w-full  sm:mt-20 mt-0 my-6">
       <section className="max-w-[1060px] m-auto   flex-grow">
         <div className="flex items-center justify-between text-center flex-row ">
           <h1 className="max-md:hidden mb-4 text-3xl text-center">
@@ -161,7 +161,7 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
         </div>
 
         {/* table of content  */}
-        <Table className="mt-10">
+        <Table className="mt-10 ">
           <TableCaption>
             A list of courses offerde by {depName} department.
           </TableCaption>

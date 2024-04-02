@@ -101,15 +101,15 @@ const SideNav: React.FC | any = () => {
                   <span className="bg-red w-2 h-2 rounded-full absolute z-10 top-0 right-0 "></span>
                 )} */}
               </div>
-              My degree
+              My Degree
             </Link>
             <Link
-              href={"/editor"}
+              href={`/profile/${user?.role}/${user?.username}/dashboard/courses`}
               onClick={(e: any) => setPageState(e.target.innerText)}
               className="sidebar-link"
             >
               <i className="fi fi-rr-file-edit"></i>
-              Write
+              My Courses
             </Link>
 
             <h1 className="text-xl text-dark-grey mb-3 mt-20">Settings</h1>

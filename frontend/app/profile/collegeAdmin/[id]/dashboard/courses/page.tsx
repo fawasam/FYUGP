@@ -47,11 +47,11 @@ const Courses = () => {
   const [getAllProgramByCollege] = useGetAllProgramByCollegeMutation();
   const handleOpenDialog = () => {};
 
+  const getAllCoursesByProgram = async () => {
+    const res: any = await getAllProgramByCollege({ id: user?.college });
+    setCourses(res?.data?.data?.programs);
+  };
   useEffect(() => {
-    const getAllCoursesByProgram = async () => {
-      const res = await getAllProgramByCollege({ id: user?.college });
-      setCourses(res?.data?.data?.programs);
-    };
     getAllCoursesByProgram();
     if (!user) {
       redirectTo("/");

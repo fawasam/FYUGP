@@ -12,6 +12,7 @@ import { updateUser } from "@/redux/features/authSlice";
 import Faq from "@/components/Faq";
 import AskQns from "@/components/AskQns";
 import Enquiry from "@/components/Enquiry";
+import HowItWorks from "@/components/HowItWorks";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ export default function Home() {
   }, [getMe]);
 
   return (
-    <main className=" pt-24 ">
+    <main className="  ">
       <AnimationWrapper className="sm:w-[70%] w-[90%] m-auto min-h-[100vh]">
         <div className="flex flex-col  sm:flex-row justify-between h-1/2 m-auto w-full">
           <div className="sm:w-1/2 w-full space-y-6">
@@ -63,6 +64,7 @@ export default function Home() {
         </div>
         <div>
           <Cards />
+          <HowItWorks />
           <AskQns />
           <Enquiry />
           {/* <Faq /> */}

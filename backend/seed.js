@@ -21,7 +21,7 @@ async function seedCollegeData(products) {
       });
 
     // Clear existing product data (optional, adjust based on your needs)
-    await College.deleteMany({});
+    // await College.deleteMany({});
 
     // Seed data
     await College.insertMany(products);
@@ -51,18 +51,7 @@ const collegeData = [
     user: "65f6e048d1e3e6b6ab6ab4dd",
     picture: "http://localhost:3000/uploads\\1707665633053.jpg",
   },
-  {
-    collegename: "FAROOK COLLEGE, AUTONOMOUS",
-    type: "Government-aided",
-    place: "FAROOK COLLEGE",
-    pincode: "673603",
-    phone: "0495 244 0660",
-    email: "mail@farookcollege.ac.in",
-    website: "https://www.farookcollege.ac.in/",
-    departments: [],
-    user: "65f6e048d1e3e6b6ab6ab4dd",
-    picture: "http://localhost:3000/uploads\\1707666692067.png",
-  },
+
   {
     collegename: "St. Josephs College Devagiri (Autonomous)",
     type: "Government-aided",

@@ -135,7 +135,14 @@ export const getAllProgramByCollege = asyncErrorHandler(
   async (req, res, next) => {
     const collegeId = req.params.collegeId;
 
-    const college = await College.findById(collegeId);
+    const isObjectId = mongoose.Types.ObjectId.isValid(collegeId);
+    let college;
+
+    if (isObjectId) {
+      college = await College.findById(collegeId);
+    } else {
+      college = await College.findOne({ collegename: collegeId });
+    }
 
     if (!college) {
       const error = new CustomError("College not found", 404);
@@ -143,7 +150,7 @@ export const getAllProgramByCollege = asyncErrorHandler(
     }
     const programs = await Department.find({
       _id: { $in: college.departments },
-    });
+    }).populate("coursesOffered");
 
     res.status(200).json({
       status: "success",

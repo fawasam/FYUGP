@@ -28,7 +28,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Courses } from "@/utils/Courses";
+// import { Courses } from "@/utils/Courses";
 
 const Dashboard = () => {
   const { toast } = useToast();
@@ -52,7 +52,17 @@ const Dashboard = () => {
       redirectTo("/");
     }
   }, [userData, dispatch, router, user]);
-
+  const {
+    degree_info: {
+      courses,
+      currentCollege,
+      discipline,
+      pathway,
+      total_course_enrolled,
+      total_credits_earned,
+    },
+  } = user;
+  console.log(courses);
   return (
     <>
       <AnimationWrapper className="w-full h-full  pt-[40px] sm:pt-[100px] ">
@@ -67,7 +77,7 @@ const Dashboard = () => {
             {/* table of content  */}
             <Table className="">
               <TableCaption>
-                {`A list of course are assigned for ${user?.degree_info?.pathway} in ${user?.degree_info?.discipline} program.`}
+                {`A list of course are assigned for ${pathway} in ${discipline} program.`}
               </TableCaption>
               <TableHeader className="border-foreground">
                 <TableRow className="border-foreground">
@@ -79,27 +89,34 @@ const Dashboard = () => {
                   <TableHead>VAC</TableHead>
                   <TableHead className="px-2">Total Courses</TableHead>
                   <TableHead className="px-2">Total Credits</TableHead>
+                  <TableHead className="px-2">Total Hrs/week</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {Courses != null &&
-                  Courses.length > 0 &&
-                  Courses.map((data, key) => (
-                    <>
-                      {data?.courses?.map((course: any, key2: any) => (
-                        <TableRow key={key + "-" + key2}>
-                          <TableCell>{course?.semester}</TableCell>
-                          <TableCell>{course?.DSC}</TableCell>
-                          <TableCell>{course?.AEC}</TableCell>
-                          <TableCell>{course?.SEC}</TableCell>
-                          <TableCell>{course?.MDC}</TableCell>
-                          <TableCell>{course?.VAC}</TableCell>
-                          <TableCell>{course?.total_courses}</TableCell>
-                          <TableCell>{course?.total_credits}</TableCell>
-                        </TableRow>
-                      ))}
-                    </>
-                  ))}
+                {courses != null && courses.length > 0 && (
+                  // courses
+                  //   .filter(
+                  //     (course: any) =>
+                  //       course.pathway === user?.degree_info?.pathway &&
+                  //       course.discipline === user?.degree_info?.discipline
+                  //   )
+                  //   .map((data: any, key: any) => (
+                  <>
+                    {courses?.map((course: any, key2: any) => (
+                      <TableRow key={key2}>
+                        <TableCell>{course?.semester}</TableCell>
+                        <TableCell>{course?.DSC}</TableCell>
+                        <TableCell>{course?.AEC}</TableCell>
+                        <TableCell>{course?.SEC}</TableCell>
+                        <TableCell>{course?.MDC}</TableCell>
+                        <TableCell>{course?.VAC}</TableCell>
+                        <TableCell>{course?.total_courses}</TableCell>
+                        <TableCell>{course?.total_credits}</TableCell>
+                        <TableCell>{course?.total_hrs_week}</TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                )}
               </TableBody>
             </Table>
             <div>
@@ -136,24 +153,32 @@ const Dashboard = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {Courses != null &&
-                      Courses.length > 0 &&
-                      Courses.map((data, key) => (
-                        <>
-                          {data?.courses_after_six_sem?.map(
-                            (course: any, key2: any) => (
-                              <TableRow key={key + "-" + key2}>
-                                <TableCell>{course?.semester}</TableCell>
-                                <TableCell>{course?.DSC}</TableCell>
-                                <TableCell>{course?.nature}</TableCell>
-                                <TableCell>{course?.total_courses}</TableCell>
-                                <TableCell>{course?.total_credits}</TableCell>
-                                <TableCell>{course?.total_hrs_week}</TableCell>
-                              </TableRow>
-                            )
-                          )}
-                        </>
-                      ))}
+                    {courses != null &&
+                      courses.length > 0 &&
+                      courses
+                        .filter(
+                          (course: any) =>
+                            course.pathway === user?.degree_info?.pathway &&
+                            course.discipline === user?.degree_info?.discipline
+                        )
+                        .map((data: any, key: any) => (
+                          <>
+                            {data?.courses_after_six_sem?.map(
+                              (course: any, key2: any) => (
+                                <TableRow key={key + "-" + key2}>
+                                  <TableCell>{course?.semester}</TableCell>
+                                  <TableCell>{course?.DSC}</TableCell>
+                                  <TableCell>{course?.nature}</TableCell>
+                                  <TableCell>{course?.total_courses}</TableCell>
+                                  <TableCell>{course?.total_credits}</TableCell>
+                                  <TableCell>
+                                    {course?.total_hrs_week}
+                                  </TableCell>
+                                </TableRow>
+                              )
+                            )}
+                          </>
+                        ))}
                   </TableBody>
                 </Table>
               </>

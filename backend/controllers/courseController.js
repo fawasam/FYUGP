@@ -164,6 +164,32 @@ export const getAllCourseByProgram = asyncErrorHandler(
   }
 );
 
+// @desc    getAllCourseByProgram  offered by a college
+// @route   GET /api/v1/college/program/course/programId
+// @access  Public
+
+// export const getAllCourseBySemester = asyncErrorHandler(
+//   async (req, res, next) => {
+//     const programId = req.params.programId;
+
+//     const program = await Department.findById(programId);
+
+//     if (!program) {
+//       const error = new CustomError("Program not found", 404);
+//       return next(error);
+//     }
+//     const course = await Course.find({
+//       _id: { $in: program.coursesOffered },
+//     });
+
+//     res.status(200).json({
+//       status: "success",
+//       result: course.length,
+//       data: { course },
+//     });
+//   }
+// );
+
 export const mergeSimilarCourse = asyncErrorHandler(async (req, res, next) => {
   // Query documents with the same semester and category
   const documents = await Course.aggregate([

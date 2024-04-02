@@ -33,10 +33,9 @@ export const collegeApi = createApi({
       }),
     }),
     getAllCollege: builder.mutation<any, any>({
-      query: (data) => ({
+      query: () => ({
         url: "",
         method: "GET",
-        headers: {},
       }),
     }),
     getACollege: builder.mutation<any, any>({

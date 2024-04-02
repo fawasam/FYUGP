@@ -25,7 +25,7 @@ const WhatIsFYUGP = () => {
   };
 
   return (
-    <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
+    <AnimationWrapper className="w-full   m-auto py-[20px] relative">
       <section className="max-w-[1060px] m-auto   flex-grow">
         <div className="sm:flex block items-center justify-center min-h-[240px] w-full bg-accent text-center rounded-sm">
           <div className="flex justify-center items-center">

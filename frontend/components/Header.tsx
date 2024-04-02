@@ -98,8 +98,8 @@ const Header = () => {
     },
   ];
   return (
-    <header className="mt-8 sm:w-[75%] w-[90%] m-auto pb-6 border-b">
-      <div className="flex items-center justify-between ">
+    <header className="pt-8  w-full m-auto pb-8 border-b flex-no-wrap fixed top-0 z-10  shadow-md shadow-black/5 lg:flex-wrap lg:justify-start  bg-background">
+      <div className="flex items-center justify-between  sm:w-[75%] w-[85%] m-auto">
         <Link href={"/"}>
           <h2 className="font-light">TrackMyDegree</h2>
         </Link>
@@ -112,7 +112,7 @@ const Header = () => {
                 </span>
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[700px] lg:grid-cols-[.75fr_1fr] h-full md:h-[400px] ">
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <Link
@@ -132,19 +132,25 @@ const Header = () => {
                     href={"/learn/design-of-fyugp"}
                     title="Design of CU-FYUGP"
                   >
-                    Re-usable components built using Radix UI and Tailwind CSS.
+                    (CU-FYUGP) includes various components and options for
+                    students to tailor their academic journey based on their
+                    interests and goals. Here are some key aspects of the design
                   </ListItem>
                   <ListItem
                     href={"/learn/different-academic-pathways"}
                     title="Different Academic Pathways"
                   >
-                    How to install dependencies and structure your app.
+                    (CU-FYUGP) offers different academic pathways for students
+                    to customize their educational experience based on their
+                    interests and career goals
                   </ListItem>
                   <ListItem
                     href={"/learn/courses-and-credits"}
                     title="Course and Credit Structure"
                   >
-                    Styles for headings, paragraphs, lists...etc
+                    (CUFYUGP) involve various components and guidelines to
+                    ensure a comprehensive and structured academic experience
+                    for students.
                   </ListItem>
                 </ul>
               </NavigationMenuContent>
@@ -154,7 +160,7 @@ const Header = () => {
                 <span className="dark:text-white text-gray-500 ">Degree</span>
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                <ul className="grid w-[400px] gap-3 p-4 md:w-[700px] md:grid-cols-2 lg:w-[600px]  h-full md:h-[400px]">
                   {components.map((component) => (
                     <ListItem
                       key={component.title}
@@ -167,16 +173,38 @@ const Header = () => {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-            {/* colleges  */}
-            {/* <NavigationMenuItem>
-              <Link href="/college" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  <span className="dark:text-white text-gray-500 ">
-                    Colleges
-                  </span>
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem> */}
+            {user?.role == "user" ? (
+              <>
+                {/* <NavigationMenuItem>
+                  <Link
+                    href={`/profile/${user?.username}/degree`}
+                    legacyBehavior
+                    passHref
+                  >
+                    <NavigationMenuLink
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      <span className="dark:text-white text-gray-500 ">
+                        TrackYour Degree
+                      </span>
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem> */}
+                <NavigationMenuItem>
+                  <Link href={`/learn/ask`} legacyBehavior passHref>
+                    <NavigationMenuLink
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      <span className="dark:text-white text-gray-500 ">
+                        Aks me
+                      </span>
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              </>
+            ) : (
+              ""
+            )}
             <NavigationMenuItem>
               <Link href="/faq" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -193,38 +221,6 @@ const Header = () => {
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
-            {user?.role == "user" ? (
-              <>
-                <NavigationMenuItem>
-                  <Link
-                    href={`/profile/${user?.username}/degree`}
-                    legacyBehavior
-                    passHref
-                  >
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      <span className="dark:text-white text-gray-500 ">
-                        TrackYour Degree
-                      </span>
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <Link href={`/learn/ask`} legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      <span className="dark:text-white text-gray-500 ">
-                        Aks me
-                      </span>
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              </>
-            ) : (
-              ""
-            )}
           </NavigationMenuList>
         </NavigationMenu>
 

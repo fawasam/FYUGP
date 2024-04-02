@@ -8,8 +8,8 @@ import Link from "next/link";
 const Cards = () => {
   return (
     <div className="my-24 m-auto items-center">
-      <h2 className="my-6 text-3xl font-semibold underline-offset-1">
-        Learn through these Steps...
+      <h2 className="my-6 text-3xl font-semibold underline-offset-1 text-center mb-10">
+        Learn through these Steps
       </h2>
       <div className="grid  lg:grid-cols-4 md:grid-cols-2 grid-cols-1 md:gap-6  gap-2 m-auto ">
         <div className=" card  text-center border">

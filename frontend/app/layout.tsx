@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={poppins.className + "min-h-[800px]"}>
+      <body className={poppins.className + "min-h-[800px] "}>
         <Providers>
           <ThemeProvider
             attribute="class"
@@ -43,7 +43,7 @@ export default function RootLayout({
             {/* <div className="mt-8 sm:w-[75%] w-[90%] m-auto pb-6 ">
               <BreadcrumbSeperator />
             </div> */}
-            {children}
+            <div className="pt-44">{children}</div>
             <div className="static bottom-0">
               <Footer />
             </div>

@@ -57,7 +57,19 @@ const userSchema = mongoose.Schema(
       currentCollege: String,
       pathway: { type: String },
       discipline: { type: String },
-      courses: { type: [String], default: null },
+      courses: [
+        {
+          semester: String,
+          DSC: [String],
+          AEC: [String],
+          SEC: [String],
+          MDC: [String],
+          VAC: [String],
+          courses_count: Number,
+          credits_count: Number,
+          hrs_work_count: Number,
+        },
+      ],
       total_credits_earned: {
         type: Number,
         default: 0,
@@ -88,6 +100,25 @@ const userSchema = mongoose.Schema(
     },
   }
 );
+
+userSchema.pre("save", function (next) {
+  if (this.isNew) {
+    for (let i = 1; i <= 6; i++) {
+      this.degree_info.courses.push({
+        semester: i.toString(),
+        DSC: [],
+        AEC: [],
+        SEC: [],
+        MDC: [],
+        VAC: [],
+        courses_count: 0,
+        credits_count: 0,
+        hrs_work_count: 0,
+      });
+    }
+  }
+  next();
+});
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();

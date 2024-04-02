@@ -151,11 +151,10 @@ export const addcourse = asyncErrorHandler(async (req, res, next) => {
 // @access  Public
 
 export const getAllColleges = asyncErrorHandler(async (req, res, next) => {
-  const colleges = await College.find();
-  // .populate({
-  //   path: "departments",
-  //   populate: { path: "coursesOffered" },
-  // });
+  const colleges = await College.find().populate({
+    path: "departments",
+    populate: { path: "coursesOffered" },
+  });
   res.status(200).json({
     status: "success",
     result: colleges.length,

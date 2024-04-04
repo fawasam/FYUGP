@@ -57,6 +57,7 @@ const userSchema = mongoose.Schema(
       currentCollege: String,
       pathway: { type: String },
       discipline: { type: String },
+      program: { type: String },
       courses: [
         {
           semester: String,
@@ -92,7 +93,7 @@ const userSchema = mongoose.Schema(
       type: String,
       default: `${process.env.SERVER_URL}/uploads/default_dp.webp`,
     },
-    active: { type: Boolean, default: true, select: false },
+    active: { type: Boolean, default: true },
   },
   {
     timestamps: {

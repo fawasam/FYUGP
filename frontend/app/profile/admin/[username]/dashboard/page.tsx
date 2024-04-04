@@ -65,26 +65,24 @@ const AdminDashboard = () => {
         </h1>
         <div className="">
           <ul className=" mt-12 grid w-[400px] gap-3 p-4 md:w-[500px] lg:grid-cols-4 md:grid-cols-2 lg:w-[900px] ">
-            {components.map((component) => (
-              <li
-                key={component.title}
-                // className={`bg-[${component.bgColor}] rounded-xl py-4 px-2`}
-              >
-                <Link
-                  href={component.href}
-                  className={`items-center py-4 justify-center select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors bg-accent hover:bg-[#DAE9F0] hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex `}
-                >
-                  <span className="w-10 h-10 rounded-full text-center  flex item-center justify-center">
-                    <i
-                      className={component.icon + " text-xl mt-2 font-bold"}
-                    ></i>
-                  </span>
-                  <div className="ml-2 text-lg  font-medium leading-none">
-                    {component.title}
-                  </div>
-                </Link>
-              </li>
-            ))}
+            {components &&
+              components.map((component) => (
+                <li key={component.title}>
+                  <Link
+                    href={component.href}
+                    className={`items-center py-4 justify-center select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors bg-background  hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex `}
+                  >
+                    <span className="w-10 h-10 rounded-full text-center  flex item-center justify-center">
+                      <i
+                        className={component.icon + " text-xl mt-2 font-bold"}
+                      ></i>
+                    </span>
+                    <div className="ml-2 text-lg  font-medium leading-none">
+                      {component.title}
+                    </div>
+                  </Link>
+                </li>
+              ))}
           </ul>
         </div>
       </section>

@@ -34,10 +34,12 @@ export default function Home() {
   return (
     <main className="  ">
       <AnimationWrapper className="sm:w-[70%] w-[90%] m-auto min-h-[100vh]">
-        <div className="flex flex-col  sm:flex-row justify-between h-1/2 m-auto w-full">
-          <div className="sm:w-1/2 w-full space-y-6">
-            <h1 className="text-6xl font-bold ">YOUR DEGREE TRACKER</h1>
-            <p className="text-slate-700 text-lg leading-8">
+        <div className="flex flex-col  sm:flex-row justify-between h-1/2 m-auto w-full mt-16">
+          <div className="sm:w-1/2 w-full space-y-6 ">
+            <h1 className="text-6xl font-bold  font-display">
+              YOUR DEGREE TRACKER
+            </h1>
+            <p className=" text-lg leading-8 font-body">
               The TrackYourDegree is designed to assist students in monitoring,
               guiding and managing their academic progress during their fourth
               year of undergraduate studies
@@ -66,7 +68,7 @@ export default function Home() {
           <Cards />
           <HowItWorks />
           <AskQns />
-          <Enquiry />
+          {/* <Enquiry /> */}
           {/* <Faq /> */}
         </div>
       </AnimationWrapper>

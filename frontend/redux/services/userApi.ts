@@ -57,10 +57,10 @@ export const userApi = createApi({
         },
       }),
     }),
-    deleteMe: builder.mutation<void, deleteMeFormData>({
-      query: () => ({
-        url: "/user/deleteMe",
-        method: "GET",
+    deleteUser: builder.mutation<void, { id: any }>({
+      query: ({ id }) => ({
+        url: `/user/${id}`,
+        method: "DELETE",
         headers: {
           Authorization: `Bearer ${loadUserFromStorage().token}`,
         },
@@ -76,6 +76,15 @@ export const userApi = createApi({
         },
       }),
     }),
+    activeUser: builder.mutation<void, { id: any }>({
+      query: ({ id }) => ({
+        url: `/user/${id}/active`,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -84,5 +93,6 @@ export const {
   useGetAllUsersMutation,
   useUpdateMeMutation,
   useGetMeMutation,
-  useDeleteMeMutation,
+  useDeleteUserMutation,
+  useActiveUserMutation,
 } = userApi;

@@ -107,11 +107,12 @@ export const getMe = asyncErrorHandler(async (req, res, next) => {
 });
 
 // @desc    DeleteUser
-// @route   GET /api/v1/user/:id
+// @route   DELETE /api/v1/user/:id
 // @access  Public
 
 export const deleteUser = asyncErrorHandler(async (req, res, next) => {
   const { userId } = req.params;
+  console.log(userId);
 
   const deletedUser = await User.findByIdAndDelete(userId);
 
@@ -119,5 +120,27 @@ export const deleteUser = asyncErrorHandler(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: { deletedUser },
+  });
+});
+
+// @desc    DeleteUser
+// @route   DELETE /api/v1/user/:id
+// @access  Public
+
+export const activeUser = asyncErrorHandler(async (req, res, next) => {
+  const { userId } = req.params;
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    const error = new CustomError("user not found", 404);
+    return next(error);
+  }
+
+  user.active = !user.active;
+  await user.save();
+  res.status(200).json({
+    status: "success",
+    data: user.active,
   });
 });

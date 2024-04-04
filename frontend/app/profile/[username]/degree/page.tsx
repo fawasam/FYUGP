@@ -20,7 +20,10 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import AnimationWrapper from "@/components/common/page-animation";
 import { useEffect, useState } from "react";
-import { useCreateCollegeMutation } from "@/redux/services/collegeApi";
+import {
+  useCreateCollegeMutation,
+  useGetAllCollegeMutation,
+} from "@/redux/services/collegeApi";
 import axios from "axios";
 import { setCollege } from "@/redux/features/collegeSlice";
 import { useRouter } from "next/navigation";
@@ -69,12 +72,13 @@ const ProfileDegree = () => {
   const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const router = useRouter();
+  const [collegeName, setCollegeName] = useState<any[]>([]);
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
   const [updateMe] = useUpdateMeMutation();
   const [getMe] = useGetMeMutation();
-
+  const [getAllCollege] = useGetAllCollegeMutation();
   let {
     fullname,
     place,
@@ -127,11 +131,19 @@ const ProfileDegree = () => {
     }
   };
 
+  const getAllCollegeName = async () => {
+    const res: any = await getAllCollege("");
+
+    setCollegeName(res?.data?.data?.colleges);
+  };
+  console.log(collegeName);
+
   useEffect(() => {
+    getAllCollegeName();
     if (!user) {
       redirectTo("/");
     }
-  }, [dispatch, router, user, redirectTo]);
+  }, [dispatch, router, user]);
 
   useEffect(() => {
     form.reset({
@@ -154,7 +166,7 @@ const ProfileDegree = () => {
             <section className="max-w-[1060px] m-auto   flex-grow">
               <div className="flex justify-between items-center  text-center m-auto">
                 <div className="flex justify-end">
-                  <h3 className="text-[36px] font-normal  tracking-tight py-[60px]">
+                  <h3 className="text-[36px] font-semibold  tracking-tight py-[60px]">
                     Add your Personal Information
                   </h3>
                 </div>
@@ -193,7 +205,7 @@ const ProfileDegree = () => {
                             <FormLabel>Place</FormLabel>
                             <FormControl>
                               <Input
-                                icon={"fi fi-rr-at"}
+                                icon={"fi fi-rr-marker"}
                                 placeholder="place"
                                 defaultValue={place}
                                 {...field}
@@ -210,7 +222,7 @@ const ProfileDegree = () => {
                         name="district"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>district</FormLabel>
+                            <FormLabel>District</FormLabel>
                             <Select
                               onValueChange={field.onChange}
                               defaultValue={district}
@@ -221,6 +233,7 @@ const ProfileDegree = () => {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
+                                <i className="fi fi-rr-marker"></i>
                                 {districts.map((dist) => (
                                   <SelectItem key={dist} value={dist}>
                                     {dist}
@@ -240,14 +253,26 @@ const ProfileDegree = () => {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>College</FormLabel>
-                            <FormControl>
-                              <Input
-                                icon={"fi fi-rr-at"}
-                                placeholder="Add college if enrolled"
-                                defaultValue={currentCollege}
-                                {...field}
-                              />
-                            </FormControl>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={form.getValues("currentCollege")}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select your College " />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {collegeName.map((c) => (
+                                  <SelectItem
+                                    key={c.collegename}
+                                    value={c.collegename}
+                                  >
+                                    {c.collegename}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -299,7 +324,7 @@ const ProfileDegree = () => {
             <section className="max-w-[1060px] m-auto   flex-grow">
               <div className="flex justify-between items-center  text-center m-auto">
                 <div className="flex justify-end">
-                  <h3 className="text-[36px] font-normal  tracking-tight py-[60px]">
+                  <h3 className="text-[36px] font-semibold  tracking-tight py-[60px]">
                     Please choose a pathway
                   </h3>
                 </div>
@@ -310,20 +335,20 @@ const ProfileDegree = () => {
               <Form {...form}>
                 <form>
                   <div className="w-full space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+                    <div className=" ">
                       <FormField
                         control={form.control}
                         name="pathway"
                         render={({ field }) => (
                           <FormItem className="space-y-3">
                             <FormControl>
-                              <div className="flex flex-wrap gap-4">
+                              <div className=" flex-wrap gap-4 flex ">
                                 {pathways.map((path) => (
                                   <FormItem
-                                    className="flex  items-center justify-center flex-row space-x-3 space-y-0"
+                                    className=" flex-row space-y-0"
                                     key={path.title}
                                   >
-                                    <div className="flex-col rounded-md border w-full text-center  h-50">
+                                    <div className="flex-col rounded-md border w-max  h-50">
                                       <label className="cursor-pointer">
                                         <input
                                           type="radio"
@@ -337,13 +362,11 @@ const ProfileDegree = () => {
                                             form.watch().pathway === path.title
                                           }
                                         />
-                                        <div className="w-40 max-w-xl rounded-md bg-white p-5 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-sky-600 peer-checked:ring-blue-400 peer-checked:ring-offset-2">
+                                        <div className="w-fit max-w-xl rounded-md bg-white p-5 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-sky-600 peer-checked:ring-blue-400 peer-checked:ring-offset-2">
                                           <div className="flex flex-col gap-1">
-                                            <div className="flex items-center justify-between">
-                                              <p className="text-sm font-semibold uppercase text-gray-500">
-                                                {path.title}
-                                              </p>
-                                            </div>
+                                            <p className="text-sm font-semibold uppercase text-gray-500">
+                                              {path.title}
+                                            </p>
                                           </div>
                                         </div>
                                       </label>
@@ -359,7 +382,7 @@ const ProfileDegree = () => {
                     </div>
                   </div>
                 </form>
-                <div className=" flex justify-end">
+                <div className=" flex justify-end mt-10">
                   <Button
                     className="btn-dark w-auto px-10  mt-4"
                     variant={"outline"}
@@ -410,13 +433,13 @@ const ProfileDegree = () => {
                         render={({ field }) => (
                           <FormItem className="space-y-3">
                             <FormControl>
-                              <div className="flex flex-wrap gap-4">
+                              <div className=" flex-wrap gap-4 flex">
                                 {disciplines?.map((discipline) => (
                                   <FormItem
-                                    className="flex  items-center justify-center flex-row space-x-3 space-y-0"
+                                    className=" flex-row  space-y-0"
                                     key={discipline}
                                   >
-                                    <div className=" flex-wrap flex-col rounded-md border w-50 h-50">
+                                    <div className=" flex-wrap flex-col rounded-md border w-fit h-50">
                                       <label className="cursor-pointer">
                                         <input
                                           type="radio"
@@ -433,8 +456,8 @@ const ProfileDegree = () => {
                                         />
                                         <div className="w-40 max-w-xl rounded-md bg-white p-5 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-sky-600 peer-checked:ring-blue-400 peer-checked:ring-offset-2">
                                           <div className="flex flex-col gap-1">
-                                            <div className="flex items-center justify-between">
-                                              <p className="text-sm font-semibold uppercase text-gray-500">
+                                            <div className="flex items-center justify-center">
+                                              <p className="text-center text-sm font-semibold uppercase text-gray-500">
                                                 {discipline}
                                               </p>
                                             </div>
@@ -453,7 +476,7 @@ const ProfileDegree = () => {
                     </div>
                   </div>
                 </form>
-                <div className=" flex justify-end">
+                <div className=" flex justify-end mt-10 ">
                   <Button
                     className="btn-dark w-auto px-10  mt-4"
                     variant={"outline"}
@@ -491,9 +514,9 @@ const ProfileDegree = () => {
   };
 
   return (
-    <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
+    <AnimationWrapper className="w-full  sm:p-[60px] pt-0 m-auto sm:pb-[5%] pb-[20px] relative">
       <section className="max-w-[1060px] m-auto   flex-grow">
-        <div className="sm:flex flex items-center justify-center min-h-[240px] w-full bg-accent text-center rounded-sm">
+        <div className="bg-background  flex items-center justify-center min-h-[240px] w-full text-center rounded-sm">
           <div className="flex justify-center items-center">
             <h1 className="md:text-[48px] text-[36px] font-bold tracking-tighter text-center ">
               Lets go through your degree

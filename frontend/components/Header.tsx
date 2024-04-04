@@ -98,18 +98,16 @@ const Header = () => {
     },
   ];
   return (
-    <header className="pt-8  w-full m-auto pb-8 border-b flex-no-wrap fixed top-0 z-10  shadow-md shadow-black/5 lg:flex-wrap lg:justify-start  bg-background">
+    <header className="pt-8  w-full m-auto pb-8 border-b flex-no-wrap fixed top-0 z-20  shadow-md shadow-black/5 lg:flex-wrap lg:justify-start  bg-background">
       <div className="flex items-center justify-between  sm:w-[75%] w-[85%] m-auto">
         <Link href={"/"}>
-          <h2 className="font-light">TrackMyDegree</h2>
+          <h2 className=" text-base font-bold">TrackMyDegree</h2>
         </Link>
         <NavigationMenu className="hidden space-x-4 sm:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger className="">
-                <span className="dark:text-white text-gray-500 ">
-                  Getting Started
-                </span>
+                <span className="  text-base">Getting Started</span>
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[700px] lg:grid-cols-[.75fr_1fr] h-full md:h-[400px] ">
@@ -157,7 +155,7 @@ const Header = () => {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuTrigger>
-                <span className="dark:text-white text-gray-500 ">Degree</span>
+                <span className="  text-base">Degree</span>
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-4 md:w-[700px] md:grid-cols-2 lg:w-[600px]  h-full md:h-[400px]">
@@ -195,9 +193,7 @@ const Header = () => {
                     <NavigationMenuLink
                       className={navigationMenuTriggerStyle()}
                     >
-                      <span className="dark:text-white text-gray-500 ">
-                        Aks me
-                      </span>
+                      <span className=" text-[16px]">Aks me</span>
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
@@ -208,16 +204,14 @@ const Header = () => {
             <NavigationMenuItem>
               <Link href="/faq" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  <span className="dark:text-white text-gray-500 ">FAQ</span>
+                  <span className=" text-base">FAQ</span>
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link href="/contact" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  <span className="dark:text-white text-gray-500 ">
-                    Contact
-                  </span>
+                  <span className=" text-base">Contact</span>
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
@@ -365,7 +359,7 @@ export const ListItem = React.forwardRef<
             )}
             {...props}
           >
-            <div className="text-sm font-medium leading-none">{title}</div>
+            <div className="text-base font-medium leading-none">{title}</div>
             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
               {children}
             </p>

@@ -34,6 +34,17 @@ const AskQns = () => {
     //   dispatch(setCollege(response?.data));
     // }
   };
+  const [messages, setMessages] = useState<any[]>([]);
+  const [inputValue, setInputValue] = useState("");
+
+  const handleMessageSend = () => {
+    if (inputValue.trim() !== "") {
+      setMessages([...messages, { text: inputValue, sender: "user" }]);
+      // Here you can send the user's message to ChatGPT for processing
+      // and handle the response accordingly
+      setInputValue("");
+    }
+  };
 
   useEffect(() => {
     if (!user) {
@@ -41,16 +52,56 @@ const AskQns = () => {
     }
   }, [user, dispatch, router]);
   return (
-    <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
+    <AnimationWrapper className="sm:w-[70%] w-[90%] m-auto min-h-[100vh]  py-[20px]">
       <section className="max-w-[1060px] m-auto   flex-grow">
-        <div className="sm:flex flex items-center justify-center min-h-[240px] w-full bg-accent text-center rounded-sm">
+        <div className=" flex items-center justify-center min-h-[240px] w-full bg-background text-center rounded-sm">
           <div className="flex justify-center items-center">
             <h1 className="md:text-[48px] text-[36px] font-bold tracking-tighter text-center ">
               Ask about FourthYearDegree
             </h1>
           </div>
         </div>
-        <div className=" w-full mt-6">
+        <div className="flex flex-col h-screen border rounded-sm mt-4">
+          <div className="flex-1 p-4 overflow-y-auto">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`flex justify-${
+                  message.sender === "user" ? "end" : "start"
+                } mb-2`}
+              >
+                <div
+                  className={`bg-${
+                    message.sender === "user" ? "blue" : "green"
+                  }-500 text-white py-2 px-4 rounded-lg max-w-xs`}
+                >
+                  {message.text}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="p-4 flex items-center">
+            <input
+              type="text"
+              className="flex-1 py-2 px-4 border rounded-full mr-4 focus:outline-none"
+              placeholder="Type your message..."
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleMessageSend();
+                }
+              }}
+            />
+            <Button
+              className=" text-white py-2 px-6 rounded-full"
+              onClick={handleMessageSend}
+            >
+              Send
+            </Button>
+          </div>
+        </div>
+        {/* <div className=" w-full mt-6">
           <div className="flex w-full">
             <Input
               type="text"
@@ -65,7 +116,7 @@ const AskQns = () => {
           <div>
             <span>{question}</span>
           </div>
-        </div>
+        </div> */}
       </section>
     </AnimationWrapper>
   );

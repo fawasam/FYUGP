@@ -6,6 +6,7 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
+    --bg2: #f0f7ff;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -74,6 +75,7 @@
   }
   .dark {
     --background: 240 10% 3.9%;
+    --bg2: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
@@ -100,7 +102,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-normal;
+    @apply bg-bg2 text-foreground font-normal;
   }
 
   i {
@@ -109,8 +111,11 @@
   /* img {
     @apply w-full h-full object-cover;
   } */
+  .content-container {
+    @apply sm:mt-[calc(100%_-_93%)]  mt-[calc(100%_-_70%)];
+  }
   .card {
-    @apply m-auto max-w-[250px] h-[300px] rounded-md hover:scale-105 transition-all ease-in-out delay-150 text-center;
+    @apply m-auto max-w-[250px] h-[300px] rounded-md hover:scale-105 transition-all ease-in-out delay-150 text-center bg-background;
   }
   .sidebar-link {
     @apply flex gap-4 items-center py-4 pr-3 text-[#6B6B6B] hover:text-black;

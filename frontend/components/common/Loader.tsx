@@ -15,16 +15,16 @@ const Loader: FC<LoaderProps> = ({ white }: LoaderProps) => {
           className="object-cover"
           src={spinnerWhite}
           alt={"spinner"}
-          width={20}
-          height={20}
+          width={50}
+          height={50}
         />
       ) : (
         <Image
           className="object-cover"
           src={spinner}
           alt={"spinner"}
-          width={20}
-          height={20}
+          width={50}
+          height={50}
         />
       )}
     </>

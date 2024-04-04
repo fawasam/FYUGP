@@ -47,7 +47,7 @@ const SideNav: React.FC | any = () => {
   ) : (
     <>
       <section>
-        <div className="sticky top-[80px] z-30">
+        <div className="sticky top-[80px] z-0">
           <div className="md:hidden  py-1 border-b border-grey flex flex-nowrap overflow-x-auto">
             <button
               className="p-5 capitalize"

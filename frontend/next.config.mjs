@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     domains: ["localhost"],
   },
+  fontLoaders: [
+    { loader: "@next/font/google", options: { subsets: ["latin"] } },
+  ],
 };
 
 export default nextConfig;

@@ -27,22 +27,22 @@ const HowItWorks = () => {
           How It Works
         </h2>
       </div>
-      <div className="grid grid-col-1 md:grid-cols-3 gap-y-4">
-        <div className="flex flex-col items-center justify-center">
+      <div className="grid gap-6 grid-col-1 md:grid-cols-3 ">
+        <div className="flex flex-col items-center justify-center bg-[#E0EDFE] p-8 rounded-lg">
           <i className="fi fi-rs-map text-4xl border p-4 rounded-full bg-foreground text-primary-foreground "></i>
-          <h2 className="text-xl font-semibold tracking-tighter mt-2">
+          <h2 className="text-xl font-semibold tracking-tighter mt-2 stroke-black">
             Choose A Pathway
           </h2>
           <span>Please select a pathway first to continue</span>
         </div>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center bg-[#E0EDFE] p-8 rounded-lg">
           <i className="fi fi-rr-graduation-cap text-4xl border p-4 rounded-full bg-foreground text-primary-foreground"></i>
           <h2 className="text-xl font-semibold tracking-tighter mt-2">
             Select A Discipline
           </h2>
           <span>Please select a pathway first to continue</span>
         </div>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center bg-[#E0EDFE] p-8 rounded-lg">
           <i className="fi fi-sr-list-check text-4xl border p-4 rounded-full bg-foreground text-primary-foreground"></i>
           <h2 className="text-xl font-semibold tracking-tighter mt-2">
             Pick Approapriate Course
@@ -55,6 +55,7 @@ const HowItWorks = () => {
       <i className="fi fi-rr-graduation-cap text-4xl border p-4 rounded-full bg-foreground text-primary-foreground"></i>
       <i className="fi fi-tr-book-open-reader text-4xl border p-4 rounded-full bg-foreground text-primary-foreground"></i> */}
 
+      {/* loader  */}
       <div className="w-full h-[60vh] flex items-center justify-center">
         {/* Core Loader Modal */}
         <Loader

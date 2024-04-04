@@ -25,6 +25,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formateDate } from "@/utils/formateDate";
+import NoDataMessage from "@/components/common/Nodata";
+import Loader from "@/components/common/Loader";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 const AdminColleges = () => {
   const { toast } = useToast();
   const dispatch = useDispatch();
@@ -63,7 +72,7 @@ const AdminColleges = () => {
       redirectTo("/");
     }
     getAllColleges();
-  }, [userData, dispatch, router, user, redirectTo, getAllCollege]);
+  }, [userData, dispatch, router, user, getAllCollege]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <div className="flex items-center justify-between text-center flex-row">
@@ -79,95 +88,121 @@ const AdminColleges = () => {
           </Link>
         </Button>
       </div>
-      <Table className="mt-10">
-        <TableCaption>A list of colleges.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[200px]">College name</TableHead>
-            <TableHead>Place</TableHead>
-            <TableHead>Joined At</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead className="text-center">Task</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {allColleges != null &&
-            allColleges?.length > 0 &&
-            allColleges?.map((college, key) => (
-              <TableRow key={key}>
-                <TableCell className="font-medium">
-                  <div className="flex flex-col ">
-                    <img
-                      src={college?.picture}
-                      className="w-20 object-cover rounded-sm h-10 mb-2"
-                      alt={"image"}
-                    />
-                    <span>{college?.collegename}</span>
-                  </div>
-                </TableCell>
-                <TableCell>{college?.place}</TableCell>
-                <TableCell>{formateDate(college?.joinedAt)}</TableCell>
-                <TableCell>{college?.email}</TableCell>
-                <TableCell className="text-center">
-                  <div className="block space-x-1">
-                    {college?.published ? (
-                      <Button
-                        variant={"outline"}
-                        className="mt-4 text-center"
-                        size={"sm"}
-                        onClick={() =>
-                          handlePublish({
-                            id: college._id,
-                          })
-                        }
-                      >
-                        <i className="fi fi-rr-paper-plane mr-2"></i>
-                        UnPublish
-                      </Button>
-                    ) : (
-                      <Button
-                        variant={"secondary"}
-                        className="mt-4 text-center"
-                        size={"sm"}
-                        onClick={() =>
-                          handlePublish({
-                            id: college._id,
-                          })
-                        }
-                      >
-                        <i className="fi fi-rr-paper-plane mr-2"></i>
-                        Publish
-                      </Button>
-                    )}
+      {allColleges && allColleges?.length > 0 ? (
+        <Table className="mt-10">
+          <TableCaption>A list of colleges.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[200px]">College name</TableHead>
+              <TableHead>Place</TableHead>
+              <TableHead>Joined At</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Published</TableHead>
+              <TableHead className="text-center">Task</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {allColleges != null &&
+              allColleges?.length > 0 &&
+              allColleges?.map((college, key) => (
+                <TableRow key={key}>
+                  <TableCell className="font-medium">
+                    <div className="flex flex-col ">
+                      <img
+                        src={college?.picture}
+                        className="w-20 object-cover rounded-sm h-10 mb-2"
+                        alt={"image"}
+                      />
+                      <span>{college?.collegename}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>{college?.place}</TableCell>
+                  <TableCell>{formateDate(college?.joinedAt)}</TableCell>
+                  <TableCell>{college?.email}</TableCell>
+                  <TableCell>
+                    {college?.published ? "Published" : "UnPublished"}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <div className="block space-x-1">
+                      <TooltipProvider>
+                        {/* publish button  */}
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Button
+                              variant={"link"}
+                              className="mt-4 text-center"
+                              size={"sm"}
+                              onClick={() =>
+                                handlePublish({
+                                  id: college._id,
+                                })
+                              }
+                            >
+                              <i className="fi fi-rr-paper-plane "></i>
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>
+                              {college?.published ? "unPublish" : "Publish"}
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                        {/* view college  */}
 
-                    <Link
-                      href={`/profile/admin/mynamefawas/dashboard/colleges/${college._id}/update`}
-                    >
-                      <Button
-                        variant={"outline"}
-                        className="mt-4 text-center"
-                        size={"sm"}
-                      >
-                        <i className="fi fi-rs-edit mr-2"></i>
-                        Update
-                      </Button>
-                    </Link>
-                    <Link href={`/college/${college._id}`}>
-                      <Button
-                        variant={"outline"}
-                        className="mt-4 text-center"
-                        size={"sm"}
-                      >
-                        <i className="fi fi-rs-edit mr-2"></i>
-                        View
-                      </Button>
-                    </Link>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            {" "}
+                            <Link href={`/college/${college._id}`}>
+                              <Button
+                                variant={"outline"}
+                                className="mt-4 text-center"
+                                size={"sm"}
+                              >
+                                <i className="fi fi-rs-eye "></i>
+                              </Button>
+                            </Link>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>View College</p>
+                          </TooltipContent>
+                        </Tooltip>
+
+                        {/* edit college */}
+
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Link
+                              href={`/profile/admin/mynamefawas/dashboard/colleges/${college._id}/update`}
+                            >
+                              <Button
+                                variant={"default"}
+                                className="mt-4 text-center"
+                                size={"sm"}
+                              >
+                                <i className="fi fi-rs-edit 2"></i>
+                              </Button>
+                            </Link>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Edit College</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <div className="flex items-center justify-center flex-col">
+          <Loader />
+          <NoDataMessage
+            message={"College Data Unavailable!"}
+            icon={"fi fi-rr-user"}
+          />
+        </div>
+      )}
     </AnimationWrapper>
   );
 };

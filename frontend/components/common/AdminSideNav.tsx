@@ -8,8 +8,8 @@ import { usePathname } from "next/navigation";
 
 const AdminSideNav: React.FC | any = () => {
   let userData = useSelector((state: RootState) => state.auth);
-  let { userInfo: user, userToken, isAuthenticated } = userData;
-  const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
+  let { userInfo: user, userToken } = userData;
+  const { redirectTo } = useRedirect();
   const page: any = usePathname().split("/").pop();
 
   const [pageState, setPageState] = useState<string | any>(
@@ -20,8 +20,7 @@ const AdminSideNav: React.FC | any = () => {
   let activeTabLine = useRef<HTMLHRElement>(null);
   let sideBarIcon = useRef<HTMLButtonElement>(null);
   let pageStateTab = useRef<HTMLButtonElement>(null);
-  const isLinkActive = (link: string) => page.includes(link);
-  // console.log(isLinkActive("dashboard"));
+  const isLinkActive = (link: string) => usePathname().includes(link);
 
   const changePageState = (e: any) => {
     let { offsetWidth, offsetLeft } = e.target;
@@ -47,8 +46,8 @@ const AdminSideNav: React.FC | any = () => {
   ) : (
     <>
       <section>
-        <div className="sticky top-[80px] z-30">
-          <div className="md:hidden   py-1 border-b border-grey flex flex-nowrap overflow-x-auto">
+        <div className="sticky  z-10">
+          <div className="md:hidden   border-b border-grey flex-nowrap overflow-x-auto">
             <button
               className="p-5 capitalize"
               ref={sideBarIcon}
@@ -82,9 +81,7 @@ const AdminSideNav: React.FC | any = () => {
             <Link
               href={`/profile/admin/${user?.username}/dashboard`}
               onClick={(e: any) => setPageState(e.target.innerText)}
-              className={`sidebar-link + ${
-                isLinkActive("/123") ? "active" : " "
-              } `}
+              className={`sidebar-link + ${isLinkActive("/") ? " " : " "} `}
             >
               <i className="fi fi-rs-settings"></i>
               Dashboard

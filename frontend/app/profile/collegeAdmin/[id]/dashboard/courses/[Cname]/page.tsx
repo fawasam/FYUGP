@@ -538,7 +538,9 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
                                       <>
                                         <Select
                                           onValueChange={field.onChange}
-                                          defaultValue={field.value}
+                                          defaultValue={form.getValues(
+                                            "category"
+                                          )}
                                           value={category}
                                         >
                                           <SelectTrigger className="w-full">
@@ -550,7 +552,7 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
                                                 (cat: any, key: any) => (
                                                   <SelectItem
                                                     value={cat}
-                                                    key={cat}
+                                                    key={key}
                                                   >
                                                     {cat}
                                                   </SelectItem>

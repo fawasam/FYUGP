@@ -22,6 +22,9 @@ import {
 import { Courses } from "@/utils/Courses";
 import Image from "next/image";
 
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+
 const Dashboard = () => {
   const { toast } = useToast();
   const dispatch = useDispatch();
@@ -46,7 +49,7 @@ const Dashboard = () => {
   const handleShow = () => {
     setShow(!show);
   };
-
+  const percentage = 66;
   useEffect(() => {
     if (!user) {
       redirectTo("/");
@@ -55,7 +58,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <AnimationWrapper className="w-full h-full bg-accent pt-[40px] sm:pt-[100px]  min-h-screen">
+      <AnimationWrapper className="w-full h-full  pt-[40px] sm:pt-[100px]  min-h-screen">
         <section className="w-[90%] m-auto md:w-[60%] ">
           <div className="flex items-center  text-center justify-center space-y-12">
             <h1 className="text-3xl font-bold space-x-3">
@@ -87,10 +90,10 @@ const Dashboard = () => {
                       size={"sm"}
                     >
                       <Link
-                        href={"/profile/user/fawasam32/settings/edit-profile"}
+                        href={`/profile/user/${user?.susername}/settings/edit-profile`}
                       >
                         <i className="fi fi-rr-pencil mr-2"></i>
-                        Edit Your Profile
+                        Edit
                       </Link>
                     </Button>
                   </div>
@@ -122,17 +125,39 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <div className="w-[400px] h-[80px] mb-[20px] rounded-2xl  shadow-xl relative  lg:mt-0 mt-10  bg-primary-foreground">
-                    <div className="p-4">
-                      <h2 className="text-md font-thin">
-                        Your Pathway : <span>{user?.degree_info?.pathway}</span>
-                      </h2>
-                      <h2 className="text-md font-thin">
-                        Your Discipline :{" "}
-                        <span>{user?.degree_info?.discipline}</span>
-                      </h2>
+                    <div className="p-4 flex">
+                      <div>
+                        <h2 className="text-md font-thin">
+                          Your Pathway :{" "}
+                          <span>{user?.degree_info?.pathway}</span>
+                        </h2>
+                        <h2 className="text-md font-thin">
+                          Your Discipline :{" "}
+                          <span>{user?.degree_info?.discipline}</span>
+                        </h2>
+                      </div>
+                      <Button
+                        className=" absolute right-2  bg-[#D2EEEE] text-[#49959B] hover:bg-[#b8d5d5]"
+                        size={"sm"}
+                      >
+                        <Link href={`/profile/${user?.username}/degree`}>
+                          <i className="fi fi-rr-pencil mr-2"></i>
+                          Edit
+                        </Link>
+                      </Button>
                     </div>
                   </div>
-                  <div className="w-[400px] h-[150px] rounded-2xl shadow-xl relative bg-primary-foreground"></div>
+                  <div className="w-[400px] h-[150px] rounded-2xl shadow-xl relative bg-primary-foreground">
+                    <div
+                      style={{ width: 80, height: 80 }}
+                      className="absolute right-3 top-3"
+                    >
+                      <CircularProgressbar
+                        value={percentage}
+                        text={`${percentage}%`}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className=" my-6 mt-20 flex items-center text-center justify-center space-y-6  flex-col">

@@ -13,6 +13,10 @@ const config = {
   ],
   prefix: "",
   theme: {
+    fontFamily: {
+      display: "var(--display-font)",
+      body: "var(--body-font)",
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -29,6 +33,10 @@ const config = {
         foreground: "hsl(var(--foreground))",
         orangeLight: {
           DEFAULT: "#fef5ec",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        bg2: {
+          DEFAULT: "#f0f7ff;",
           foreground: "hsl(var(--primary-foreground))",
         },
         primary: {

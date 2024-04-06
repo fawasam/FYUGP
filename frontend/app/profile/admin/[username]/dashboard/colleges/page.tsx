@@ -41,8 +41,7 @@ const AdminColleges = () => {
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
-  const [getAllCollege, { isLoading, error, isSuccess }] =
-    useGetAllCollegeMutation();
+  const [getAllCollege, { isLoading, isSuccess }] = useGetAllCollegeMutation();
 
   const [publishCollege] = usePublishCollegeMutation();
   const [allColleges, setAllColleges] = useState<any[]>([]);
@@ -88,7 +87,14 @@ const AdminColleges = () => {
           </Link>
         </Button>
       </div>
-      {allColleges && allColleges?.length > 0 ? (
+      {isLoading ? (
+        <Loader />
+      ) : !isSuccess ? (
+        <NoDataMessage
+          message={"Enquiry Data Unavailable!"}
+          icon={"fi fi-rr-search-alt"}
+        />
+      ) : (
         <Table className="mt-10">
           <TableCaption>A list of colleges.</TableCaption>
           <TableHeader>
@@ -194,14 +200,6 @@ const AdminColleges = () => {
               ))}
           </TableBody>
         </Table>
-      ) : (
-        <div className="flex items-center justify-center flex-col">
-          <Loader />
-          <NoDataMessage
-            message={"College Data Unavailable!"}
-            icon={"fi fi-rr-user"}
-          />
-        </div>
       )}
     </AnimationWrapper>
   );

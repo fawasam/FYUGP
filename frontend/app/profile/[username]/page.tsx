@@ -44,7 +44,6 @@ const Dashboard = () => {
       total_credits_earned,
     },
   } = user;
-  console.log(user);
 
   const handleShow = () => {
     setShow(!show);

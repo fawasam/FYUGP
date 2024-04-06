@@ -27,19 +27,19 @@ const AdminDashboard = () => {
   }[] = [
     {
       title: "View College",
-      href: `/profile/${user.role}/${user?.username}/dashboard/college`,
+      href: `/profile/${user?.role}/${user?.username}/dashboard/college`,
       icon: "fi fi-rr-school",
       bgColor: "#FFD3C6",
     },
     {
       title: "View Programs",
-      href: `/profile/${user.role}/${user?.username}/dashboard/programme`,
+      href: `/profile/${user?.role}/${user?.username}/dashboard/programme`,
       icon: "fi fi-rr-school",
       bgColor: "#FFD3C6",
     },
     {
       title: "Enquiry",
-      href: `/profile/${user.role}/${user?.username}/dashboard/enquiry`,
+      href: `/profile/${user?.role}/${user?.username}/dashboard/enquiry`,
       icon: "fi fi-rr-comment-alt",
       bgColor: "#FFD3C6",
     },
@@ -66,7 +66,7 @@ const AdminDashboard = () => {
               >
                 <Link
                   href={component.href}
-                  className={`items-center py-4 justify-center select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors bg-accent hover:bg-[#DAE9F0] hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex `}
+                  className={`items-center py-4 justify-center select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors bg-background hover:bg-[#DAE9F0] hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex `}
                 >
                   <span className="w-10 h-10 rounded-full text-center  flex item-center justify-center">
                     <i

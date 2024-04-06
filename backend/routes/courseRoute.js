@@ -8,6 +8,7 @@ import {
   getAllCourse,
   getAllCourseByProgram,
   mergeSimilarCourse,
+  deleteCourseById,
 } from "../controllers/courseController.js";
 import { protect, restrict } from "../controllers/authController.js";
 
@@ -20,7 +21,11 @@ router
   .route("/:programId/:courseId")
   .patch(protect, restrict("collegeAdmin"), updateCourse);
 router.route("/all-course").get(getAllCourse);
-router.route("/:id").get(getACourse);
+router
+  .route("/:id")
+  .get(getACourse)
+  .delete(protect, restrict("collegeAdmin"), deleteCourseById);
+
 router.route("/merge").get(mergeSimilarCourse);
 
 export default router;

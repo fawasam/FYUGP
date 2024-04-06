@@ -9,10 +9,21 @@ import {
   protect,
   restrict,
   generateCollegeCredentials,
+  generateDepartmentCredentials,
+  generateAdvisorCredentials,
 } from "../controllers/authController.js";
 
 router.route("/signup").post(registerUser);
-router.route("/signup/college").post(generateCollegeCredentials);
+router
+  .route("/signup/college")
+  .post(protect, restrict("admin"), generateCollegeCredentials);
+router
+  .route("/signup/department")
+  .post(protect, restrict("collegeAdmin"), generateDepartmentCredentials);
+router
+  .route("/signup/advisor")
+  .post(protect, restrict("collegeAdmin"), generateAdvisorCredentials);
+
 router.route("/login").post(loginUser);
 router.route("/forgotPassword").post(forgotPassword);
 router.route("/resetPassword/:token").patch(passwordReset);

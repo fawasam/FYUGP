@@ -12,58 +12,71 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import Loader from "@/components/common/Loader";
 import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AnimationWrapper from "@/components/common/page-animation";
 import { useState } from "react";
-import { useCreateCollegeMutation } from "@/redux/services/collegeApi";
+import {
+  useCreateCollegeMutation,
+  useCreateProgramMutation,
+} from "@/redux/services/collegeApi";
 import axios from "axios";
 import { setCollege } from "@/redux/features/collegeSlice";
 import { useRouter } from "next/navigation";
-import { useGenerateCollegeCredentialsMutation } from "@/redux/services/authApi";
-const MAX_FILE_SIZE = 10000000;
-const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
+import {
+  useGenerateCollegeCredentialsMutation,
+  useGenerateDepartmentCredentialsMutation,
+} from "@/redux/services/authApi";
+import { RootState } from "@/redux/store";
 
 const formSchema = z.object({
-  collegename: z.string().min(2, {
-    message: "college name must be at least 2 characters.",
+  Dname: z.string().min(2, {
+    message: "Please provide a Department name ",
   }),
-  place: z.string().min(2, {
-    message: "please enter a valid  address",
+  headOfDepartment: z.string(),
+  Discipline: z.string().min(2, {
+    message: "Please choose a Discipline ",
   }),
-  email: z.string().min(6, {
-    message: "please provide a valid email",
-  }),
+  email: z
+    .string()
+    .min(2, {
+      message: "Please provide a email ",
+    })
+    .email("This is not a valid email."),
 });
 
-const CreateCollege = () => {
+const NewProgram = () => {
   const router = useRouter();
   const { toast } = useToast();
   const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const [userId, setUserId] = useState("");
   const [userPassword, setUserPassword] = useState("");
-
-  const [selectedImage, setSelectedImage] = useState<
-    any | string | File | null
-  >(null);
-  const [createCollege, { isLoading, error, isSuccess }] =
-    useCreateCollegeMutation();
-  const [generateCollegeCredentials] = useGenerateCollegeCredentialsMutation();
+  let userData = useSelector((state: RootState) => state.auth);
+  let { userInfo: user, userToken, isAuthenticated } = userData;
+  const [createProgram, { isLoading, error, isSuccess }] =
+    useCreateProgramMutation();
+  const [generateDepartmentCredentials] =
+    useGenerateDepartmentCredentialsMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      collegename: "",
-      place: "",
+      Dname: "",
+      headOfDepartment: "",
+      Discipline: "",
       email: "",
     },
   });
@@ -86,24 +99,29 @@ const CreateCollege = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const newValues = { ...values };
-      const response: any = await createCollege(newValues).unwrap();
-      const newValues2 = { ...newValues, college: response?.newCollege?._id };
 
-      if (response?.newCollege?._id) {
-        const response2: any = await generateCollegeCredentials(
-          newValues2
-        ).unwrap();
-        console.log(response2?.data?.user);
-        setUserId(response2?.data?.user?.email);
-        setUserPassword(response2?.data?.password);
+      const response: any = await createProgram(newValues).unwrap();
+      const newValues2 = {
+        ...newValues,
+        department: response?.newProgram?._id,
+        college: user?.college,
+      };
 
-        dispatch(setCollege(response));
-        toast({
-          title: "Successfully added college",
-        });
-        nextStep();
-        console.log("Successfully added College");
-      }
+      console.log(newValues2);
+
+      const response2: any = await generateDepartmentCredentials(
+        newValues2
+      ).unwrap();
+      console.log(response2?.data?.user);
+      setUserId(response2?.data?.user?.email);
+      setUserPassword(response2?.data?.password);
+
+      dispatch(setCollege(response));
+      toast({
+        title: "Successfully added college",
+      });
+      nextStep();
+      console.log("Successfully added College");
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -121,7 +139,7 @@ const CreateCollege = () => {
             <div className="md:w-full w-[90%] m-auto">
               <div className="my-10 ">
                 <h1 className="text-2xl font-semibold text-center underline underline-offset-8">
-                  Create College
+                  Create Program
                 </h1>
               </div>
               <Form {...form}>
@@ -129,23 +147,83 @@ const CreateCollege = () => {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className=" item-center sm:w-[60%] w-[90%] m-auto grid md:grid-cols-1 gap-4  sm:grid-cols-1 grid-cols-1"
                 >
+                  {/* dname  */}
                   <FormField
                     control={form.control}
-                    name="collegename"
+                    name="Dname"
                     render={({ field }) => (
                       <FormItem className="w-full m-0">
-                        <FormLabel>College Name</FormLabel>
+                        <FormLabel> Program Name</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="college name"
-                            {...field}
+                            placeholder="Program Name"
                             icon={"fi fi-rr-graduation-cap"}
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
+
+                  {/* hod */}
+                  <FormField
+                    control={form.control}
+                    name="headOfDepartment"
+                    render={({ field }) => (
+                      <FormItem className="w-full m-0">
+                        <FormLabel>Head Of Department</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Head Of Department"
+                            icon={"fi fi-rr-graduation-cap"}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* discipline  */}
+                  <FormField
+                    control={form.control}
+                    name="Discipline"
+                    render={({ field }) => (
+                      <FormItem className="w-full m-0">
+                        <FormLabel>Select the Discipline</FormLabel>
+                        <>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <SelectTrigger className="w-[180px]">
+                              <SelectValue placeholder="Discipline" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup {...field}>
+                                <SelectItem value="Humanities">
+                                  Humanities
+                                </SelectItem>
+                                <SelectItem value="Languages">
+                                  Languages
+                                </SelectItem>
+                                <SelectItem value="Science">Science</SelectItem>
+                                <SelectItem value="Commerce">
+                                  Commerce
+                                </SelectItem>
+                                <SelectItem value="Management">
+                                  Management
+                                </SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
                   <FormField
                     control={form.control}
                     name="email"
@@ -154,29 +232,11 @@ const CreateCollege = () => {
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Email"
+                            placeholder="enter email"
+                            icon={"fi fi-rr-graduation-cap"}
                             {...field}
-                            icon={"fi fi-rr-envelope"}
                           />
                         </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="place"
-                    render={({ field }) => (
-                      <FormItem className=" w-full m-0">
-                        <FormLabel>Place</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="place"
-                            {...field}
-                            icon={"fi fi-rr-map-marker"}
-                          />
-                        </FormControl>
-
                         <FormMessage />
                         <div className="flex justify-center items-center flex-col ">
                           <Button
@@ -204,7 +264,7 @@ const CreateCollege = () => {
             <div className="md:w-full w-[90%] m-auto">
               <div className="my-10 ">
                 <h1 className="text-2xl text-center underline underline-offset-8">
-                  College Credential
+                  Department Credential
                 </h1>
               </div>
               <div className=" item-center sm:w-[60%] w-[90%] m-auto grid md:grid-cols-1 gap-4  sm:grid-cols-1 grid-cols-1">
@@ -221,7 +281,6 @@ const CreateCollege = () => {
                   defaultValue={userPassword}
                   icon={"fi fi-rr-unlock"}
                 />
-                <p>Credentials must save before click save</p>
                 <div className="flex justify-center items-center flex-col ">
                   <Button
                     size={"lg"}
@@ -242,4 +301,4 @@ const CreateCollege = () => {
   return <>{renderStep()}</>;
 };
 
-export default CreateCollege;
+export default NewProgram;

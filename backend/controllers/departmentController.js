@@ -20,34 +20,46 @@ let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for pass
 // @access  Private
 
 export const createProgram = asyncErrorHandler(async (req, res, next) => {
-  const { Dname, headOfDepartment, Discipline } = req.body;
+  const { Dname, headOfDepartment, Discipline, email } = req.body;
 
-  if (!Dname || !headOfDepartment || !Discipline) {
+  if (!Dname || !headOfDepartment || !Discipline || !email) {
     const error = new CustomError("Please provide all field!", 400);
     return next(error);
   }
 
   const college = await College.findById(req.user.college);
-
   if (!college) {
     const error = new CustomError("College not found!", 400);
     return next(error);
   }
 
-  const existingDepartment = college.departments.find(
-    (department) => department.Dname === Dname
+  const existingUser = await User.findOne({ email }).select("+password");
+  if (existingUser) {
+    const error = new CustomError("Email already exist", 400);
+    return next(error);
+  }
+  const existingUserInDepartment = await Department.findOne({ email }).select(
+    "+password"
   );
+  if (existingUserInDepartment) {
+    const error = new CustomError("Email already exist", 400);
+    return next(error);
+  }
 
+  const existingDepartment = await Department.findOne({
+    Dname,
+    college: req.user.college,
+  });
   if (existingDepartment) {
     const error = new CustomError(
-      "Department with the same name already exists!",
+      "Department with the same name already exists in this college!",
       400
     );
     return next(error);
   }
-
   const newProgram = await Department.create({
     ...req.body,
+    college: req.user.college,
     user: req.user._id,
   });
   college.departments.push(newProgram._id);
@@ -159,3 +171,19 @@ export const getAllProgramByCollege = asyncErrorHandler(
     });
   }
 );
+
+// @desc    updateProgram
+// @route   PATCH /api/v1/college/program/:id
+// @access  Private
+
+export const deleteProgramById = asyncErrorHandler(async (req, res, next) => {
+  const department = await Department.findById(req.params.id);
+  if (!department) {
+    throw new CustomError("Department not found", 404);
+  }
+
+  const college = await College.findById(department.college);
+  if (!college) {
+    throw new CustomError("College not found", 404);
+  }
+});

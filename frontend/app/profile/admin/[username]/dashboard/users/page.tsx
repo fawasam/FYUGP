@@ -63,7 +63,7 @@ const AdminUsers = () => {
   let { userInfo: user, userToken, isAuthenticated } = userData;
   const [allUsers, setAllUsers] = useState<any[]>([]);
 
-  let [getAllUsers] = useGetAllUsersMutation();
+  let [getAllUsers, { isLoading, isSuccess }] = useGetAllUsersMutation();
   let [deleteUser] = useDeleteUserMutation();
   let [activeUser] = useActiveUserMutation();
 
@@ -119,8 +119,14 @@ const AdminUsers = () => {
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <h1 className="max-md:hidden mb-4 text-2xl font-semibold">All User</h1>
-
-      {allUsers && allUsers?.length > 0 ? (
+      {isLoading ? (
+        <Loader />
+      ) : !isSuccess ? (
+        <NoDataMessage
+          message={"User Data Unavailable!"}
+          icon={"fi fi-rr-search-alt"}
+        />
+      ) : (
         <Table className="mt-10">
           <TableCaption>A list of user who are Registered.</TableCaption>
           <TableHeader>
@@ -130,7 +136,7 @@ const AdminUsers = () => {
               <TableHead>Joined At</TableHead>
               <TableHead>Role</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="text-right">Task</TableHead>
+              <TableHead className="">Task</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -145,10 +151,10 @@ const AdminUsers = () => {
                   <TableCell>{formateDate(user?.joinedAt)}</TableCell>
                   <TableCell>{user?.role}</TableCell>
                   <TableCell>
-                    {user?.active ? "Deactivate" : "Active"}
+                    {user?.active ? "Activate" : "Deactivated"}
                   </TableCell>
-                  <TableCell className="text-right">
-                    <div className="block space-x-1">
+                  <TableCell className="">
+                    <div className=" space-x-1">
                       <TooltipProvider>
                         {/* view college  */}
                         <Tooltip>
@@ -180,9 +186,9 @@ const AdminUsers = () => {
                           </TooltipTrigger>
                           <TooltipContent>
                             {user?.active ? (
-                              <p>Activate User</p>
-                            ) : (
                               <p>Deactivate User</p>
+                            ) : (
+                              <p>Activate User</p>
                             )}
                           </TooltipContent>
                         </Tooltip>
@@ -240,14 +246,6 @@ const AdminUsers = () => {
               ))}
           </TableBody>
         </Table>
-      ) : (
-        <div className="flex items-center justify-center flex-col">
-          <Loader />
-          <NoDataMessage
-            message={"User Data Unavailable!"}
-            icon={"fi fi-rr-user"}
-          />
-        </div>
       )}
     </AnimationWrapper>
   );

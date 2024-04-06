@@ -70,6 +70,10 @@ export const loginUser = asyncErrorHandler(async (req, res, next) => {
     const error = new CustomError("Incorrect email or password", 400);
     return next(error);
   }
+  if (!user.active) {
+    const error = new CustomError("Your account has been Deactivated ", 400);
+    return next(error);
+  }
 
   createSendResponse(user, 200, res);
 });
@@ -193,19 +197,6 @@ export const protect = asyncErrorHandler(async (req, res, next) => {
 // @route   middleware
 // @access  Public
 
-// export const restrict = (role) => {
-//   return (req, res, next) => {
-//     if (req?.user?.role !== role) {
-//       const error = new CustomError(
-//         "You do not have permission to perform this action",
-//         403
-//       );
-//       return next(error);
-//     }
-//     next();
-//   };
-// };
-
 export const restrict = (...roles) => {
   return (req, res, next) => {
     const userRole = req?.user?.role;
@@ -222,7 +213,7 @@ export const restrict = (...roles) => {
     next();
   };
 };
-// @desc    Login new user
+// @desc    signup new college
 // @route   POST /api/v1/auth/login
 // @access  Public
 
@@ -231,8 +222,17 @@ export const generateCollegeCredentials = asyncErrorHandler(
     const { email, college } = req.body;
 
     if (!email) {
-      return res.status(400).json({ message: "Email is required." });
+      const error = new CustomError("Please provide email", 400);
+      return next(error);
     }
+    const existUser = await User.findOne({ email }).select("+password");
+
+    if (existUser) {
+      const error = new CustomError("User already exist", 400);
+      return next(error);
+    }
+
+    User.findOne;
     let username = await generateUsername(email);
     const password = generateRandomPassword();
     let role = "collegeAdmin";
@@ -248,5 +248,76 @@ export const generateCollegeCredentials = asyncErrorHandler(
       data: { user, password },
     });
     // createSendResponse(newUser, 201, res);
+  }
+);
+
+// @desc    signup new department
+// @route   POST /api/v1/auth/login
+// @access  Public
+
+export const generateDepartmentCredentials = asyncErrorHandler(
+  async (req, res, next) => {
+    const { email, college, department } = req.body;
+
+    if (!email) {
+      const error = new CustomError("Please provide email", 400);
+      return next(error);
+    }
+    const existUser = await User.findOne({ email }).select("+password");
+
+    if (existUser) {
+      const error = new CustomError("User already exist", 400);
+      return next(error);
+    }
+    let username = await generateUsername(email);
+    const password = generateRandomPassword();
+    let role = "department";
+    const user = await User.create({
+      email,
+      password,
+      username,
+      role,
+      college,
+      department,
+    });
+    res.status(201).json({
+      status: "success",
+      data: { user, password },
+    });
+  }
+);
+
+// @desc    signup new advisor
+// @route   POST /api/v1/auth/login
+// @access  Public
+
+export const generateAdvisorCredentials = asyncErrorHandler(
+  async (req, res, next) => {
+    const { email, college } = req.body;
+
+    if (!email) {
+      const error = new CustomError("Please provide email", 400);
+      return next(error);
+    }
+    const existUser = await User.findOne({ email }).select("+password");
+
+    if (existUser) {
+      const error = new CustomError("User already exist", 400);
+      return next(error);
+    }
+    let username = await generateUsername(email);
+    const password = generateRandomPassword();
+    let role = "advisor";
+    const user = await User.create({
+      email,
+      password,
+      username,
+      role,
+      college,
+    });
+    res.status(201).json({
+      status: "success",
+      data: { user, password },
+    });
   }
 );

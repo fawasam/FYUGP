@@ -2,11 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["localhost"],
+    domains: ["localhost", "192.168.1.37", "http:192.168.1.37"],
   },
-  fontLoaders: [
-    { loader: "@next/font/google", options: { subsets: ["latin"] } },
-  ],
 };
 
 export default nextConfig;

@@ -160,6 +160,15 @@ export const collegeApi = createApi({
         headers: {},
       }),
     }),
+    deleteCourse: builder.mutation<any, any>({
+      query: ({ id }) => ({
+        url: `/program/course/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -182,4 +191,5 @@ export const {
   useGetACourseMutation,
   useGetAllCourseMutation,
   useGetAllCourseByProgramMutation,
+  useDeleteCourseMutation,
 } = collegeApi;

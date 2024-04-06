@@ -41,7 +41,7 @@ const Footer = () => {
   return (
     <div className=" sm:w-[75%] w-[90%] h-full m-auto  border-b border-t mt-[100px]">
       <footer className=" rounded-lg   m-4">
-        <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+        <div className="w-full max-w-screen-xl mx-auto p-4 md:pt-8">
           <div className="sm:flex sm:items-center sm:justify-between">
             <a
               href="https://flowbite.com/"

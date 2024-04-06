@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { loadUserFromStorage } from "../features/authSlice";
 
 interface RegisterFormData {
   fullname: string;
@@ -32,7 +33,7 @@ export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth`,
-  }), // Adjust the base URL accordingly
+  }),
   endpoints: (builder) => ({
     register: builder.mutation<void, RegisterFormData>({
       query: (data) => ({
@@ -41,6 +42,7 @@ export const authApi = createApi({
         body: data,
       }),
     }),
+
     generateCollegeCredentials: builder.mutation<
       void,
       GenerateCollegeCredentialsFormData
@@ -49,6 +51,37 @@ export const authApi = createApi({
         url: "/signup/college",
         method: "POST",
         body: data,
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
+
+    generateDepartmentCredentials: builder.mutation<
+      void,
+      GenerateCollegeCredentialsFormData
+    >({
+      query: (data) => ({
+        url: "/signup/department",
+        method: "POST",
+        body: data,
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
+
+    generateAdvisorCredentials: builder.mutation<
+      void,
+      GenerateCollegeCredentialsFormData
+    >({
+      query: (data) => ({
+        url: "/signup/advisor",
+        method: "POST",
+        body: data,
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
       }),
     }),
     login: builder.mutation<void, LoginFormData>({
@@ -81,4 +114,6 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useGenerateCollegeCredentialsMutation,
+  useGenerateDepartmentCredentialsMutation,
+  useGenerateAdvisorCredentialsMutation,
 } = authApi;

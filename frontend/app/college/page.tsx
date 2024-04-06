@@ -74,80 +74,90 @@ const College = () => {
     }
   }, [searchKey, getAllCollege, typingTimeout]);
   return (
-    <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
+    <AnimationWrapper className="sm:w-[70%] w-[90%] m-auto min-h-[100vh]  py-[20px]">
       <section className="max-w-[1060px] m-auto   flex-grow   ">
-        <div className="sm:flex block items-center justify-center min-h-[240px] w-full bg-accent text-center rounded-sm">
+        <div className=" flex items-center justify-center min-h-[240px] w-full bg-background text-center rounded-sm">
           <div className="flex items-center justify-center h-full">
             <h1 className="md:text-[48px] text-[36px] font-bold tracking-tighter text-center">
               Colleges Under Calicut University
             </h1>
           </div>
         </div>
-        <div className="flex items-center justify-center space-x-2 mt-10">
-          <Input
-            type="text"
-            className="px-3 py-2 "
-            placeholder="Search..."
-            onChange={(e: any) => setSearchKey(e.target.value)}
+        {isSuccess ? (
+          <div className="flex items-center justify-center space-x-2 mt-10">
+            <Input
+              type="text"
+              className="px-3 py-2 "
+              placeholder="Search..."
+              onChange={(e: any) => setSearchKey(e.target.value)}
+            />
+            <Button className="px-3 py-2" onClick={handleSearch}>
+              Search
+            </Button>
+          </div>
+        ) : (
+          ""
+        )}
+        {isLoading ? (
+          <Loader />
+        ) : !isSuccess ? (
+          <NoDataMessage
+            message={"Enquiry Data Unavailable!"}
+            icon={"fi fi-rr-search-alt"}
           />
-          <Button className="px-3 py-2" onClick={handleSearch}>
-            Search
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-12">
-          {colleges?.length === 0 ? <h2>No college Data</h2> : null}
-          {colleges?.map((college: any, i: number) =>
-            college?.published ? (
-              <div key={i}>
-                {isLoading ? (
-                  <>
-                    <Skeleton className=" w-full h-[200px] rounded-xl" />
-                    <div className="space-y-4">
-                      <Skeleton className="h-4 w-[200px] mt-2" />
-                      <Skeleton className="h-4 w-[200px]" />
-                    </div>
-                  </>
-                ) : (
-                  <Link
-                    // href={`/college/${college?.collegename.replace(/ /g, "-")}`}
-                    href={`/college/${college?._id}`}
-                    className="group flex flex-col justify-between"
-                  >
-                    <div className=" ">
-                      <div className="border w-full h-[200px]  overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                        {college?.picture ? (
-                          <img
-                            src={college?.picture}
-                            alt={college?.collegename}
-                            className="object-cover w-full h-full  group-hover:opacity-75 border"
-
-                            // width={100}
-                          />
-                        ) : (
-                          ""
-                        )}
+        ) : (
+          <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-12">
+            {colleges?.length === 0 ? <h2>No college Data</h2> : null}
+            {colleges?.map((college: any, i: number) =>
+              college?.published ? (
+                <div key={i}>
+                  {isLoading ? (
+                    <>
+                      <Skeleton className=" w-full h-[200px] rounded-xl" />
+                      <div className="space-y-4">
+                        <Skeleton className="h-4 w-[200px] mt-2" />
+                        <Skeleton className="h-4 w-[200px]" />
                       </div>
-                      <h3 className="mt-4 text-sm text-gray-700 uppercase">
-                        {college.collegename}
-                      </h3>
-                      {/* <Badge variant="secondary" className="capitalize">
+                    </>
+                  ) : (
+                    <Link
+                      // href={`/college/${college?.collegename.replace(/ /g, "-")}`}
+                      href={`/college/${college?._id}`}
+                      className="group flex flex-col justify-between"
+                    >
+                      <div className=" ">
+                        <div className="border w-full h-[200px]  overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                          {college?.picture ? (
+                            <img
+                              src={college?.picture}
+                              alt={college?.collegename}
+                              className="object-cover w-full h-full  group-hover:opacity-75 border"
+
+                              // width={100}
+                            />
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <h3 className="mt-4 text-sm text-gray-700 uppercase">
+                          {college.collegename}
+                        </h3>
+                        {/* <Badge variant="secondary" className="capitalize">
                       {college.type}
                     </Badge> */}
-                      <p className="mt-1 text-lg font-medium text-gray-900 capitalize">
-                        {college.place}
-                      </p>
-                    </div>
-                  </Link>
-                )}
-              </div>
-            ) : (
-              <div key={i}>
-                <NoDataMessage message={"No college data available"} />
-              </div>
-            )
-          )}
-        </div>
+                        <p className="mt-1 text-lg font-medium text-gray-900 capitalize">
+                          {college.place}
+                        </p>
+                      </div>
+                    </Link>
+                  )}
+                </div>
+              ) : (
+                ""
+              )
+            )}
+          </div>
+        )}
       </section>
     </AnimationWrapper>
   );

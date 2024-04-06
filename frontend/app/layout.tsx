@@ -40,7 +40,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${sora.variable} ${poppins.variable}`}
     >
-      <body className="min-h-[800px] font-display">
+      <body className="md:min-h-[800px] min-h-full font-display">
         <Providers>
           <ThemeProvider
             attribute="class"
@@ -54,7 +54,7 @@ export default function RootLayout({
               <BreadcrumbSeperator />
             </div> */}
             <div className="content-container">{children}</div>
-            <div className="static bottom-0">
+            <div className="">
               <Footer />
             </div>
           </ThemeProvider>

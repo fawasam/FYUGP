@@ -39,7 +39,7 @@ const userSchema = mongoose.Schema(
     },
     username: {
       type: String,
-      minlength: [3, "Username must be 3 letters long"],
+      minlength: [2, "Username must be 3 letters long"],
       required: [true],
     },
     bio: {
@@ -82,12 +82,24 @@ const userSchema = mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["admin", "student", "collegeAdmin", "user"],
+      enum: [
+        "admin",
+        "collegeAdmin",
+        "department",
+        "advisor",
+        "parent",
+        "student",
+        "user",
+      ],
       default: "user",
     },
     college: {
       type: Schema.Types.ObjectId,
       ref: "colleges",
+    },
+    department: {
+      type: Schema.Types.ObjectId,
+      ref: "departments",
     },
     profileImage: {
       type: String,

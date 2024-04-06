@@ -9,7 +9,7 @@ interface LoaderProps {
 
 const Loader: FC<LoaderProps> = ({ white }: LoaderProps) => {
   return (
-    <>
+    <div className="flex items-center justify-center">
       {white ? (
         <Image
           className="object-cover"
@@ -27,7 +27,7 @@ const Loader: FC<LoaderProps> = ({ white }: LoaderProps) => {
           height={50}
         />
       )}
-    </>
+    </div>
   );
 };
 export default Loader;

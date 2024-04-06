@@ -19,7 +19,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
   let activeTabLine = useRef<HTMLHRElement>(null);
   let sideBarIcon = useRef<HTMLButtonElement>(null);
   let pageStateTab = useRef<HTMLButtonElement>(null);
-  const isLinkActive = (link: string) => page.includes(link);
+  const isLinkActive = (link: string) => usePathname().includes(link);
   // console.log(isLinkActive("dashboard"));
 
   const changePageState = (e: any) => {
@@ -46,7 +46,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
   ) : (
     <>
       <section>
-        <div className="sticky top-[80px] z-30">
+        <div className="sticky top-[80px] z-10">
           <div className="md:hidden  py-1 border-b border-grey flex flex-nowrap overflow-x-auto">
             <button
               className="p-5 capitalize"

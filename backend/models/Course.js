@@ -39,6 +39,11 @@ const courseSchema = mongoose.Schema(
       ref: "departments",
       default: null,
     },
+    college: {
+      type: Schema.Types.ObjectId,
+      ref: "colleges",
+      default: null,
+    },
   },
   {
     timestamps: {

@@ -34,6 +34,8 @@ import {
   useGetAllCourseByProgramMutation,
   useGetAllProgramByCollegeMutation,
 } from "@/redux/services/collegeApi";
+import Loader from "@/components/common/Loader";
+import NoDataMessage from "@/components/common/Nodata";
 
 const Courses = () => {
   const { toast } = useToast();
@@ -44,7 +46,8 @@ const Courses = () => {
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
 
-  const [getAllProgramByCollege] = useGetAllProgramByCollegeMutation();
+  const [getAllProgramByCollege, { isLoading, isError, isSuccess }] =
+    useGetAllProgramByCollegeMutation();
   const handleOpenDialog = () => {};
 
   const getAllCoursesByProgram = async () => {
@@ -63,17 +66,29 @@ const Courses = () => {
         <h1 className="max-md:hidden mb-4 text-2xl font-semibold">
           All Courses
         </h1>
-        <div className="my-6 space-y-4">
-          {courses.length > 0 &&
-            courses?.map((c: any, key: any) => (
-              <Link
-                href={`/profile/collegeAdmin/${user.username}/dashboard/courses/${c._id}`}
-                key={key}
-              >
-                <Button className="mr-2">{c?.Dname}</Button>
-              </Link>
-            ))}
-        </div>
+        {isLoading ? (
+          <Loader />
+        ) : !isSuccess ? (
+          <NoDataMessage
+            message={"Course Data Unavailable!"}
+            icon={"fi fi-rr-search-alt"}
+          />
+        ) : (
+          <div className="my-6 space-y-4">
+            {courses.length > 0 &&
+              courses?.map((c: any, key: any) => (
+                <Link
+                  href={`/profile/collegeAdmin/${user.username}/dashboard/courses/${c._id}`}
+                  key={key}
+                  className="flex"
+                >
+                  <Button className="mr-2 bg-background" variant={"secondary"}>
+                    {c?.Dname}
+                  </Button>
+                </Link>
+              ))}
+          </div>
+        )}
       </section>
     </AnimationWrapper>
   );

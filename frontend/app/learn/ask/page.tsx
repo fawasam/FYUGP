@@ -11,7 +11,7 @@ import { ListItem } from "@/components/Header";
 import Link from "next/link";
 import AnimationWrapper from "@/components/common/page-animation";
 import { Input } from "@/components/ui/input";
-
+import axios from "axios";
 const AskQns = () => {
   const { toast } = useToast();
   const dispatch = useDispatch();
@@ -37,14 +37,36 @@ const AskQns = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const [inputValue, setInputValue] = useState("");
 
-  const handleMessageSend = () => {
-    if (inputValue.trim() !== "") {
-      setMessages([...messages, { text: inputValue, sender: "user" }]);
-      // Here you can send the user's message to ChatGPT for processing
-      // and handle the response accordingly
-      setInputValue("");
+  const handleMessageSend = async () => {
+    const userMessage = { text: inputValue, sender: "user" };
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    setInputValue("");
+
+    const options = {
+      method: "POST",
+      url: "https://simple-chatgpt-api.p.rapidapi.com/ask",
+      headers: {
+        "content-type": "application/json",
+        "X-RapidAPI-Key": "b31fd4ef7fmshee8d59d225c8142p123b64jsn07f8b380c8ff",
+        "X-RapidAPI-Host": "simple-chatgpt-api.p.rapidapi.com",
+      },
+      data: { question: inputValue },
+    };
+
+    try {
+      const response = await axios.request(options);
+      const botMessage = response.data;
+      const { answer } = botMessage;
+      let text = { text: answer };
+      console.log(botMessage);
+
+      setMessages((prevMessages) => [...prevMessages, text]);
+    } catch (error) {
+      console.error(error);
     }
   };
+
+  console.log(messages);
 
   useEffect(() => {
     if (!user) {
@@ -61,7 +83,7 @@ const AskQns = () => {
             </h1>
           </div>
         </div>
-        <div className="flex flex-col h-screen border rounded-sm mt-4">
+        <div className="flex flex-col h-screen">
           <div className="flex-1 p-4 overflow-y-auto">
             {messages.map((message, index) => (
               <div
@@ -72,8 +94,8 @@ const AskQns = () => {
               >
                 <div
                   className={`bg-${
-                    message.sender === "user" ? "blue" : "green"
-                  }-500 text-white py-2 px-4 rounded-lg max-w-xs`}
+                    message.sender === "user" ? "blue" : "orange"
+                  } text-black py-2 px-4 rounded-lg max-w-xs`}
                 >
                   {message.text}
                 </div>
@@ -93,12 +115,12 @@ const AskQns = () => {
                 }
               }}
             />
-            <Button
-              className=" text-white py-2 px-6 rounded-full"
+            <button
+              className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-full"
               onClick={handleMessageSend}
             >
               Send
-            </Button>
+            </button>
           </div>
         </div>
         {/* <div className=" w-full mt-6">

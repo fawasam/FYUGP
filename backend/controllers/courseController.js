@@ -26,6 +26,7 @@ export const createCourse = asyncErrorHandler(async (req, res, next) => {
   }
 
   const college = await College.findById(req.user.college);
+  // const user = await College.findById(req.user._id);
   const department = await Department.findById(programId);
 
   if (!college) {
@@ -39,6 +40,7 @@ export const createCourse = asyncErrorHandler(async (req, res, next) => {
 
   const existingCourse = await Course.findOne({
     "course.courseCode": course[0].courseCode,
+    user: req.user._id,
   });
   if (existingCourse) {
     return res
@@ -58,6 +60,7 @@ export const createCourse = asyncErrorHandler(async (req, res, next) => {
     ...req.body,
     user: req.user._id,
     department: department._id,
+    college: college._id,
   });
   department?.coursesOffered?.push(newCourse._id);
   await department.save();
@@ -164,31 +167,41 @@ export const getAllCourseByProgram = asyncErrorHandler(
   }
 );
 
-// @desc    getAllCourseByProgram  offered by a college
-// @route   GET /api/v1/college/program/course/programId
+// @desc    deleteCourseById
+// @route   GET /api/v1/college/program/course/:id
 // @access  Public
 
-// export const getAllCourseBySemester = asyncErrorHandler(
-//   async (req, res, next) => {
-//     const programId = req.params.programId;
+export const deleteCourseById = asyncErrorHandler(async (req, res, next) => {
+  const id = req.params.id;
 
-//     const program = await Department.findById(programId);
+  const courseToDelete = await Course.findById(id);
+  if (!courseToDelete) {
+    const error = new CustomError("Course not found!", 404);
+    return next(error);
+  }
 
-//     if (!program) {
-//       const error = new CustomError("Program not found", 404);
-//       return next(error);
-//     }
-//     const course = await Course.find({
-//       _id: { $in: program.coursesOffered },
-//     });
+  console.log(courseToDelete);
+  // Check if the user has permission to delete this course
+  if (courseToDelete.user.toString() !== req.user._id.toString()) {
+    const error = new CustomError("Unauthorized", 401);
+    return next(error);
+  }
 
-//     res.status(200).json({
-//       status: "success",
-//       result: course.length,
-//       data: { course },
-//     });
-//   }
-// );
+  // Delete the course
+  await Course.deleteOne({ _id: id });
+  // await courseToDelete.remove();
+
+  // Optionally, you might want to remove the course ID from the department's coursesOffered array.
+  const department = await Department.findById(courseToDelete.department);
+  if (department) {
+    department.coursesOffered = department.coursesOffered.filter(
+      (courseId) => courseId.toString() !== courseToDelete._id.toString()
+    );
+    await department.save();
+  }
+
+  return res.status(200).json({ message: "Course deleted successfully" });
+});
 
 export const mergeSimilarCourse = asyncErrorHandler(async (req, res, next) => {
   // Query documents with the same semester and category

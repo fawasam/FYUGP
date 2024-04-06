@@ -2,10 +2,15 @@ import mongoose, { Schema } from "mongoose";
 
 const departmentSchema = mongoose.Schema(
   {
-    Dname: { type: String, required: true, unique: [true, "already added"] },
+    Dname: { type: String, required: true },
     headOfDepartment: {
       type: String,
       required: true,
+    },
+    email: {
+      type: String,
+      required: [true, "College email is required"],
+      unique: true,
     },
     Discipline: {
       type: String,
@@ -15,6 +20,11 @@ const departmentSchema = mongoose.Schema(
     user: {
       type: Schema.Types.ObjectId,
       ref: "users",
+      required: true,
+    },
+    college: {
+      type: Schema.Types.ObjectId,
+      ref: "colleges",
       required: true,
     },
     coursesOffered: [

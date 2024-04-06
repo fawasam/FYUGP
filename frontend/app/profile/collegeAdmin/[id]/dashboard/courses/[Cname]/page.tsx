@@ -30,6 +30,7 @@ import { Input } from "@/components/ui/input";
 import {
   useCreateCourseMutation,
   useCreateProgramMutation,
+  useDeleteCourseMutation,
   useGetACollegeMutation,
   useGetACourseMutation,
   useGetAProgramMutation,
@@ -62,6 +63,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Categories } from "@/utils/Categories";
+import Loader from "@/components/common/Loader";
+import NoDataMessage from "@/components/common/Nodata";
 
 const formSchema = z.object({
   courseCode: z.string().min(2, {
@@ -85,6 +88,7 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
   const [semester, setSemester] = useState("");
   const [program, setProgram] = useState("");
   const [courseId, setCourseId] = useState("");
+  const [open, setOpen] = useState(false);
   const [code, setCode] = useState("");
   const [allCourses, setAllCourses] = useState<any[]>([]);
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
@@ -92,12 +96,15 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
   let { userInfo: user, userToken, isAuthenticated } = userData;
   let [getAllCourse] = useGetAllCourseMutation();
   let [getACourse] = useGetACourseMutation();
+  let [deleteCourse] = useDeleteCourseMutation();
   let [createCourse] = useCreateCourseMutation();
   let [updateCourse] = useUpdateCourseMutation();
-  let [getAllCourseByProgram] = useGetAllCourseByProgramMutation();
+  let [getAllCourseByProgram, { isLoading, isError, isSuccess }] =
+    useGetAllCourseByProgramMutation();
   let [getAProgram] = useGetAProgramMutation();
   let [getAllProgramByCollege] = useGetAllProgramByCollegeMutation();
 
+  let count = 1;
   const getACourses = async (id: any) => {
     resetData();
     const response: any = await getACourse(id);
@@ -155,6 +162,7 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
       console.log(error?.data?.message);
       console.log(error);
     }
+    setOpen(false);
   };
   const onUpdate = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -189,16 +197,9 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
       });
       console.log(error?.data?.message);
     }
+    setOpen(false);
   };
 
-  // console.log(form.watch());
-
-  // const getAllPrograms = async () => {
-  //   const response: any = await getAllProgramByCollege({
-  //     id: user?.college,
-  //   });
-  //   setAllCourses(response?.data?.data?.programs);
-  // };
   const getAllCoursesByProgram = async () => {
     const response: any = await getAllCourseByProgram({ id: params?.Cname });
     setAllCourses(response?.data?.data?.course);
@@ -226,6 +227,27 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
   //   ?.slice()
   //   .sort((a, b) => parseInt(a.semester) - parseInt(b.semester));
 
+  const handleDeleteCourse = async (id: any) => {
+    console.log(id);
+
+    try {
+      const response = await deleteCourse({ id });
+      console.log(response);
+
+      toast({
+        title: "Course Deleted Successfully",
+      });
+      console.log("Course Deleted Successfully");
+      getAllCoursesByProgram();
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: error.data.message,
+      });
+      console.log(error.data.message);
+    }
+  };
   useEffect(() => {
     form.reset({
       courseCode: code,
@@ -249,16 +271,20 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
   return (
     <AnimationWrapper className="w-full  sm:mt-20 mt-0">
       <div className="flex items-center justify-between text-center flex-row">
-        <h1 className="max-md:hidden mb-4 text-3xl text-center">
+        <h1 className=" mb-4 text-3xl text-center">
           <i className="fi fi-rr-book-alt mr-2"></i>
           {dname}
         </h1>
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button>
-              {" "}
-              <i className="fi fi-rr-plus mr-2"></i>New
-            </Button>
+            {isSuccess ? (
+              <Button>
+                {" "}
+                <i className="fi fi-rr-plus mr-2"></i>New
+              </Button>
+            ) : (
+              ""
+            )}
           </DialogTrigger>
           <DialogContent className="sm:max-w-[900px]">
             <Form {...form}>
@@ -377,7 +403,9 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button>Add Course</Button>
+                  {/* <DialogClose asChild> */}
+                  <Button type="submit">Add Course</Button>
+                  {/* </DialogClose> */}
                 </DialogFooter>
               </form>
             </Form>
@@ -385,201 +413,264 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
         </Dialog>
       </div>
 
-      {/* table of content  */}
-      <Table className="mt-10">
-        <TableCaption>
-          A list of courses offerde by {dname} department.
-        </TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="">SEMESTER</TableHead>
-            <TableHead>COURSE CODE</TableHead>
-            <TableHead>COURSE NAME</TableHead>
-            <TableHead>CATEGORY</TableHead>
-            <TableHead className="text-right">TASK</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {allCourses?.length > 0 &&
-            allCourses
-              ?.slice()
-              ?.sort((a, b) => parseInt(a.semester) - parseInt(b.semester))
-              ?.map((course, key) => (
-                <TableRow key={key}>
-                  <TableCell className="font-medium">
-                    {course?.semester}
-                  </TableCell>
-                  {course?.course?.map((c: any, key: any) => (
-                    <>
-                      <TableCell className="font-medium">
-                        {c?.courseCode}
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {c?.courseName}
-                      </TableCell>
-                    </>
-                  ))}
-                  <TableCell className="font-medium">
-                    {course?.category}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          size={"lg"}
-                          onClick={() => getACourses(course?._id)}
-                        >
-                          {" "}
-                          <i className="fi fi-rs-edit mr-2"></i>
-                          Update
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-[900px]">
-                        <Form {...form}>
-                          <form
-                            onSubmit={form.handleSubmit(onUpdate)}
-                            className="w-full"
-                          >
-                            <DialogHeader>
-                              <DialogTitle>Edit Course</DialogTitle>
-                              <DialogDescription>
-                                Make changes to your profile here. Click save
-                                when you are done.
-                              </DialogDescription>
-                            </DialogHeader>
-                            <div className=" space-y-4 py-4">
-                              <div className="  items-center gap-4 space-y-4">
-                                <div className="grid grid-cols-2 gap-2">
-                                  {/* code  */}
-                                  <FormField
-                                    control={form.control}
-                                    name="courseCode"
-                                    render={({ field }) => (
-                                      <FormItem className="w-full m-0">
-                                        <FormLabel>Enter Course Code</FormLabel>
-                                        <FormControl>
-                                          <Input
-                                            defaultValue={code}
-                                            placeholder="Course Code"
-                                            icon={"fi fi-rr-graduation-cap"}
-                                            {...field}
-                                          />
-                                        </FormControl>
-                                        <FormMessage />
-                                      </FormItem>
-                                    )}
-                                  />
-                                  {/* cname  */}
-                                  <FormField
-                                    control={form.control}
-                                    name="courseName"
-                                    render={({ field }) => (
-                                      <FormItem className="w-full m-0">
-                                        <FormLabel>Enter Course Name</FormLabel>
-                                        <FormControl>
-                                          <Input
-                                            defaultValue={cname}
-                                            placeholder="Course Name"
-                                            icon={"fi fi-rr-graduation-cap"}
-                                            {...field}
-                                          />
-                                        </FormControl>
-                                        <FormMessage />
-                                      </FormItem>
-                                    )}
-                                  />
+      {isLoading ? (
+        <Loader />
+      ) : !isSuccess ? (
+        <NoDataMessage
+          message={"Course Data Unavailable!"}
+          icon={"fi fi-rr-search-alt"}
+        />
+      ) : (
+        <Table className="mt-10">
+          <TableCaption>
+            A list of courses offerde by {dname} department.
+          </TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>SI NO</TableHead>
+              <TableHead className="">SEMESTER</TableHead>
+              <TableHead>COURSE CODE</TableHead>
+              <TableHead>COURSE NAME</TableHead>
+              <TableHead>CATEGORY</TableHead>
+              <TableHead className="text-right">TASK</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {allCourses?.length > 0 &&
+              allCourses
+                ?.slice()
+                ?.sort((a, b) => parseInt(a.semester) - parseInt(b.semester))
+                ?.map((course, key) => (
+                  <TableRow key={key}>
+                    <TableCell className="font-medium">{count++}</TableCell>
+                    <TableCell className="font-medium">
+                      {course?.semester}
+                    </TableCell>
+                    {course?.course?.map((c: any, key: any) => (
+                      <>
+                        <TableCell className="font-medium">
+                          {c?.courseCode}
+                        </TableCell>
+                        <TableCell className="font-medium">
+                          {c?.courseName}
+                        </TableCell>
+                      </>
+                    ))}
+                    <TableCell className="font-medium">
+                      {course?.category}
+                    </TableCell>
+                    {course?.course?.map((c: any, key: any) => (
+                      <TableCell className="text-right ">
+                        <div className="flex">
+                          <Dialog>
+                            {/* delete start  */}
+                            <DialogTrigger>
+                              <Button
+                                variant={"destructive"}
+                                className=" text-center mr-2"
+                                size={"sm"}
+                              >
+                                <i className="fi fi-rs-trash "></i>
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="mt-4">
+                              <DialogHeader className="mt-6">
+                                <DialogTitle className="text-2xl flex item-center justify-center flex-col text-center">
+                                  <i className="fi fi-rs-trash mr-2"></i>
+                                  Are you sure?
+                                </DialogTitle>
+                              </DialogHeader>
+                              <DialogDescription className="text-base text-center">
+                                You want to delete this course "{c?.courseName}"
+                                <div className="my-4 space-x-3">
+                                  <DialogClose asChild>
+                                    <Button type="button" variant="secondary">
+                                      Close
+                                    </Button>
+                                  </DialogClose>
+
+                                  <Button
+                                    variant={"destructive"}
+                                    onClick={() =>
+                                      handleDeleteCourse(course._id)
+                                    }
+                                  >
+                                    Confirm
+                                  </Button>
                                 </div>
-                                {/* semester */}
-                                <FormField
-                                  control={form.control}
-                                  name="semester"
-                                  render={({ field }) => (
-                                    <FormItem className="w-full m-0">
-                                      <FormLabel>Select the semster</FormLabel>
-                                      <>
-                                        <Select
-                                          onValueChange={field.onChange}
-                                          defaultValue={field.value}
-                                          value={semester}
-                                        >
-                                          <SelectTrigger className="w-full">
-                                            <SelectValue placeholder="semester" />
-                                          </SelectTrigger>
-                                          <SelectContent>
-                                            <SelectGroup {...field}>
-                                              {[1, 2, 3, 4, 5, 6, 7, 8].map(
-                                                (value, key) => (
-                                                  <SelectItem
-                                                    value={value.toString()}
-                                                    key={key}
-                                                  >
-                                                    {value}
-                                                  </SelectItem>
-                                                )
-                                              )}
-                                            </SelectGroup>
-                                          </SelectContent>
-                                        </Select>
-                                      </>
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
-                                {/* category */}
-                                <FormField
-                                  control={form.control}
-                                  name="category"
-                                  render={({ field }) => (
-                                    <FormItem className="w-full m-0">
-                                      <FormLabel>
-                                        Select the Category{" "}
-                                      </FormLabel>
-                                      <>
-                                        <Select
-                                          onValueChange={field.onChange}
-                                          defaultValue={form.getValues(
-                                            "category"
+                              </DialogDescription>
+                            </DialogContent>
+                          </Dialog>
+                          <Dialog open={open} onOpenChange={setOpen}>
+                            {/* edit start  */}
+                            <DialogTrigger asChild>
+                              <Button
+                                variant={"outline"}
+                                // size={"lg"}
+                                onClick={() => getACourses(course?._id)}
+                              >
+                                {" "}
+                                <i className="fi fi-rs-edit "></i>
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[900px]">
+                              <Form {...form}>
+                                <form
+                                  onSubmit={form.handleSubmit(onUpdate)}
+                                  className="w-full"
+                                >
+                                  <DialogHeader>
+                                    <DialogTitle>Edit Course</DialogTitle>
+                                    <DialogDescription>
+                                      Make changes to your profile here. Click
+                                      save when you are done.
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  <div className=" space-y-4 py-4">
+                                    <div className="  items-center gap-4 space-y-4">
+                                      <div className="grid grid-cols-2 gap-2">
+                                        {/* code  */}
+                                        <FormField
+                                          control={form.control}
+                                          name="courseCode"
+                                          render={({ field }) => (
+                                            <FormItem className="w-full m-0">
+                                              <FormLabel>
+                                                Enter Course Code
+                                              </FormLabel>
+                                              <FormControl>
+                                                <Input
+                                                  defaultValue={code}
+                                                  placeholder="Course Code"
+                                                  icon={
+                                                    "fi fi-rr-graduation-cap"
+                                                  }
+                                                  {...field}
+                                                />
+                                              </FormControl>
+                                              <FormMessage />
+                                            </FormItem>
                                           )}
-                                          value={category}
-                                        >
-                                          <SelectTrigger className="w-full">
-                                            <SelectValue placeholder="Category" />
-                                          </SelectTrigger>
-                                          <SelectContent>
-                                            <SelectGroup {...field}>
-                                              {Categories?.map(
-                                                (cat: any, key: any) => (
-                                                  <SelectItem
-                                                    value={cat}
-                                                    key={key}
-                                                  >
-                                                    {cat}
-                                                  </SelectItem>
-                                                )
-                                              )}
-                                            </SelectGroup>
-                                          </SelectContent>
-                                        </Select>
-                                      </>
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
-                              </div>
-                            </div>
-                            <DialogFooter>
-                              <Button>Update Course</Button>
-                            </DialogFooter>
-                          </form>
-                        </Form>
-                      </DialogContent>
-                    </Dialog>
-                  </TableCell>
-                </TableRow>
-              ))}
-        </TableBody>
-      </Table>
+                                        />
+                                        {/* cname  */}
+                                        <FormField
+                                          control={form.control}
+                                          name="courseName"
+                                          render={({ field }) => (
+                                            <FormItem className="w-full m-0">
+                                              <FormLabel>
+                                                Enter Course Name
+                                              </FormLabel>
+                                              <FormControl>
+                                                <Input
+                                                  defaultValue={cname}
+                                                  placeholder="Course Name"
+                                                  icon={
+                                                    "fi fi-rr-graduation-cap"
+                                                  }
+                                                  {...field}
+                                                />
+                                              </FormControl>
+                                              <FormMessage />
+                                            </FormItem>
+                                          )}
+                                        />
+                                      </div>
+                                      {/* semester */}
+                                      <FormField
+                                        control={form.control}
+                                        name="semester"
+                                        render={({ field }) => (
+                                          <FormItem className="w-full m-0">
+                                            <FormLabel>
+                                              Select the semster
+                                            </FormLabel>
+                                            <>
+                                              <Select
+                                                onValueChange={field.onChange}
+                                                defaultValue={field.value}
+                                                value={semester}
+                                              >
+                                                <SelectTrigger className="w-full">
+                                                  <SelectValue placeholder="semester" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                  <SelectGroup {...field}>
+                                                    {[
+                                                      1, 2, 3, 4, 5, 6, 7, 8,
+                                                    ].map((value, key) => (
+                                                      <SelectItem
+                                                        value={value.toString()}
+                                                        key={key}
+                                                      >
+                                                        {value}
+                                                      </SelectItem>
+                                                    ))}
+                                                  </SelectGroup>
+                                                </SelectContent>
+                                              </Select>
+                                            </>
+                                            <FormMessage />
+                                          </FormItem>
+                                        )}
+                                      />
+                                      {/* category */}
+                                      <FormField
+                                        control={form.control}
+                                        name="category"
+                                        render={({ field }) => (
+                                          <FormItem className="w-full m-0">
+                                            <FormLabel>
+                                              Select the Category{" "}
+                                            </FormLabel>
+                                            <>
+                                              <Select
+                                                onValueChange={field.onChange}
+                                                defaultValue={form.getValues(
+                                                  "category"
+                                                )}
+                                                value={category}
+                                              >
+                                                <SelectTrigger className="w-full">
+                                                  <SelectValue placeholder="Category" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                  <SelectGroup {...field}>
+                                                    {Categories?.map(
+                                                      (cat: any, key: any) => (
+                                                        <SelectItem
+                                                          value={cat}
+                                                          key={key}
+                                                        >
+                                                          {cat}
+                                                        </SelectItem>
+                                                      )
+                                                    )}
+                                                  </SelectGroup>
+                                                </SelectContent>
+                                              </Select>
+                                            </>
+                                            <FormMessage />
+                                          </FormItem>
+                                        )}
+                                      />
+                                    </div>
+                                  </div>
+                                  <DialogFooter>
+                                    <Button>Update Course</Button>
+                                  </DialogFooter>
+                                </form>
+                              </Form>
+                            </DialogContent>
+                          </Dialog>
+                        </div>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+          </TableBody>
+        </Table>
+      )}
     </AnimationWrapper>
   );
 };

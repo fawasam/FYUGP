@@ -52,6 +52,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import Loader from "@/components/common/Loader";
+import NoDataMessage from "@/components/common/Nodata";
 
 const formSchema = z.object({
   courseCode: z.string().min(2, {
@@ -86,7 +88,7 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
   let [createCourse] = useCreateCourseMutation();
   let [updateCourse] = useUpdateCourseMutation();
   let [getAllCourseByProgram] = useGetAllCourseByProgramMutation();
-  let [getAProgram] = useGetAProgramMutation();
+  let [getAProgram, { isLoading, isSuccess }] = useGetAProgramMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -150,10 +152,10 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
   console.log(allCourses);
 
   return (
-    <AnimationWrapper className="w-full  sm:mt-20 mt-0 my-6">
+    <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
       <section className="max-w-[1060px] m-auto   flex-grow">
         <div className="flex items-center justify-between text-center flex-row ">
-          <h1 className="max-md:hidden mb-4 text-3xl text-center">
+          <h1 className="mb-4 text-3xl text-center">
             <i className="fi fi-rr-book-alt mr-2"></i>
             {depName}
           </h1>
@@ -161,94 +163,109 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
         </div>
 
         {/* table of content  */}
-        <Table className="mt-10 ">
-          <TableCaption>
-            A list of courses offerde by {depName} department.
-          </TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="">SEMESTER</TableHead>
-              <TableHead>CJ</TableHead>
-              <TableHead>EJ</TableHead>
-              <TableHead>MN</TableHead>
-              <TableHead>VN</TableHead>
-              <TableHead>AEC</TableHead>
-              <TableHead>SEC</TableHead>
-              <TableHead>VAC</TableHead>
-              <TableHead>MDC</TableHead>
-              <TableHead>Total courses</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {allCourses != null &&
-              allCourses.length > 0 &&
-              groupCoursesBySemester(allCourses).map(
-                (course: any, key: any) => (
-                  <TableRow key={key}>
-                    <TableCell className="font-medium">
-                      {course[0]?.semester}
-                    </TableCell>
 
-                    <TableCell>
-                      {getCoursesByCategory(course, "CORE IN MAJOR")}
-                    </TableCell>
-                    <TableCell>
-                      {getCoursesByCategory(course, "ELECTIVE IN MAJOR")}
-                    </TableCell>
-                    <TableCell>
-                      {getCoursesByCategory(course, "MINOR")}
-                    </TableCell>
-                    <TableCell>
-                      {getCoursesByCategory(course, "VOCATIONAL MINOR")}
-                    </TableCell>
-                    <TableCell>
-                      {getCoursesByCategory(
-                        course,
-                        "ABILITY ENHANCEMENT COURSE"
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      {getCoursesByCategory(course, "SKILL ENHANCEMENT COURSE")}
-                    </TableCell>
-                    <TableCell>
-                      {getCoursesByCategory(course, "VALUE ADDED COURSE")}
-                    </TableCell>
-                    <TableCell>
-                      {getCoursesByCategory(
-                        course,
-                        "MULTI-DISCIPLINARY COURSE"
-                      )}
-                    </TableCell>
-                    <TableCell>{getTotalCourses(course)}</TableCell>
-                  </TableRow>
-                )
-              )}
-          </TableBody>
-        </Table>
-
-        {/* second table  */}
-        <Table className="mt-10">
-          <TableHeader>
-            <TableRow>
-              <TableHead className="">SEMESTER</TableHead>
-              <TableHead>COURSE CODE</TableHead>
-              <TableHead>COURSE NAME</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {allCourses != null &&
-              allCourses?.length > 0 &&
-              allCourses?.map((course: any, key: any) => (
-                <TableRow key={key}>
-                  <TableCell className="font-medium">
-                    {course?.semester}
-                  </TableCell>
-                  <TableCell>{course?.course[0]?.courseCode}</TableCell>
-                  <TableCell>{course?.course[0]?.courseName}</TableCell>
+        {isLoading ? (
+          <Loader />
+        ) : !isSuccess ? (
+          <NoDataMessage
+            message={"Course Data Unavailable!"}
+            icon={"fi fi-rr-search-alt"}
+          />
+        ) : (
+          <>
+            <Table className="mt-10 ">
+              <TableCaption>
+                A list of courses offerde by {depName} department.
+              </TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="">SEMESTER</TableHead>
+                  <TableHead>CJ</TableHead>
+                  <TableHead>EJ</TableHead>
+                  <TableHead>MN</TableHead>
+                  <TableHead>VN</TableHead>
+                  <TableHead>AEC</TableHead>
+                  <TableHead>SEC</TableHead>
+                  <TableHead>VAC</TableHead>
+                  <TableHead>MDC</TableHead>
+                  <TableHead>Total courses</TableHead>
                 </TableRow>
-              ))}
-          </TableBody>
-        </Table>
+              </TableHeader>
+              <TableBody>
+                {allCourses != null &&
+                  allCourses.length > 0 &&
+                  groupCoursesBySemester(allCourses).map(
+                    (course: any, key: any) => (
+                      <TableRow key={key}>
+                        <TableCell className="font-medium">
+                          {course[0]?.semester}
+                        </TableCell>
+
+                        <TableCell>
+                          {getCoursesByCategory(course, "CORE IN MAJOR")}
+                        </TableCell>
+                        <TableCell>
+                          {getCoursesByCategory(course, "ELECTIVE IN MAJOR")}
+                        </TableCell>
+                        <TableCell>
+                          {getCoursesByCategory(course, "MINOR")}
+                        </TableCell>
+                        <TableCell>
+                          {getCoursesByCategory(course, "VOCATIONAL MINOR")}
+                        </TableCell>
+                        <TableCell>
+                          {getCoursesByCategory(
+                            course,
+                            "ABILITY ENHANCEMENT COURSE"
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {getCoursesByCategory(
+                            course,
+                            "SKILL ENHANCEMENT COURSE"
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {getCoursesByCategory(course, "VALUE ADDED COURSE")}
+                        </TableCell>
+                        <TableCell>
+                          {getCoursesByCategory(
+                            course,
+                            "MULTI-DISCIPLINARY COURSE"
+                          )}
+                        </TableCell>
+                        <TableCell>{getTotalCourses(course)}</TableCell>
+                      </TableRow>
+                    )
+                  )}
+              </TableBody>
+            </Table>
+
+            {/* second table  */}
+            <Table className="mt-10">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="">SEMESTER</TableHead>
+                  <TableHead>COURSE CODE</TableHead>
+                  <TableHead>COURSE NAME</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {allCourses != null &&
+                  allCourses?.length > 0 &&
+                  allCourses?.map((course: any, key: any) => (
+                    <TableRow key={key}>
+                      <TableCell className="font-medium">
+                        {course?.semester}
+                      </TableCell>
+                      <TableCell>{course?.course[0]?.courseCode}</TableCell>
+                      <TableCell>{course?.course[0]?.courseName}</TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </>
+        )}
       </section>
     </AnimationWrapper>
   );

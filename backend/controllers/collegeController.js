@@ -27,7 +27,18 @@ export const createCollege = asyncErrorHandler(async (req, res, next) => {
     return next(error);
   }
 
-  // try {
+  const existCollege = await User.findOne({ collegename }).select("+password");
+  if (existCollege) {
+    const error = new CustomError("College already exist", 400);
+    return next(error);
+  }
+
+  const existUser = await User.findOne({ email }).select("+password");
+  if (existUser) {
+    const error = new CustomError("Email already exist", 400);
+    return next(error);
+  }
+
   const newCollege = await College.create({
     ...req.body,
     user: req.user._id,

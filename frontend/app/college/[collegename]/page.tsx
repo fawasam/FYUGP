@@ -15,6 +15,8 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import NoDataMessage from "@/components/common/Nodata";
 import Image from "next/image";
+import { disciplines } from "@/utils/disciplines";
+import Loader from "@/components/common/Loader";
 
 const SingleCollege = ({ params }: { params: { collegename: string } }) => {
   const { toast } = useToast();
@@ -24,7 +26,7 @@ const SingleCollege = ({ params }: { params: { collegename: string } }) => {
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
-  const [getACollege] = useGetACollegeMutation();
+  const [getACollege, { isLoading, isSuccess }] = useGetACollegeMutation();
 
   const getCollegeData = async () => {
     const response: any = await getACollege(params.collegename);
@@ -36,90 +38,121 @@ const SingleCollege = ({ params }: { params: { collegename: string } }) => {
   }, [getACollege]);
   return (
     <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
-      <section className="max-w-[1060px] m-auto   flex-grow">
-        <div className="relative w-full h-[250px]">
-          {college?.picture ? (
-            <Image
-              src={college?.picture}
-              alt="image"
-              className="w-full  h-[250px] object-cover rounded-sm"
-              fill
-            />
-          ) : (
-            <Skeleton className=" w-full h-[250px] rounded-sm" />
-          )}
-        </div>
-        <div className="w-full">
-          {college?.collegename ? (
-            <h1 className="text-2xl mt-4 font-bold">{college?.collegename}</h1>
-          ) : (
-            <Skeleton className=" w-[20px] h-[20px] rounded-sm ,mt-4" />
-          )}
+      {isLoading ? (
+        <Loader />
+      ) : !isSuccess ? (
+        <NoDataMessage
+          message={"College Data Unavailable!"}
+          icon={"fi fi-rr-search-alt"}
+        />
+      ) : (
+        <section className="max-w-[1060px] m-auto   flex-grow">
+          <div className="relative w-full h-[250px]">
+            {college?.picture ? (
+              <Image
+                src={college?.picture}
+                alt="image"
+                className="w-full  h-[250px] object-cover rounded-sm"
+                fill
+              />
+            ) : (
+              <Skeleton className=" w-full h-[250px] rounded-sm" />
+            )}
+          </div>
+          <div className="w-full">
+            {college?.collegename ? (
+              <h1 className="text-2xl mt-4 font-bold">
+                {college?.collegename}
+              </h1>
+            ) : (
+              <Skeleton className=" w-[20px] h-[20px] rounded-sm ,mt-4" />
+            )}
 
-          <i className="fi  fi-rr-marker mr-2"></i>
-          <span className="text-md  font-thin">{college?.place}</span>
-          <div className="mt-4">
-            <Link
-              href={college?.website ? college?.website : ""}
-              target="_blank"
-            >
-              <i className="fi  fi-rr-globe mr-2"></i>
-              <Button variant={"link"} className=" pl-0">
-                {college?.website ? college?.website : "Not provided"}
-              </Button>
-            </Link>
-            <div>
+            <i className="fi  fi-rr-marker mr-2"></i>
+            <span className="text-md  font-thin">{college?.place}</span>
+            <div className="mt-4">
               <Link
-                href={
-                  college?.email ? "mailto: " + college?.email : "Not provided"
-                }
+                href={college?.website ? college?.website : ""}
                 target="_blank"
               >
-                <i className="fi fi-rr-envelope mr-2"></i>
+                <i className="fi  fi-rr-globe mr-2"></i>
                 <Button variant={"link"} className=" pl-0">
-                  <span>
-                    {college?.email ? college?.email : "Not provided"}
-                  </span>
+                  {college?.website ? college?.website : "Not provided"}
                 </Button>
               </Link>
+              <div>
+                <Link
+                  href={
+                    college?.email
+                      ? "mailto: " + college?.email
+                      : "Not provided"
+                  }
+                  target="_blank"
+                >
+                  <i className="fi fi-rr-envelope mr-2"></i>
+                  <Button variant={"link"} className=" pl-0">
+                    <span>
+                      {college?.email ? college?.email : "Not provided"}
+                    </span>
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </div>
-          {college?.about ? (
+            {college?.about ? (
+              <div className="pt-4 flex flex-col">
+                <h3 className="text-lg font-medium">ABOUT</h3>
+                <span className="leading-normal font-light">
+                  {college?.about}
+                </span>
+              </div>
+            ) : (
+              ""
+            )}
             <div className="pt-4 flex flex-col">
-              <h3 className="text-lg font-medium">ABOUT</h3>
-              <span className="leading-normal font-light">
-                {college?.about}
-              </span>
-            </div>
-          ) : (
-            ""
-          )}
-          <div className="pt-4 flex flex-col">
-            <h3 className="text-lg font-medium ">DEPARTMENT</h3>
-            <div className="mr-2 mt-2">
-              {college?.departments && college.departments.length > 0 ? (
-                college.departments.map((dep: any, key: any) => (
+              <h3 className="text-lg font-medium ">DISCIPLINES</h3>
+              <div className="mr-2 mt-2">
+                {disciplines.map((d: any, key: any) => (
                   <Link
-                    href={`/college/${params.collegename}/${dep?.Dname.replace(
-                      /\s+/g,
-                      "-"
-                    )}`}
+                    // href={`/college/${params.collegename}/${dep?.Dname.replace(
+                    //   /\s+/g,
+                    //   "-"
+                    // )}`}
+                    href={"/"}
                     key={key}
                   >
                     <Button variant="outline" className="mr-2 ">
-                      {dep?.Dname}
+                      {d}
                     </Button>
                   </Link>
+                ))}
+              </div>
+            </div>
+            <div className="pt-4 flex flex-col">
+              <h3 className="text-lg font-medium ">DEPARTMENT</h3>
+              <div className="mr-2 mt-2">
+                {college?.departments && college.departments.length > 0 ? (
+                  college.departments.map((dep: any, key: any) => (
+                    <Link
+                      href={`/college/${
+                        params.collegename
+                      }/${dep?.Dname.replace(/\s+/g, "-")}`}
+                      key={key}
+                    >
+                      <Button variant="outline" className="mr-2 ">
+                        {dep?.Dname}
+                      </Button>
+                    </Link>
 
-                  // <span key={key}>{dep?.Dname}</span>
-                ))
-              ) : (
-                <NoDataMessage message={"No Departments found"} />
-              )}
+                    // <span key={key}>{dep?.Dname}</span>
+                  ))
+                ) : (
+                  <NoDataMessage message={"No Departments found"} />
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </AnimationWrapper>
   );
 };

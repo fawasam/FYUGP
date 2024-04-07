@@ -44,7 +44,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
   const { toast } = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
-  const [college, setCollege] = useState({});
+  const [college, setCollege] = useState<any>({});
   const { redirectTo } = useRedirect();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user } = userData;
@@ -98,7 +98,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       formData.append("image", selectedImage);
       try {
         const response: any = await axios.post(
-          "http://localhost:3000/api/v1/upload/image",
+          ` ${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/upload/image`,
           formData,
           {
             headers: {
@@ -158,7 +158,6 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
     }
   }, [userData, dispatch, router, user, getACollege]);
   useEffect(() => {
-    // Reset the form with updated default values whenever college state changes
     form.reset({
       collegename: collegename,
       place: place,
@@ -169,7 +168,8 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       website: website,
       about: about,
     });
-  }, []);
+  }, [collegename, place, phone, pincode, picture, email, website, about]);
+
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <h1 className="max-md:hidden text-2xl font-semibold">Edit Profile</h1>

@@ -14,17 +14,17 @@ import { protect, restrict } from "../controllers/authController.js";
 
 router
   .route("/:programId")
-  .post(protect, restrict("collegeAdmin"), createCourse);
+  .post(protect, restrict("department", "collegeAdmin"), createCourse);
 
 router.route("/all/:programId").get(getAllCourseByProgram);
 router
   .route("/:programId/:courseId")
-  .patch(protect, restrict("collegeAdmin"), updateCourse);
+  .patch(protect, restrict("department", "collegeAdmin"), updateCourse);
 router.route("/all-course").get(getAllCourse);
 router
   .route("/:id")
   .get(getACourse)
-  .delete(protect, restrict("collegeAdmin"), deleteCourseById);
+  .delete(protect, restrict("department", "collegeAdmin"), deleteCourseById);
 
 router.route("/merge").get(mergeSimilarCourse);
 

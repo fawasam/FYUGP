@@ -113,6 +113,16 @@ const AdminSideNav: React.FC | any = () => {
               Colleges
             </Link>
             <Link
+              href={`/profile/admin/${user?.username}/dashboard/advisor`}
+              onClick={(e: any) => setPageState(e.target.innerText)}
+              className={`sidebar-link + ${
+                isLinkActive("/dashboard/advisor") ? "active" : " "
+              } `}
+            >
+              <i className="fi  fi-sr-calendar-lines-pen"></i>
+              Advisor
+            </Link>
+            <Link
               href={`/profile/admin/${user?.username}/dashboard/enquiry`}
               onClick={(e: any) => setPageState(e.target.innerText)}
               className={`sidebar-link + ${

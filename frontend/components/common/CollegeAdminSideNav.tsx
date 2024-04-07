@@ -78,6 +78,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
             <h1 className="text-xl text-dark-grey mb-3">Dashboard</h1>
             <hr className="border-grey -ml-6 mb-8 mr-6" />
 
+            {/* dashboard */}
             <Link
               href={`/profile/${user?.role}/${user?.username}/dashboard`}
               onClick={(e: any) => setPageState(e.target.innerText)}
@@ -88,16 +89,24 @@ const CollegeAdminSideNav: React.FC | any = () => {
               <i className="fi fi-rs-settings"></i>
               Dashboard
             </Link>
-            <Link
-              href={`/profile/${user?.role}/${user?.username}/dashboard/college`}
-              onClick={(e: any) => setPageState(e.target.innerText)}
-              className={`sidebar-link + ${
-                isLinkActive("/dashboard/college") ? "active" : " "
-              } `}
-            >
-              <i className="fi fi-rr-school"></i>
-              College
-            </Link>
+
+            {/* dashboard college */}
+            {user?.role === "collegeAdmin" ? (
+              <Link
+                href={`/profile/${user?.role}/${user?.username}/dashboard/college`}
+                onClick={(e: any) => setPageState(e.target.innerText)}
+                className={`sidebar-link + ${
+                  isLinkActive("/dashboard/college") ? "active" : " "
+                } `}
+              >
+                <i className="fi fi-rr-school"></i>
+                College
+              </Link>
+            ) : (
+              ""
+            )}
+
+            {/* dashboard program */}
 
             <Link
               href={`/profile/${user?.role}/${user?.username}/dashboard/programme`}
@@ -106,9 +115,12 @@ const CollegeAdminSideNav: React.FC | any = () => {
                 isLinkActive("/dashboard/programme") ? "active" : " "
               } `}
             >
-              <i className="fi fi-rr-duplicate"></i>
+              <i className="fi fi-rr-graduation-cap"></i>
               Programme
             </Link>
+
+            {/* dashboard course */}
+
             <Link
               href={`/profile/${user?.role}/${user?.username}/dashboard/courses`}
               onClick={(e: any) => setPageState(e.target.innerText)}
@@ -117,10 +129,29 @@ const CollegeAdminSideNav: React.FC | any = () => {
               } `}
             >
               <div className="relative">
-                <i className="fi fi-rr-book-alt"></i>
+                <i className="fi fi-rr-book"></i>
               </div>
               Courses
             </Link>
+
+            {/* dashboard advisor */}
+
+            {user?.role === "collegeAdmin" ? (
+              <Link
+                href={`/profile/${user?.role}/${user?.username}/dashboard/advisor`}
+                onClick={(e: any) => setPageState(e.target.innerText)}
+                className={`sidebar-link + ${
+                  isLinkActive("/dashboard/advisor") ? "active" : " "
+                } `}
+              >
+                <i className="fi fi fi-sr-calendar-lines-pen"></i>
+                Advisor
+              </Link>
+            ) : (
+              ""
+            )}
+
+            {/* dashboard enquiry */}
 
             <Link
               href={`/profile/${user?.role}/${user?.username}/dashboard/enquiry`}
@@ -141,6 +172,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
             <h1 className="text-xl text-dark-grey mb-3 mt-20">Settings</h1>
             <hr className="border-grey -ml-6 mb-8 mr-6" />
 
+            {/* settings Edit Profile */}
             <Link
               href={`/profile/${user?.role}/${user?.username}/settings/edit-profile`}
               onClick={(e: any) => setPageState(e.target.innerText)}
@@ -152,6 +184,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
               Edit Profile
             </Link>
 
+            {/* settings Change Password */}
             <Link
               href={`/profile/${user?.role}/${user?.username}/settings/change-password`}
               onClick={(e: any) => setPageState(e.target.innerText)}

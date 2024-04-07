@@ -33,6 +33,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
   useCreateProgramMutation,
+  useDeleteProgramMutation,
   useGetACollegeMutation,
   useGetAProgramMutation,
   useGetAllProgramByCollegeMutation,
@@ -98,6 +99,7 @@ const Programme = () => {
   let [getAllProgram] = useGetAllProgramMutation();
   let [getAProgram] = useGetAProgramMutation();
   let [createProgram] = useCreateProgramMutation();
+  let [deleteProgram] = useDeleteProgramMutation();
   let [updateProgram] = useUpdateProgramMutation();
   let [getAllProgramByCollege, { isLoading, isError, isSuccess }] =
     useGetAllProgramByCollegeMutation();
@@ -182,6 +184,25 @@ const Programme = () => {
     });
     setAllPrograms(response?.data?.data?.programs);
   };
+
+  const handleDeleteProgram = async (id: any) => {
+    try {
+      const response = await deleteProgram({ id });
+
+      toast({
+        title: "Program Deleted Successfully",
+      });
+      console.log("Program Deleted Successfully");
+      getAllPrograms();
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: error.data.message,
+      });
+      console.log(error.data.message);
+    }
+  };
   useEffect(() => {
     getAllPrograms();
     if (!user) {
@@ -203,8 +224,7 @@ const Programme = () => {
         <h1 className="max-md:hidden mb-4 text-2xl font-semibold">
           All Programs
         </h1>
-        {/* <Dialog>
-          <DialogTrigger asChild> */}
+
         {isSuccess ? (
           <Button>
             <Link
@@ -217,101 +237,6 @@ const Programme = () => {
         ) : (
           " "
         )}
-        {/* </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-                <DialogHeader>
-                  <DialogTitle>Add Programme</DialogTitle>
-                  <DialogDescription>
-                    Make changes to your profile here. Click save when you are
-                    done.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className=" space-y-4 py-4">
-                  <div className="  items-center gap-4 space-y-4">
-                    <FormField
-                      control={form.control}
-                      name="Dname"
-                      render={({ field }) => (
-                        <FormItem className="w-full m-0">
-                          <FormLabel>Enter Program Name</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Program Name"
-                              icon={"fi fi-rr-graduation-cap"}
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="headOfDepartment"
-                      render={({ field }) => (
-                        <FormItem className="w-full m-0">
-                          <FormLabel>Enter Head Of Department</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Head Of Department"
-                              icon={"fi fi-rr-graduation-cap"}
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="Discipline"
-                      render={({ field }) => (
-                        <FormItem className="w-full m-0">
-                          <FormLabel>Select the Discipline</FormLabel>
-                          <>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Discipline" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectGroup {...field}>
-                                  <SelectItem value="Humanities">
-                                    Humanities
-                                  </SelectItem>
-                                  <SelectItem value="Languages">
-                                    Languages
-                                  </SelectItem>
-                                  <SelectItem value="Science">
-                                    Science
-                                  </SelectItem>
-                                  <SelectItem value="Commerce">
-                                    Commerce
-                                  </SelectItem>
-                                  <SelectItem value="Management">
-                                    Management
-                                  </SelectItem>
-                                </SelectGroup>
-                              </SelectContent>
-                            </Select>
-                          </>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-                <DialogFooter>
-                  <Button>Add Program</Button>
-                </DialogFooter>
-              </form>
-            </Form>
-          </DialogContent>
-        </Dialog> */}
       </div>
 
       {isLoading ? (
@@ -322,186 +247,240 @@ const Programme = () => {
           icon={"fi fi-rr-user"}
         />
       ) : (
-        <Table className="mt-10">
-          <TableCaption>List of Porgramms.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[200px]">Department</TableHead>
-              <TableHead>Hod</TableHead>
-              <TableHead>Discipline</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Joined At</TableHead>
-              <TableHead>Total courses</TableHead>
-              <TableHead className="text-right">Task</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {allPrograms != null &&
-              allPrograms.length > 0 &&
-              allPrograms.map((program, key) => (
-                <TableRow key={key}>
-                  <TableCell className="font-medium">
-                    {program?.Dname}
-                  </TableCell>
-                  <TableCell>{program?.headOfDepartment}</TableCell>
-                  <TableCell>{program?.Discipline}</TableCell>
-                  <TableCell>{program?.email}</TableCell>
-                  <TableCell className="text-center">
-                    {formateDate(program.joinedAt)}
-                  </TableCell>
-                  <TableCell>{program?.coursesOffered.length}</TableCell>
-                  <TableCell className="text-right ">
-                    <TooltipProvider>
-                      <div className="flex space-x-1">
-                        <Link
-                          href={`/profile/collegeAdmin/${user.username}/dashboard/courses/${program._id}`}
-                        >
-                          <Tooltip>
-                            <TooltipTrigger>
-                              {" "}
-                              <Button variant={"secondary"}>
-                                {" "}
-                                <i className="fi fi-rs-eye "></i>
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>View</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </Link>
-                        <Dialog>
-                          <Tooltip>
-                            <DialogTrigger asChild>
-                              <TooltipTrigger>
-                                <Button
-                                  variant={"outline"}
-                                  onClick={() => getAPrograms(program?._id)}
-                                >
-                                  {" "}
-                                  <i className="fi fi-rs-edit "></i>
-                                </Button>
-                              </TooltipTrigger>
-                            </DialogTrigger>
-                            <TooltipContent>
-                              <p>Edit</p>
-                            </TooltipContent>
-                          </Tooltip>
-                          <DialogContent className="sm:max-w-[425px]">
-                            <Form {...form2}>
-                              <form
-                                onSubmit={form2.handleSubmit(onUpdate)}
-                                className="w-full"
-                              >
-                                <DialogHeader>
-                                  <DialogTitle>Add Programme</DialogTitle>
-                                  <DialogDescription>
-                                    Make changes to your Program here. Click
-                                    save when you are done.
-                                  </DialogDescription>
-                                </DialogHeader>
-                                <div className=" space-y-4 py-4">
-                                  <div className="  items-center gap-4 space-y-4">
-                                    <FormField
-                                      control={form2.control}
-                                      name="Dname"
-                                      render={({ field }) => (
-                                        <FormItem className="w-full m-0">
-                                          <FormLabel>
-                                            Enter Program Name
-                                          </FormLabel>
-                                          <FormControl>
-                                            <Input
-                                              placeholder="Program Name"
-                                              defaultValue={dname}
-                                              icon={"fi fi-rr-graduation-cap"}
-                                              {...field}
-                                            />
-                                          </FormControl>
-                                          <FormMessage />
-                                        </FormItem>
-                                      )}
-                                    />
-                                    <FormField
-                                      control={form2.control}
-                                      name="headOfDepartment"
-                                      render={({ field }) => (
-                                        <FormItem className="w-full m-0">
-                                          <FormLabel>
-                                            Enter Head Of Department
-                                          </FormLabel>
-                                          <FormControl>
-                                            <Input
-                                              placeholder="Head Of Department"
-                                              defaultValue={headOfDepartment}
-                                              icon={"fi fi-rr-graduation-cap"}
-                                              {...field}
-                                            />
-                                          </FormControl>
-                                          <FormMessage />
-                                        </FormItem>
-                                      )}
-                                    />
-
-                                    <FormField
-                                      control={form2.control}
-                                      name="Discipline"
-                                      render={({ field }) => (
-                                        <FormItem>
-                                          <FormLabel>Discipline</FormLabel>
-                                          <Select
-                                            onValueChange={field.onChange}
-                                            defaultValue={field.value}
-                                          >
-                                            <FormControl>
-                                              <SelectTrigger>
-                                                <SelectValue placeholder="Select your Discipline " />
-                                              </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                              {disciplines.map((dist, key) => (
-                                                <SelectItem
-                                                  value={dist}
-                                                  key={key}
-                                                >
-                                                  {dist}
-                                                </SelectItem>
-                                              ))}
-                                            </SelectContent>
-                                          </Select>
-
-                                          <FormMessage />
-                                        </FormItem>
-                                      )}
-                                    />
-                                  </div>
-                                </div>
-                                <DialogFooter>
-                                  <Button>Update Program</Button>
-                                </DialogFooter>
-                              </form>
-                            </Form>
-                          </DialogContent>
-                        </Dialog>
-
-                        <Tooltip>
-                          <TooltipTrigger>
-                            {" "}
-                            <Button variant={"destructive"}>
-                              {" "}
-                              <i className="fi fi-rs-trash "></i>
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Delete</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </div>
-                    </TooltipProvider>
-                  </TableCell>
+        <>
+          {allPrograms?.length == 0 ? (
+            <NoDataMessage
+              message={"No Program Data exist"}
+              icon={"fi fi-rr-search-alt"}
+            />
+          ) : (
+            <Table className="mt-10">
+              <TableCaption>List of Porgramms.</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[200px]">Department</TableHead>
+                  <TableHead>Hod</TableHead>
+                  <TableHead>Discipline</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Joined At</TableHead>
+                  <TableHead>Total courses</TableHead>
+                  <TableHead className="text-right">Task</TableHead>
                 </TableRow>
-              ))}
-          </TableBody>
-        </Table>
+              </TableHeader>
+              <TableBody>
+                {allPrograms != null &&
+                  allPrograms.length > 0 &&
+                  allPrograms.map((program, key) => (
+                    <TableRow key={key}>
+                      <TableCell className="font-medium">
+                        {program?.Dname}
+                      </TableCell>
+                      <TableCell>{program?.headOfDepartment}</TableCell>
+                      <TableCell>{program?.Discipline}</TableCell>
+                      <TableCell>{program?.email}</TableCell>
+                      <TableCell className="text-center">
+                        {formateDate(program.joinedAt)}
+                      </TableCell>
+                      <TableCell>{program?.coursesOffered.length}</TableCell>
+                      <TableCell className="text-right ">
+                        <TooltipProvider>
+                          <div className="flex space-x-1">
+                            <Link
+                              href={`/profile/collegeAdmin/${user.username}/dashboard/courses/${program._id}`}
+                            >
+                              <Tooltip>
+                                <TooltipTrigger>
+                                  {" "}
+                                  <Button variant={"secondary"}>
+                                    {" "}
+                                    <i className="fi fi-rs-eye "></i>
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>View</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </Link>
+                            <Dialog>
+                              <Tooltip>
+                                <DialogTrigger asChild>
+                                  <TooltipTrigger>
+                                    <Button
+                                      variant={"outline"}
+                                      onClick={() => getAPrograms(program?._id)}
+                                    >
+                                      {" "}
+                                      <i className="fi fi-rs-edit "></i>
+                                    </Button>
+                                  </TooltipTrigger>
+                                </DialogTrigger>
+                                <TooltipContent>
+                                  <p>Edit</p>
+                                </TooltipContent>
+                              </Tooltip>
+                              <DialogContent className="sm:max-w-[425px]">
+                                <Form {...form2}>
+                                  <form
+                                    onSubmit={form2.handleSubmit(onUpdate)}
+                                    className="w-full"
+                                  >
+                                    <DialogHeader>
+                                      <DialogTitle>Add Programme</DialogTitle>
+                                      <DialogDescription>
+                                        Make changes to your Program here. Click
+                                        save when you are done.
+                                      </DialogDescription>
+                                    </DialogHeader>
+                                    <div className=" space-y-4 py-4">
+                                      <div className="  items-center gap-4 space-y-4">
+                                        <FormField
+                                          control={form2.control}
+                                          name="Dname"
+                                          render={({ field }) => (
+                                            <FormItem className="w-full m-0">
+                                              <FormLabel>
+                                                Enter Program Name
+                                              </FormLabel>
+                                              <FormControl>
+                                                <Input
+                                                  placeholder="Program Name"
+                                                  defaultValue={dname}
+                                                  icon={
+                                                    "fi fi-rr-graduation-cap"
+                                                  }
+                                                  {...field}
+                                                />
+                                              </FormControl>
+                                              <FormMessage />
+                                            </FormItem>
+                                          )}
+                                        />
+                                        <FormField
+                                          control={form2.control}
+                                          name="headOfDepartment"
+                                          render={({ field }) => (
+                                            <FormItem className="w-full m-0">
+                                              <FormLabel>
+                                                Enter Head Of Department
+                                              </FormLabel>
+                                              <FormControl>
+                                                <Input
+                                                  placeholder="Head Of Department"
+                                                  defaultValue={
+                                                    headOfDepartment
+                                                  }
+                                                  icon={
+                                                    "fi fi-rr-graduation-cap"
+                                                  }
+                                                  {...field}
+                                                />
+                                              </FormControl>
+                                              <FormMessage />
+                                            </FormItem>
+                                          )}
+                                        />
+
+                                        <FormField
+                                          control={form2.control}
+                                          name="Discipline"
+                                          render={({ field }) => (
+                                            <FormItem>
+                                              <FormLabel>Discipline</FormLabel>
+                                              <Select
+                                                onValueChange={field.onChange}
+                                                defaultValue={field.value}
+                                              >
+                                                <FormControl>
+                                                  <SelectTrigger>
+                                                    <SelectValue placeholder="Select your Discipline " />
+                                                  </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent>
+                                                  {disciplines.map(
+                                                    (dist, key) => (
+                                                      <SelectItem
+                                                        value={dist}
+                                                        key={key}
+                                                      >
+                                                        {dist}
+                                                      </SelectItem>
+                                                    )
+                                                  )}
+                                                </SelectContent>
+                                              </Select>
+
+                                              <FormMessage />
+                                            </FormItem>
+                                          )}
+                                        />
+                                      </div>
+                                    </div>
+                                    <DialogFooter>
+                                      <Button>Update Program</Button>
+                                    </DialogFooter>
+                                  </form>
+                                </Form>
+                              </DialogContent>
+                            </Dialog>
+
+                            <Tooltip>
+                              <TooltipTrigger>
+                                <Dialog>
+                                  <DialogTrigger>
+                                    <Button
+                                      variant={"destructive"}
+                                      className=" text-center"
+                                      size={"sm"}
+                                    >
+                                      <i className="fi fi-rs-trash "></i>
+                                    </Button>
+                                  </DialogTrigger>
+                                  <DialogContent className="">
+                                    <DialogHeader className="mt-6">
+                                      <DialogTitle className="text-2xl flex item-center justify-center flex-col text-center">
+                                        <i className="fi fi-rs-trash "></i>
+                                        Are you sure?
+                                      </DialogTitle>
+                                    </DialogHeader>
+                                    <DialogDescription className="text-base text-center">
+                                      {` You want to delete this Program 
+                                  ${program?.Dname}`}
+                                      <div className="my-4 space-x-3">
+                                        <DialogClose asChild>
+                                          <Button
+                                            type="button"
+                                            variant="secondary"
+                                          >
+                                            Close
+                                          </Button>
+                                        </DialogClose>
+
+                                        <Button
+                                          variant={"destructive"}
+                                          onClick={() =>
+                                            handleDeleteProgram(program._id)
+                                          }
+                                        >
+                                          Confirm
+                                        </Button>
+                                      </div>
+                                    </DialogDescription>
+                                  </DialogContent>
+                                </Dialog>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Delete</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </div>
+                        </TooltipProvider>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          )}
+        </>
       )}
     </AnimationWrapper>
   );

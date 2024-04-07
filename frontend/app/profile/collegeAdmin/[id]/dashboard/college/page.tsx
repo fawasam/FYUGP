@@ -68,7 +68,6 @@ const AdminCollege = () => {
           <div className="relative">
             <img
               src={`${college?.picture ? college?.picture : ""}`}
-              // fill
               alt="image"
               className="w-full  h-[250px] object-cover rounded-sm"
             />

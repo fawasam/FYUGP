@@ -31,6 +31,12 @@ const collegeSchema = mongoose.Schema(
       ref: "users",
       required: true,
     },
+    advisor: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "advisor",
+      },
+    ],
     picture: {
       type: String,
       default: `${process.env.SERVER_URL}/uploads/default_dp.webp`,

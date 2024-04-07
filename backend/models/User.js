@@ -49,7 +49,6 @@ const userSchema = mongoose.Schema(
     },
     place: String,
     district: String,
-
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetTokenExpires: Date,

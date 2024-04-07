@@ -231,10 +231,9 @@ export const generateCollegeCredentials = asyncErrorHandler(
       const error = new CustomError("User already exist", 400);
       return next(error);
     }
-
-    User.findOne;
     let username = await generateUsername(email);
-    const password = generateRandomPassword();
+    // const password = generateRandomPassword();
+    const password = "111111";
     let role = "collegeAdmin";
     const user = await User.create({
       email,
@@ -270,7 +269,8 @@ export const generateDepartmentCredentials = asyncErrorHandler(
       return next(error);
     }
     let username = await generateUsername(email);
-    const password = generateRandomPassword();
+    // const password = generateRandomPassword();
+    const password = "111111";
     let role = "department";
     const user = await User.create({
       email,
@@ -293,7 +293,7 @@ export const generateDepartmentCredentials = asyncErrorHandler(
 
 export const generateAdvisorCredentials = asyncErrorHandler(
   async (req, res, next) => {
-    const { email, college } = req.body;
+    const { email, college, fullname } = req.body;
 
     if (!email) {
       const error = new CustomError("Please provide email", 400);
@@ -306,12 +306,14 @@ export const generateAdvisorCredentials = asyncErrorHandler(
       return next(error);
     }
     let username = await generateUsername(email);
-    const password = generateRandomPassword();
+    // const password = generateRandomPassword();
+    const password = "111111";
     let role = "advisor";
     const user = await User.create({
       email,
       password,
       username,
+      fullname,
       role,
       college,
     });

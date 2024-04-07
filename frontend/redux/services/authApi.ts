@@ -28,6 +28,10 @@ interface ResetPasswordFormData {
 interface GenerateCollegeCredentialsFormData {
   email: string;
 }
+interface GenerateAdvisorCredentialsFormData {
+  fullname: string;
+  user: string;
+}
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -71,10 +75,7 @@ export const authApi = createApi({
       }),
     }),
 
-    generateAdvisorCredentials: builder.mutation<
-      void,
-      GenerateCollegeCredentialsFormData
-    >({
+    generateAdvisorCredentials: builder.mutation<void, any>({
       query: (data) => ({
         url: "/signup/advisor",
         method: "POST",

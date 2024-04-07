@@ -75,18 +75,30 @@ const Courses = () => {
           />
         ) : (
           <div className="my-6 space-y-4">
-            {courses.length > 0 &&
-              courses?.map((c: any, key: any) => (
-                <Link
-                  href={`/profile/collegeAdmin/${user.username}/dashboard/courses/${c._id}`}
-                  key={key}
-                  className="flex"
-                >
-                  <Button className="mr-2 bg-background" variant={"secondary"}>
-                    {c?.Dname}
-                  </Button>
-                </Link>
-              ))}
+            {courses.length == 0 ? (
+              <NoDataMessage
+                message={"No Course Data exist"}
+                icon={"fi fi-rr-search-alt"}
+              />
+            ) : (
+              <>
+                {courses.length > 0 &&
+                  courses?.map((c: any, key: any) => (
+                    <Link
+                      href={`/profile/collegeAdmin/${user.username}/dashboard/courses/${c._id}`}
+                      key={key}
+                      className="flex"
+                    >
+                      <Button
+                        className="mr-2 bg-background"
+                        variant={"secondary"}
+                      >
+                        {c?.Dname}
+                      </Button>
+                    </Link>
+                  ))}
+              </>
+            )}
           </div>
         )}
       </section>

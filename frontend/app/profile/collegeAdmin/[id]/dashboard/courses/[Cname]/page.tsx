@@ -126,44 +126,6 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      // const newValues = { ...values, collegeId: user?.college };
-      let newValues = {
-        course: [
-          {
-            courseCode: values.courseCode,
-            courseName: values.courseName,
-          },
-        ],
-        category: values.category,
-        semester: values.semester,
-        collegeId: user?.college,
-      };
-      console.log(newValues);
-
-      const response: any = await createCourse({
-        programId: params.Cname,
-        data: newValues,
-      }).unwrap();
-      resetData();
-      console.log(response);
-
-      toast({
-        title: "Successfully added Course",
-      });
-      getAllCoursesByProgram();
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
-      });
-      console.log(error?.data?.message);
-      console.log(error);
-    }
-    setOpen(false);
-  };
   const onUpdate = async (values: z.infer<typeof formSchema>) => {
     try {
       // const newValues = { ...values };
@@ -223,10 +185,6 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
     params?.Cname,
   ]);
 
-  // allCourses
-  //   ?.slice()
-  //   .sort((a, b) => parseInt(a.semester) - parseInt(b.semester));
-
   const handleDeleteCourse = async (id: any) => {
     console.log(id);
 
@@ -275,144 +233,7 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
           <i className="fi fi-rr-book-alt mr-2"></i>
           {dname}
         </h1>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            {isSuccess ? (
-              <Button>
-                {" "}
-                <i className="fi fi-rr-plus mr-2"></i>New
-              </Button>
-            ) : (
-              ""
-            )}
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[900px]">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-                <DialogHeader>
-                  <DialogTitle>Add Course</DialogTitle>
-                  <DialogDescription>
-                    A list of courses offered by {dname} department.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className=" space-y-4 py-4">
-                  <div className="  items-center gap-4 space-y-4">
-                    <div className="grid grid-cols-2 gap-2">
-                      {/* code  */}
-                      <FormField
-                        control={form.control}
-                        name="courseCode"
-                        render={({ field }) => (
-                          <FormItem className="w-full m-0">
-                            <FormLabel>Enter Course Code</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Course Code"
-                                icon={"fi fi-rr-graduation-cap"}
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      {/* cname  */}
-                      <FormField
-                        control={form.control}
-                        name="courseName"
-                        render={({ field }) => (
-                          <FormItem className="w-full m-0">
-                            <FormLabel>Enter Course Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Course Name"
-                                icon={"fi fi-rr-graduation-cap"}
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    {/* semester */}
-                    <FormField
-                      control={form.control}
-                      name="semester"
-                      render={({ field }) => (
-                        <FormItem className="w-full m-0">
-                          <FormLabel>Select the semster</FormLabel>
-                          <>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <SelectTrigger className="w-full">
-                                <SelectValue placeholder="semester" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectGroup {...field}>
-                                  {[1, 2, 3, 4, 5, 6, 7, 8].map(
-                                    (value, key) => (
-                                      <SelectItem
-                                        value={value.toString()}
-                                        key={key}
-                                      >
-                                        {value}
-                                      </SelectItem>
-                                    )
-                                  )}
-                                </SelectGroup>
-                              </SelectContent>
-                            </Select>
-                          </>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    {/* category */}
-                    <FormField
-                      control={form.control}
-                      name="category"
-                      render={({ field }) => (
-                        <FormItem className="w-full m-0">
-                          <FormLabel>Select the Category </FormLabel>
-                          <>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Category" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectGroup {...field}>
-                                  {Categories?.map((cat: any, key: any) => (
-                                    <SelectItem value={cat} key={cat}>
-                                      {cat}
-                                    </SelectItem>
-                                  ))}
-                                </SelectGroup>
-                              </SelectContent>
-                            </Select>
-                          </>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-                <DialogFooter>
-                  {/* <DialogClose asChild> */}
-                  <Button type="submit">Add Course</Button>
-                  {/* </DialogClose> */}
-                </DialogFooter>
-              </form>
-            </Form>
-          </DialogContent>
-        </Dialog>
       </div>
-
       {isLoading ? (
         <Loader />
       ) : !isSuccess ? (

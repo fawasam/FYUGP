@@ -38,6 +38,12 @@ const AdminDashboard = () => {
       bgColor: "#FFD3C6",
     },
     {
+      title: "All Advisors",
+      href: `/profile/${user.role}/${user?.username}/dashboard/advisor`,
+      icon: "fi fi-sr-calendar-lines-pen",
+      bgColor: "#FFD3C6",
+    },
+    {
       title: "Enquiry",
       href: `/profile/${user.role}/${user?.username}/dashboard/enquiry`,
       icon: "fi fi-rr-comment-alt",
@@ -64,7 +70,7 @@ const AdminDashboard = () => {
           Admin Dashboard
         </h1>
         <div className="">
-          <ul className=" mt-12 grid w-[400px] gap-3 p-4 md:w-[500px] lg:grid-cols-4 md:grid-cols-2 lg:w-[900px] ">
+          <ul className=" mt-12 grid w-[400px] gap-3 p-4 md:w-[500px] lg:grid-cols-3 md:grid-cols-2 lg:w-[900px] ">
             {components &&
               components.map((component) => (
                 <li key={component.title}>

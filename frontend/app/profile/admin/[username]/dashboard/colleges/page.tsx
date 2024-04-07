@@ -95,111 +95,124 @@ const AdminColleges = () => {
           icon={"fi fi-rr-search-alt"}
         />
       ) : (
-        <Table className="mt-10">
-          <TableCaption>A list of colleges.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[200px]">College name</TableHead>
-              <TableHead>Place</TableHead>
-              <TableHead>Joined At</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Published</TableHead>
-              <TableHead className="text-center">Task</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {allColleges != null &&
-              allColleges?.length > 0 &&
-              allColleges?.map((college, key) => (
-                <TableRow key={key}>
-                  <TableCell className="font-medium">
-                    <div className="flex flex-col ">
-                      <img
-                        src={college?.picture}
-                        className="w-20 object-cover rounded-sm h-10 mb-2"
-                        alt={"image"}
-                      />
-                      <span>{college?.collegename}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>{college?.place}</TableCell>
-                  <TableCell>{formateDate(college?.joinedAt)}</TableCell>
-                  <TableCell>{college?.email}</TableCell>
-                  <TableCell>
-                    {college?.published ? "Published" : "UnPublished"}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <div className="block space-x-1">
-                      <TooltipProvider>
-                        {/* publish button  */}
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Button
-                              variant={"link"}
-                              className="mt-4 text-center"
-                              size={"sm"}
-                              onClick={() =>
-                                handlePublish({
-                                  id: college._id,
-                                })
-                              }
-                            >
-                              <i className="fi fi-rr-paper-plane "></i>
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>
-                              {college?.published ? "unPublish" : "Publish"}
-                            </p>
-                          </TooltipContent>
-                        </Tooltip>
-                        {/* view college  */}
+        <div className="mt-6">
+          {allColleges?.length == 0 ? (
+            <NoDataMessage
+              message={"No College Data exist"}
+              icon={"fi fi-rr-search-alt"}
+            />
+          ) : (
+            <div className="my-6 ">
+              <Table className="mt-10">
+                <TableCaption>A list of colleges.</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[200px]">College name</TableHead>
+                    <TableHead>Place</TableHead>
+                    <TableHead>Joined At</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Published</TableHead>
+                    <TableHead className="text-center">Task</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {allColleges != null &&
+                    allColleges?.length > 0 &&
+                    allColleges?.map((college, key) => (
+                      <TableRow key={key}>
+                        <TableCell className="font-medium">
+                          <div className="flex flex-col ">
+                            <img
+                              src={college?.picture}
+                              className="w-20 object-cover rounded-sm h-10 mb-2"
+                              alt={"image"}
+                            />
+                            <span>{college?.collegename}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>{college?.place}</TableCell>
+                        <TableCell>{formateDate(college?.joinedAt)}</TableCell>
+                        <TableCell>{college?.email}</TableCell>
+                        <TableCell>
+                          {college?.published ? "Published" : "UnPublished"}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          <div className="block space-x-1">
+                            <TooltipProvider>
+                              {/* publish button  */}
+                              <Tooltip>
+                                <TooltipTrigger>
+                                  <Button
+                                    variant={"link"}
+                                    className="mt-4 text-center"
+                                    size={"sm"}
+                                    onClick={() =>
+                                      handlePublish({
+                                        id: college._id,
+                                      })
+                                    }
+                                  >
+                                    <i className="fi fi-rr-paper-plane "></i>
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>
+                                    {college?.published
+                                      ? "unPublish"
+                                      : "Publish"}
+                                  </p>
+                                </TooltipContent>
+                              </Tooltip>
+                              {/* view college  */}
 
-                        <Tooltip>
-                          <TooltipTrigger>
-                            {" "}
-                            <Link href={`/college/${college._id}`}>
-                              <Button
-                                variant={"outline"}
-                                className="mt-4 text-center"
-                                size={"sm"}
-                              >
-                                <i className="fi fi-rs-eye "></i>
-                              </Button>
-                            </Link>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>View College</p>
-                          </TooltipContent>
-                        </Tooltip>
+                              <Tooltip>
+                                <TooltipTrigger>
+                                  {" "}
+                                  <Link href={`/college/${college._id}`}>
+                                    <Button
+                                      variant={"outline"}
+                                      className="mt-4 text-center"
+                                      size={"sm"}
+                                    >
+                                      <i className="fi fi-rs-eye "></i>
+                                    </Button>
+                                  </Link>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>View College</p>
+                                </TooltipContent>
+                              </Tooltip>
 
-                        {/* edit college */}
+                              {/* edit college */}
 
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Link
-                              href={`/profile/admin/mynamefawas/dashboard/colleges/${college._id}/update`}
-                            >
-                              <Button
-                                variant={"default"}
-                                className="mt-4 text-center"
-                                size={"sm"}
-                              >
-                                <i className="fi fi-rs-edit 2"></i>
-                              </Button>
-                            </Link>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Edit College</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
+                              <Tooltip>
+                                <TooltipTrigger>
+                                  <Link
+                                    href={`/profile/admin/mynamefawas/dashboard/colleges/${college._id}/update`}
+                                  >
+                                    <Button
+                                      variant={"default"}
+                                      className="mt-4 text-center"
+                                      size={"sm"}
+                                    >
+                                      <i className="fi fi-rs-edit 2"></i>
+                                    </Button>
+                                  </Link>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>Edit College</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+        </div>
       )}
     </AnimationWrapper>
   );

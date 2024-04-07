@@ -114,6 +114,15 @@ export const collegeApi = createApi({
         headers: {},
       }),
     }),
+    deleteProgram: builder.mutation<any, any>({
+      query: ({ id }) => ({
+        url: `/program/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
 
     //courses
     createCourse: builder.mutation<void, { programId: string; data: any }>({
@@ -169,6 +178,74 @@ export const collegeApi = createApi({
         },
       }),
     }),
+
+    //advisor
+    createAdvisor: builder.mutation<void, { data: any }>({
+      query: (data) => ({
+        url: `/advisor`,
+        method: "POST",
+        body: data,
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
+    updateAdvisor: builder.mutation<void, { data: any; id: string }>({
+      query: ({ data, id }) => ({
+        url: `/advisor/${id}`,
+        method: "PATCH",
+        body: data,
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
+
+    getAllAdvisor: builder.mutation<void, void>({
+      query: () => ({
+        url: `/advisor/all`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
+    getAdvisor: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/advisor/${id}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
+    deleteAdvisor: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/advisor/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
+
+    getAllAdvisorByCollege: builder.mutation<any, { collegeId: string }>({
+      query: ({ collegeId }) => ({
+        url: `/advisor/${collegeId}/all/`,
+        method: "GET",
+        headers: {},
+      }),
+    }),
+
+    changeAvailabilityOfAdvisor: builder.mutation<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `/advisor/${id}/available`,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -185,6 +262,7 @@ export const {
   useGetAProgramMutation,
   useGetAllProgramMutation,
   useGetAllProgramByCollegeMutation,
+  useDeleteProgramMutation,
 
   useCreateCourseMutation,
   useUpdateCourseMutation,
@@ -192,4 +270,12 @@ export const {
   useGetAllCourseMutation,
   useGetAllCourseByProgramMutation,
   useDeleteCourseMutation,
+
+  useCreateAdvisorMutation,
+  useUpdateAdvisorMutation,
+  useGetAdvisorMutation,
+  useGetAllAdvisorMutation,
+  useGetAllAdvisorByCollegeMutation,
+  useDeleteAdvisorMutation,
+  useChangeAvailabilityOfAdvisorMutation,
 } = collegeApi;

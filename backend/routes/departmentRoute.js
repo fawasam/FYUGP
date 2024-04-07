@@ -8,6 +8,7 @@ import {
   getAProgram,
   getAllProgram,
   getAllProgramByCollege,
+  deleteProgramById,
 } from "../controllers/departmentController.js";
 
 router.route("/").post(protect, restrict("collegeAdmin"), createProgram);
@@ -16,6 +17,7 @@ router.get("/all/:collegeId", getAllProgramByCollege);
 router
   .route("/:id")
   .get(getAProgram)
+  .delete(protect, restrict("collegeAdmin"), deleteProgramById)
   .patch(protect, restrict("collegeAdmin"), updateProgram);
 
 export default router;

@@ -34,7 +34,19 @@ const AdminDashboard = () => {
     {
       title: "View Programs",
       href: `/profile/${user?.role}/${user?.username}/dashboard/programme`,
-      icon: "fi fi-rr-school",
+      icon: "fi fi-rr-graduation-cap",
+      bgColor: "#FFD3C6",
+    },
+    {
+      title: "View Courses",
+      href: `/profile/${user?.role}/${user?.username}/dashboard/courses`,
+      icon: "fi fi-rr-book",
+      bgColor: "#FFD3C6",
+    },
+    {
+      title: "View Advisor",
+      href: `/profile/${user?.role}/${user?.username}/dashboard/advisor`,
+      icon: "fi fi-sr-calendar-lines-pen",
       bgColor: "#FFD3C6",
     },
     {
@@ -57,13 +69,11 @@ const AdminDashboard = () => {
         <h1 className="max-md:hidden text-2xl font-semibold ">
           College Admin Dashboard
         </h1>
+        {/* <span>{user?.college}</span> */}
         <div className="">
-          <ul className=" mt-12 grid w-[400px] gap-3 p-4 md:w-[500px] lg:grid-cols-4 md:grid-cols-2 lg:w-[900px] ">
+          <ul className=" mt-12 grid w-[400px] gap-3 p-4 md:w-[500px] lg:grid-cols-3 md:grid-cols-2 lg:w-[900px] ">
             {components.map((component) => (
-              <li
-                key={component.title}
-                // className={`bg-[${component.bgColor}] rounded-xl py-4 px-2`}
-              >
+              <li key={component.title}>
                 <Link
                   href={component.href}
                   className={`items-center py-4 justify-center select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors bg-background hover:bg-[#DAE9F0] hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex `}

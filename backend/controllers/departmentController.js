@@ -186,4 +186,26 @@ export const deleteProgramById = asyncErrorHandler(async (req, res, next) => {
   if (!college) {
     throw new CustomError("College not found", 404);
   }
+
+  // Check if the current user is the creator of the college
+  // if (college.user.toString() !== req.user._id.toString()) {
+  //   const error = new CustomError(
+  //     "You are not authorized to delete this program!",
+  //     403
+  //   );
+  //   return next(error);
+  // }
+
+  const programIndex = college.departments.indexOf(req.params.id);
+  if (programIndex === -1) {
+    const error = new CustomError("Program not found in this college!", 404);
+    return next(error);
+  }
+  college.departments.splice(programIndex, 1);
+
+  await college.save();
+
+  await Department.findByIdAndDelete(req.params.id);
+
+  return res.status(200).json({ message: "Program deleted successfully" });
 });

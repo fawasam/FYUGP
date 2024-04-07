@@ -109,7 +109,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       formData.append("image", selectedImage);
       try {
         const response: any = await axios.post(
-          "http://localhost:3000/api/v1/upload/image",
+          ` ${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/upload/image`,
           formData,
           {
             headers: {
@@ -161,16 +161,16 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       console.log(error?.data?.message);
     }
   };
+  const getCollege = async () => {
+    const response: any = await getACollege(user?.college);
+    setCollege(response?.data?.data?.college);
+  };
   useEffect(() => {
-    const getCollege = async () => {
-      const response: any = await getACollege(user?.college);
-      setCollege(response?.data?.data?.college);
-    };
     getCollege();
     if (!user) {
       redirectTo("/");
     }
-  }, [userData, dispatch, router, user, redirectTo, getACollege]);
+  }, [userData, dispatch, router, user, getACollege]);
   useEffect(() => {
     form.reset({
       collegename: collegename,
@@ -182,7 +182,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       website: website,
       about: about,
     });
-  }, [form]);
+  }, [collegename, place, phone, pincode, picture, email, website, about]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <h1 className="max-md:hidden  text-2xl font-semibold">Edit College</h1>

@@ -1,4 +1,4 @@
-#### TrackYourDegree
+# TrackYourDegree
 
 The "TrackYourDegree" is a  Web App designed to assist 
 students in monitoring, guiding and managing their academic progress 

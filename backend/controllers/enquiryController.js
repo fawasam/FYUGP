@@ -42,7 +42,22 @@ export const createEnquiry = asyncErrorHandler(async (req, res, next) => {
 // @access  Public
 
 export const getAllEnquiry = asyncErrorHandler(async (req, res, next) => {
-  const enquiries = await Enquiry.find();
+  const enquiries = await Enquiry.find().sort({ createdAt: -1 });
+  res.status(200).json({
+    status: "success",
+    result: enquiries.length,
+    data: { enquiries },
+  });
+});
+
+// @desc    getAllNewEnquiry
+// @route   POST /api/v1/Enquiry/all
+// @access  Public
+
+export const getAllNewEnquiry = asyncErrorHandler(async (req, res, next) => {
+  const enquiries = await Enquiry.find({ isReaded: false }).sort({
+    createdAt: -1,
+  });
   res.status(200).json({
     status: "success",
     result: enquiries.length,

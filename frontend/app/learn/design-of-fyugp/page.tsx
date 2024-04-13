@@ -1,7 +1,7 @@
 "use client";
 import { pathways } from "@/utils/pathways";
 import AnimationWrapper from "@/components/common/page-animation";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Drawer,
   DrawerClose,
@@ -16,18 +16,31 @@ import { Button } from "@/components/ui/button";
 import book from "@/components/assets/cards/pencil.svg";
 import Image from "next/image";
 import Link from "next/link";
-
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { designOfCu } from "@/utils/DeisgnOfCU";
 const DesignOfUg = () => {
   const [expanded, setExpanded] = useState(false);
 
+  const scrollBottom = (e: any) => {
+    e.current.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+  const scrollRef = useRef<any>();
   const toggleExpansion = () => {
     setExpanded(!expanded);
   };
 
+  let count = 1;
   return (
     <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
       <section className="max-w-[1060px] m-auto   flex-grow">
-        <div className="sm:flex block items-center justify-center min-h-[240px] w-full bg-accent text-center rounded-sm">
+        <div className=" flex items-center justify-center min-h-[240px] w-full bg-background text-center rounded-sm">
           <div className="flex justify-center items-center">
             <Image
               priority
@@ -51,6 +64,18 @@ const DesignOfUg = () => {
           </div>
           <div className=""></div>
         </div>
+        <h2 className="mt-6 my-2 text-xl font-semibold">Table of content</h2>
+        {designOfCu.map((d, key) => (
+          <div
+            key={key}
+            className="flex"
+            onClick={() => scrollBottom(scrollRef)}
+          >
+            <span>
+              {count++} - {d.title}
+            </span>
+          </div>
+        ))}
         <div className="my-6">
           <h2 className="learn-text ">
             The design of the Calicut University's Four Year Undergraduate
@@ -111,6 +136,23 @@ const DesignOfUg = () => {
             flexibility, academic rigor, and opportunities for research and
             specialization within a four-year undergraduate program
           </span>
+          <Accordion type="single" collapsible>
+            {designOfCu.map((d, key) => (
+              <AccordionItem
+                value={d.title}
+                // key={key}
+                className="bg-background"
+                ref={scrollRef}
+              >
+                <AccordionTrigger className="text-md  p-6">
+                  {d.title}
+                </AccordionTrigger>
+                <AccordionContent className="p-6">
+                  <span dangerouslySetInnerHTML={d?.content}></span>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
         <div className="flex justify-end items-center mt-[40px]">
           <Button>

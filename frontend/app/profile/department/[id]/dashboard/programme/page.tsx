@@ -154,11 +154,12 @@ const ProgramDetails = () => {
               </div>
               <div className="my-4">
                 <span className="my-4">
-                  {department?.coursesOffered.map((c: any, key: any) => (
+                  {/* {department?.coursesOffered.map((c: any, key: any) => (
                     <div className="" key={key}>
                       <h1>{c?.category}</h1>
                     </div>
-                  ))}
+                  ))} */}
+                  {department?.coursesOffered?.length}
                 </span>
               </div>
             </div>

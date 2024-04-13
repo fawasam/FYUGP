@@ -140,7 +140,7 @@
     @apply relative w-[100%] mb-4;
   }
   .learn-text {
-    @apply text-lg  tracking-wide text-justify;
+    @apply text-sm  tracking-wide text-justify sm:text-lg;
   }
   .learn-top-block {
     @apply sm:flex block items-center justify-center min-h-[240px]   w-full bg-accent text-center rounded-sm;

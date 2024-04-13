@@ -72,6 +72,8 @@ const AdminColleges = () => {
     }
     getAllColleges();
   }, [userData, dispatch, router, user, getAllCollege]);
+  console.log(allColleges);
+
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <div className="flex items-center justify-between text-center flex-row">

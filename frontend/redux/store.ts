@@ -6,12 +6,14 @@ import collegeReducer from "@/redux/features/collegeSlice";
 import { collegeApi } from "./services/collegeApi";
 import { authApi } from "./services/authApi";
 import { userApi } from "./services/userApi";
+import { enquiryApi } from "./services/enquiryApi";
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [collegeApi.reducerPath]: collegeApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
+    [enquiryApi.reducerPath]: enquiryApi.reducer,
     auth: authReducer,
     college: collegeReducer,
   },

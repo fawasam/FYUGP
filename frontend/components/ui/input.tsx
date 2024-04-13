@@ -3,7 +3,9 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  icon2?: String;
+}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
@@ -15,6 +17,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       value,
       placeholder,
       icon,
+      icon2,
       disable = false,
       ...props
     },
@@ -48,6 +51,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           ""
         )}
         <i className={`fi ${icon} input-icon`}></i>
+        <i
+          className={`right-4 cursor-pointer fi ${icon2} input-icon left-[auto] `}
+          // onClick={}
+        ></i>
       </div>
     );
   }

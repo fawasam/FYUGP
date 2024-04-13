@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
+import { useGetAllNewEnquiryMutation } from "@/redux/services/enquiryApi";
 
 const AdminSideNav: React.FC | any = () => {
   let userData = useSelector((state: RootState) => state.auth);
@@ -21,6 +22,8 @@ const AdminSideNav: React.FC | any = () => {
   let sideBarIcon = useRef<HTMLButtonElement>(null);
   let pageStateTab = useRef<HTMLButtonElement>(null);
   const isLinkActive = (link: string) => usePathname().includes(link);
+
+  const [getAllNewEnquiry] = useGetAllNewEnquiryMutation();
 
   const changePageState = (e: any) => {
     let { offsetWidth, offsetLeft } = e.target;
@@ -122,6 +125,7 @@ const AdminSideNav: React.FC | any = () => {
               <i className="fi  fi-sr-calendar-lines-pen"></i>
               Advisor
             </Link>
+
             <Link
               href={`/profile/admin/${user?.username}/dashboard/enquiry`}
               onClick={(e: any) => setPageState(e.target.innerText)}
@@ -132,6 +136,7 @@ const AdminSideNav: React.FC | any = () => {
               <i className="fi fi-rr-feedback"></i>
               Enquiry
             </Link>
+
             <Link
               href={`/profile/admin/${user?.username}/dashboard/feedback`}
               onClick={(e: any) => setPageState(e.target.innerText)}

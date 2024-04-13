@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { ListItem } from "@/components/Header";
 import Link from "next/link";
 
-const AdminDashboard = () => {
+const AdvisorDashboard = () => {
   const { toast } = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -25,18 +25,6 @@ const AdminDashboard = () => {
     icon: string;
     bgColor: string;
   }[] = [
-    {
-      title: "All Users",
-      href: `/profile/${user.role}/${user?.username}/dashboard/users`,
-      icon: "fi fi-rr-user",
-      bgColor: "#DAE9F0",
-    },
-    {
-      title: "All Colleges",
-      href: `/profile/${user.role}/${user?.username}/dashboard/colleges`,
-      icon: "fi fi-rr-school",
-      bgColor: "#FFD3C6",
-    },
     {
       title: "Enquiry",
       href: `/profile/${user.role}/${user?.username}/dashboard/enquiry`,
@@ -61,7 +49,7 @@ const AdminDashboard = () => {
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <section className="">
         <h1 className="max-md:hidden text-2xl font-semibold">
-          Admin Dashboard
+          Advisor Dashboard
         </h1>
         <div className="">
           <ul className=" mt-12 grid w-[400px] gap-3 p-4 md:w-[500px] lg:grid-cols-4 md:grid-cols-2 lg:w-[900px] ">
@@ -90,4 +78,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default AdvisorDashboard;

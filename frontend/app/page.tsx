@@ -19,7 +19,7 @@ export default function Home() {
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
   const [getMe] = useGetMeMutation();
-  console.log("from page" + user);
+  // console.log("from page" + user);
 
   const fetchUser = async () => {
     const response: any = await getMe(" ");
@@ -33,8 +33,8 @@ export default function Home() {
 
   return (
     <main className="  ">
-      <AnimationWrapper className="sm:w-[70%] w-[90%] m-auto min-h-[100vh]">
-        <div className="flex flex-col  sm:flex-row justify-between h-1/2 m-auto w-full mt-16">
+      <AnimationWrapper className="mt-[5%] sm:w-[70%] w-[90%] m-auto min-h-[100vh]">
+        <div className=" flex flex-col  sm:flex-row justify-between h-1/2 m-auto w-full mt-[200px]">
           <div className="sm:w-1/2 w-full space-y-6 ">
             <h1 className="text-6xl font-bold  font-display">
               YOUR DEGREE TRACKER

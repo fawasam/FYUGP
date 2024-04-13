@@ -28,12 +28,13 @@ import { Textarea } from "./ui/textarea";
 
 import email from "@/components/assets/email2.png";
 import Image from "next/image";
+import { useCreateEnquiryMutation } from "@/redux/services/enquiryApi";
 const formSchema = z.object({
   subject: z.string().min(2, {
     message: "subject must be at least 2 characters.",
   }),
-  message: z.string().email({
-    message: "please enter a message",
+  message: z.string().min(2, {
+    message: "message must be at least 2 characters.",
   }),
   email: z.string().email({
     message: "please enter your mail address",
@@ -44,10 +45,9 @@ const Enquiry = () => {
   const dispatch = useDispatch();
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   const { toast } = useToast();
-  const [signup, { isLoading, error, isSuccess }] = useRegisterMutation();
-  //   useEffect(() => {
-  //     redirectToHomeIfLoggedIn();
-  //   });
+
+  const [createEnquiry, { isLoading, isSuccess, isError }] =
+    useCreateEnquiryMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,24 +59,23 @@ const Enquiry = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    //   try {
-    //     const response: any = await signup(values).unwrap();
-    //     dispatch(setUser(response));
-    //     if (response) {
-    //       redirectTo("/");
-    //     }
-    //     toast({
-    //       title: "Successfully signed up",
-    //     });
-    //     console.log("Successfully signed");
-    //   } catch (error: any) {
-    //     toast({
-    //       variant: "destructive",
-    //       title: "Uh oh! Something went wrong.",
-    //       description: error.data.message,
-    //     });
-    //     console.log(error.data.message);
-    //   }
+    console.log(values);
+    try {
+      const response: any = await createEnquiry(values).unwrap();
+      toast({
+        title: "Enquiry sended  ",
+      });
+      console.log("Enquiry sended ");
+      form.reset();
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: error.data.message,
+      });
+      form.reset();
+      console.log(error.data.message);
+    }
   };
 
   return (
@@ -99,8 +98,9 @@ const Enquiry = () => {
               className="w-full space-y-4"
             >
               <h2 className="text-3xl font-bold tracking-tighter">
-                Get in touch
+                Any Enquiry
               </h2>
+              {/* subject  */}
               <FormField
                 control={form.control}
                 name="subject"
@@ -118,6 +118,8 @@ const Enquiry = () => {
                   </FormItem>
                 )}
               />
+
+              {/* email  */}
               <FormField
                 control={form.control}
                 name="email"
@@ -136,6 +138,8 @@ const Enquiry = () => {
                   </FormItem>
                 )}
               />
+
+              {/* message  */}
               <FormField
                 control={form.control}
                 name="message"
@@ -152,7 +156,7 @@ const Enquiry = () => {
 
                     <FormMessage />
                     <div className="flex justify-center items-center flex-col ">
-                      <Button type="submit" size={"lg"} className="w-full mt-4">
+                      <Button size={"lg"} className="w-full mt-4">
                         Send
                         <span> </span>
                         {isLoading ? <Loader white={true} /> : ""}

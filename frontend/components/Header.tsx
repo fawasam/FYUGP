@@ -173,21 +173,16 @@ const Header = () => {
             </NavigationMenuItem>
             {user?.role == "user" ? (
               <>
-                {/* <NavigationMenuItem>
-                  <Link
-                    href={`/profile/${user?.username}/degree`}
-                    legacyBehavior
-                    passHref
-                  >
+                <NavigationMenuItem>
+                  <Link href={`/community`} legacyBehavior passHref>
                     <NavigationMenuLink
                       className={navigationMenuTriggerStyle()}
                     >
-                      <span className="dark:text-white text-gray-500 ">
-                        TrackYour Degree
-                      </span>
+                      {" "}
+                      <span className=" text-[16px]">Community</span>
                     </NavigationMenuLink>
                   </Link>
-                </NavigationMenuItem> */}
+                </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Link href={`/learn/ask`} legacyBehavior passHref>
                     <NavigationMenuLink

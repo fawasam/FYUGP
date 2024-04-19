@@ -5,14 +5,41 @@ import pencil from "../components/assets/cards/pencil.svg";
 import book2 from "../components/assets/cards/book2.svg";
 import Image from "next/image";
 import Link from "next/link";
+
+import { motion } from "framer-motion";
+
+const fadeInAnimationVariants = {
+  initial: {
+    opacity: 0,
+    y: 100,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.05,
+    },
+  },
+};
+
 const Cards = () => {
   return (
     <div className="my-24 m-auto items-center">
       <h2 className="my-6 text-3xl font-semibold underline-offset-1 text-center mb-10">
         Learn through these Steps
       </h2>
-      <div className="grid  lg:grid-cols-4 md:grid-cols-2 grid-cols-1 md:gap-6  gap-2 m-auto ">
-        <div className=" card  text-center border">
+      <motion.div
+        className="grid  lg:grid-cols-4 md:grid-cols-2 grid-cols-1 md:gap-6  gap-2 m-auto "
+        variants={fadeInAnimationVariants}
+        initial="initial"
+        whileInView="animate"
+        viewport={{
+          once: true,
+        }}
+        animate="animate"
+        // custom={}
+      >
+        <div className=" card  text-center">
           <Link href={"learn/what-is-fyugp"}>
             <div className="flex justify-center items-center flex-col w-full h-full">
               <h1 className="text-4xl font-semibold mb-4 text-accent">
@@ -31,7 +58,7 @@ const Cards = () => {
             </div>
           </Link>
         </div>
-        <div className="  card w-[250px] border">
+        <div className="  card w-[250px] ">
           <Link href={"learn/design-of-fyugp"}>
             <div className="flex justify-center items-center flex-col w-full h-full">
               <h1 className="text-4xl font-semibold mb-4 text-accent">
@@ -48,7 +75,7 @@ const Cards = () => {
             </div>
           </Link>
         </div>
-        <div className="card w-[250px] border">
+        <div className="card w-[250px] ">
           <Link href={"learn/different-academic-pathways"}>
             <div className="flex justify-center items-center w-full h-full flex-col text-center">
               <h1 className="text-4xl font-semibold mb-4 text-accent">
@@ -66,7 +93,7 @@ const Cards = () => {
             </div>
           </Link>
         </div>
-        <div className=" card  border">
+        <div className=" card  ">
           <Link href={"learn/courses-and-credits"}>
             <div className="flex justify-center items-center w-full h-full flex-col">
               <h1 className="text-4xl font-semibold mb-4 text-accent">
@@ -85,7 +112,7 @@ const Cards = () => {
             </div>
           </Link>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

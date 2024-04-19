@@ -68,11 +68,11 @@ const AskQns = () => {
 
   console.log(messages);
 
-  useEffect(() => {
-    if (!user) {
-      redirectTo("/");
-    }
-  }, [user, dispatch, router]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     redirectTo("/");
+  //   }
+  // }, [user, dispatch, router]);
   return (
     <AnimationWrapper className="sm:w-[70%] w-[90%] m-auto min-h-[100vh]  py-[20px]">
       <section className="max-w-[1060px] m-auto   flex-grow">
@@ -83,7 +83,7 @@ const AskQns = () => {
             </h1>
           </div>
         </div>
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col h-screen border">
           <div className="flex-1 p-4 overflow-y-auto">
             {messages.map((message, index) => (
               <div
@@ -102,6 +102,7 @@ const AskQns = () => {
               </div>
             ))}
           </div>
+          <span className="text-6xl w-full">Chatbot</span>
           <div className="p-4 flex items-center">
             <input
               type="text"

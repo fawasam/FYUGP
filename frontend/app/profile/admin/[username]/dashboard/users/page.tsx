@@ -34,6 +34,7 @@ import {
   useActiveUserMutation,
   useDeleteUserMutation,
   useGetAllUsersMutation,
+  useGetCountMutation,
 } from "@/redux/services/userApi";
 import {
   Menubar,
@@ -53,7 +54,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
+import InputBox from "@/components/ui/InputBox";
+import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
 const AdminUsers = () => {
   const { toast } = useToast();
   const dispatch = useDispatch();
@@ -62,8 +65,10 @@ const AdminUsers = () => {
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
   const [allUsers, setAllUsers] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   let [getAllUsers, { isLoading, isSuccess }] = useGetAllUsersMutation();
+
   let [deleteUser] = useDeleteUserMutation();
   let [activeUser] = useActiveUserMutation();
 
@@ -109,6 +114,10 @@ const AdminUsers = () => {
       console.log(error.data.message);
     }
   };
+
+  const filteredUsers = allUsers.filter((user) =>
+    user.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   useEffect(() => {
     if (!user) {
       redirectTo("/");
@@ -119,6 +128,13 @@ const AdminUsers = () => {
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <h1 className="max-md:hidden mb-4 text-2xl font-semibold">All User</h1>
+      <Input
+        placeholder="Search user"
+        icon={"fi-rr-user"}
+        // icon2={"fi-br-paper-plane"}
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
       {isLoading ? (
         <Loader />
       ) : !isSuccess ? (
@@ -127,10 +143,10 @@ const AdminUsers = () => {
           icon={"fi fi-rr-search-alt"}
         />
       ) : (
-        <div className="mt-6">
-          {allUsers?.length == 0 ? (
+        <div className="mt-2">
+          {filteredUsers?.length == 0 ? (
             <NoDataMessage
-              message={"No College Data exist"}
+              message={"No User Data exist"}
               icon={"fi fi-rr-search-alt"}
             />
           ) : (
@@ -147,9 +163,9 @@ const AdminUsers = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {allUsers != null &&
-                  allUsers?.length > 0 &&
-                  allUsers?.map((user, key) => (
+                {filteredUsers != null &&
+                  filteredUsers?.length > 0 &&
+                  filteredUsers?.map((user, key) => (
                     <TableRow key={key}>
                       <TableCell className="font-medium">
                         {user?.username}

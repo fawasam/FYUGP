@@ -4,17 +4,45 @@ import NoDataMessage from "@/components/common/Nodata";
 import AnimationWrapper from "@/components/common/page-animation";
 import { Button } from "@/components/ui/button";
 import {
+  useDeleteEnquiryMutation,
   useGetAllEnquiryMutation,
   useReadEnquiryMutation,
 } from "@/redux/services/enquiryApi";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import React, { useEffect, useState } from "react";
 import { formateDate } from "@/utils/formateDate";
+import Link from "next/link";
 const AdminEnquiry = () => {
   const [enquiries, setEnquiries] = useState<any>({});
 
   const [getAllEnquiry, { isLoading, isError, isSuccess }] =
     useGetAllEnquiryMutation();
   const [readEnquiry] = useReadEnquiryMutation();
+  const [deleteEnquiry] = useDeleteEnquiryMutation();
 
   const getAllEnquiries = async () => {
     const res: any = await getAllEnquiry("");
@@ -24,6 +52,10 @@ const AdminEnquiry = () => {
 
   const handleReaded = async (id: any) => {
     const res = await readEnquiry({ id });
+    getAllEnquiries();
+  };
+  const handleDeleteAdvisor = async (id: any) => {
+    const res = await deleteEnquiry({ id });
     getAllEnquiries();
   };
 
@@ -68,21 +100,95 @@ const AdminEnquiry = () => {
                             {formateDate(enquiry?.createdAt)}
                           </span>
                         </div>
-                        {enquiry?.isReaded ? (
-                          <Button variant={"secondary"} className="text-[10px]">
-                            Readed
-                          </Button>
-                        ) : (
-                          <Button
-                            variant={"destructive"}
-                            className="text-[10px] "
-                            onClick={() => handleReaded(enquiry?._id)}
-                          >
-                            UnReaded
-                          </Button>
-                        )}
+                        <div className="space-x-2">
+                          {enquiry?.isReaded ? (
+                            <Button
+                              variant={"secondary"}
+                              className="text-[10px]"
+                            >
+                              Readed
+                            </Button>
+                          ) : (
+                            <Button
+                              variant={"destructive"}
+                              className="text-[10px] "
+                              onClick={() => handleReaded(enquiry?._id)}
+                            >
+                              UnReaded
+                            </Button>
+                          )}
+
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger>
+                                <Link href={`mailto:${enquiry?.email}`}>
+                                  <Button
+                                    // variant={"destructive"}
+                                    className=" text-center"
+                                    size={"sm"}
+                                  >
+                                    <i className="fi fi-ss-paper-plane"></i>
+                                  </Button>
+                                </Link>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Replay</p>
+                              </TooltipContent>
+                            </Tooltip>
+                            <Tooltip>
+                              <TooltipTrigger>
+                                <Dialog>
+                                  <DialogTrigger>
+                                    <Button
+                                      variant={"destructive"}
+                                      className=" text-center"
+                                      size={"sm"}
+                                    >
+                                      <i className="fi fi-rs-trash "></i>
+                                    </Button>
+                                  </DialogTrigger>
+                                  <DialogContent className="">
+                                    <DialogHeader className="mt-6">
+                                      <DialogTitle className="text-2xl flex item-center justify-center flex-col text-center">
+                                        <i className="fi fi-rs-trash "></i>
+                                        Are you sure?
+                                      </DialogTitle>
+                                    </DialogHeader>
+                                    <DialogDescription className="text-base text-center">
+                                      {` You want to delete this Program 
+                                  ${enquiry?.email}`}
+                                      <div className="my-4 space-x-3">
+                                        <DialogClose asChild>
+                                          <Button
+                                            type="button"
+                                            variant="secondary"
+                                          >
+                                            Close
+                                          </Button>
+                                        </DialogClose>
+
+                                        <Button
+                                          variant={"destructive"}
+                                          onClick={() =>
+                                            handleDeleteAdvisor(enquiry._id)
+                                          }
+                                        >
+                                          Confirm
+                                        </Button>
+                                      </div>
+                                    </DialogDescription>
+                                  </DialogContent>
+                                </Dialog>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Delete</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </div>
                       </div>
                     </div>
+
                     <div className="flex flex-col mt-2">
                       <span className="text-[16px]">
                         Subject :

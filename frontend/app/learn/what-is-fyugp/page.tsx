@@ -27,7 +27,7 @@ const WhatIsFYUGP = () => {
   return (
     <AnimationWrapper className="w-full   m-auto py-[20px] relative">
       <section className="max-w-[1060px] m-auto   flex-grow">
-        <div className="sm:flex block items-center justify-center min-h-[240px] w-full bg-accent text-center rounded-sm">
+        <div className="flex items-center justify-center min-h-[240px] w-full bg-background text-center rounded-sm">
           <div className="flex justify-center items-center">
             <Image
               priority
@@ -54,15 +54,15 @@ const WhatIsFYUGP = () => {
         </div>
         <div className="my-6">
           <h2 className="learn-text ">
-            A four-year undergraduate program typically refers to a bachelor's
+            A four-year undergraduate program typically refers to a bachelor
             degree program that spans four years of full-time study at a
             university or college. In this type of program, students complete a
             specified number of credits over four academic years, usually
-            leading to a bachelor's degree in a specific field of study. <br />{" "}
+            leading to a bachelor degree in a specific field of study. <br />{" "}
             <br />
           </h2>
           <span className="learn-text ">
-            In the context of the Calicut University's Four Year Undergraduate
+            In the context of the Calicut University Four Year Undergraduate
             Program (CU-FYUGP), there are different options available for
             students:
           </span>

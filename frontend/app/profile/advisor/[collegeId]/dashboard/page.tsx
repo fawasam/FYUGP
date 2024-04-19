@@ -26,15 +26,15 @@ const AdvisorDashboard = () => {
     bgColor: string;
   }[] = [
     {
-      title: "Enquiry",
-      href: `/profile/${user.role}/${user?.username}/dashboard/enquiry`,
-      icon: "fi fi-rr-comment-alt",
+      title: "My Profile",
+      href: `/profile/${user.role}/${user?.username}/dashboard/profile`,
+      icon: "fi fi-rr-user",
       bgColor: "#FFD3C6",
     },
     {
-      title: "FeedBack",
-      href: `/profile/${user.role}/${user?.username}/dashboard/feedback`,
-      icon: "fi fi-rr-user",
+      title: "Appointment",
+      href: `/profile/${user.role}/${user?.username}/dashboard/appointments`,
+      icon: "fi fi-rr-comment-alt",
       bgColor: "#FFD3C6",
     },
   ];

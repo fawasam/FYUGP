@@ -128,17 +128,14 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
 
     return uniqueCnames.length;
   };
-  const getAPrograms = async (id: any) => {
-    const response: any = await getAProgram(id);
-    setAllCourses(response?.data?.data?.program?.coursesOffered);
-    setProgram(id);
-  };
   useEffect(() => {
+    const getAPrograms = async (id: any) => {
+      const response: any = await getAProgram(id);
+      setAllCourses(response?.data?.data?.program?.coursesOffered);
+      setProgram(id);
+    };
     getAPrograms(depName);
-    if (!user) {
-      redirectTo("/");
-    }
-  }, [user, getAProgram]);
+  }, [user, getAProgram, depName]);
 
   useEffect(() => {
     form.reset({

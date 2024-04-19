@@ -99,3 +99,19 @@ export const readEnquiry = asyncErrorHandler(async (req, res, next) => {
     data: { enquiry },
   });
 });
+
+// @desc    DeleteEnquiry
+// @route   DELETE /api/v1/user/:id
+// @access  Public
+
+export const deleteEnquiry = asyncErrorHandler(async (req, res, next) => {
+  const { id } = req.params;
+  console.log(id);
+  const deletedEnquiry = await Enquiry.findByIdAndDelete(id);
+
+  console.log(deletedEnquiry);
+  res.status(200).json({
+    status: "success",
+    data: { deletedEnquiry },
+  });
+});

@@ -20,7 +20,6 @@ const CollegeAdminSideNav: React.FC | any = () => {
   let sideBarIcon = useRef<HTMLButtonElement>(null);
   let pageStateTab = useRef<HTMLButtonElement>(null);
   const isLinkActive = (link: string) => usePathname().includes(link);
-  // console.log(isLinkActive("dashboard"));
 
   const changePageState = (e: any) => {
     let { offsetWidth, offsetLeft } = e.target;

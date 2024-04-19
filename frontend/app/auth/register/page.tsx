@@ -22,6 +22,8 @@ import { setUser } from "@/redux/features/authSlice";
 import AnimationWrapper from "@/components/common/page-animation";
 import useRedirect from "@/hooks/useRedirect";
 import { useEffect } from "react";
+import Signup from "@/components/assets/signup.svg";
+import Image from "next/image";
 
 const formSchema = z
   .object({
@@ -86,11 +88,19 @@ function Register() {
 
   return (
     <AnimationWrapper>
-      <div className="md:w-[60%] w-[90%] m-auto">
+      <div className="mt-[160px] md:w-[60%] w-[90%] m-auto block md:flex md:justify-between md:gap-6">
         <div className="my-10">
-          <h1 className="text-2xl text-center underline underline-offset-8">
+          <h1 className="text-3xl text-center  underline-offset-8 mb-4 font-semibold">
             Create an account
           </h1>
+          <Image
+            priority
+            src={Signup}
+            alt="Follow us on Twitter"
+            width={600}
+            height={400}
+            className="mt-8"
+          />
         </div>
         <Form {...form}>
           <form
@@ -101,7 +111,7 @@ function Register() {
               control={form.control}
               name="fullname"
               render={({ field }) => (
-                <FormItem className="sm:w-1/2 w-full m-auto">
+                <FormItem className="sm:w-[80%] w-full m-auto">
                   <FormLabel>Fullname</FormLabel>
                   <FormControl>
                     <Input
@@ -118,7 +128,7 @@ function Register() {
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem className="sm:w-1/2 w-full m-auto">
+                <FormItem className="sm:w-[80%] w-full m-auto">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
@@ -136,7 +146,7 @@ function Register() {
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem className="sm:w-1/2 w-full m-auto">
+                <FormItem className="sm:w-[80%] w-full m-auto">
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
@@ -155,7 +165,7 @@ function Register() {
               control={form.control}
               name="confirmPassword"
               render={({ field }) => (
-                <FormItem className="sm:w-1/2 w-full m-auto">
+                <FormItem className="sm:w-[80%] w-full m-auto">
                   <FormLabel>ConfirmPassword</FormLabel>
                   <FormControl>
                     <Input

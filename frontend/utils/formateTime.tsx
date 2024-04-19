@@ -1,11 +1,9 @@
 export function formatedTime(timestamp: any) {
-  console.log(timestamp);
   const createdAtDate: any = new Date(timestamp);
   const now: any = new Date();
 
   // Calculate the difference in milliseconds
   const timeDifference = now - createdAtDate;
-  console.log(timeDifference);
 
   // Convert milliseconds to seconds, minutes, hours, and days
   const secondsDifference = Math.floor(timeDifference / 1000);

@@ -41,37 +41,37 @@ const components: { title: string; href: string; description: string }[] = [
   {
     title: "Colleges",
     href: "/college",
-    description: "Colleges under Calicut University",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
     description:
-      "For sighted users to preview content available behind a link.",
+      "Colleges under Calicut University student can view college offering all courses and syllabus",
   },
   {
-    title: "Progress",
-    href: "/docs/primitives/progress",
+    title: "Community",
+    href: "/community",
     description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+      "Discussion forum where all students and others can ask and share their thought",
   },
   {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
+    title: "Contact",
+    href: "/contact",
+    description: "Enquiry and feedbacks",
   },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
+  // {
+  //   title: "Scroll-area",
+  //   href: "/docs/primitives/scroll-area",
+  //   description: "Visually or semantically separates content.",
+  // },
+  // {
+  //   title: "Tabs",
+  //   href: "/docs/primitives/tabs",
+  //   description:
+  //     "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+  // },
+  // {
+  //   title: "Tooltip",
+  //   href: "/docs/primitives/tooltip",
+  //   description:
+  //     "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+  // },
 ];
 
 const Header = () => {
@@ -101,7 +101,9 @@ const Header = () => {
     <header className="pt-8  w-full m-auto pb-8 border-b flex-no-wrap fixed top-0 z-20  shadow-md shadow-black/5 lg:flex-wrap lg:justify-start  bg-background">
       <div className="flex items-center justify-between  sm:w-[75%] w-[85%] m-auto">
         <Link href={"/"}>
-          <h2 className=" text-base font-bold">TrackMyDegree</h2>
+          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            TrackMyDegree
+          </span>
         </Link>
         <NavigationMenu className="hidden space-x-4 sm:flex">
           <NavigationMenuList>
@@ -280,13 +282,39 @@ const Header = () => {
                   </SheetTrigger>
                   <SheetContent className="w-[400px] sm:w-[540px]">
                     <SheetHeader>
-                      <SheetTitle>Are you absolutely sure?</SheetTitle>
+                      {/* <SheetTitle>Are you absolutely sure?</SheetTitle>
                       <SheetDescription>
                         This action cannot be undone. This will permanently
                         delete your account and remove your data from our
                         servers.
-                      </SheetDescription>
+                      </SheetDescription> */}
                     </SheetHeader>
+                    <div className="flex flex-col mt-6">
+                      <NavigationMenu>
+                        <NavigationMenuList className="text-left flex-col">
+                          <NavigationMenuItem>
+                            <Link href="/contact" legacyBehavior passHref>
+                              <NavigationMenuLink
+                                className={navigationMenuTriggerStyle()}
+                              >
+                                <span className=" text-base">
+                                  Getting Started
+                                </span>
+                              </NavigationMenuLink>
+                            </Link>
+                          </NavigationMenuItem>
+                          <NavigationMenuItem>
+                            <Link href="/colleges" legacyBehavior passHref>
+                              <NavigationMenuLink
+                                className={navigationMenuTriggerStyle()}
+                              >
+                                <span className=" text-base">Colleges</span>
+                              </NavigationMenuLink>
+                            </Link>
+                          </NavigationMenuItem>
+                        </NavigationMenuList>
+                      </NavigationMenu>
+                    </div>
                   </SheetContent>
                 </Sheet>
               </div>
@@ -311,11 +339,6 @@ export const ListItem = React.forwardRef<
     redirectTo("/");
     dispatch(logout());
   };
-  useEffect(() => {
-    if (!user) {
-      redirectTo("/");
-    }
-  }, [userData, dispatch, user]);
 
   return (
     <li>

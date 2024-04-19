@@ -13,6 +13,7 @@ import Faq from "@/components/Faq";
 import AskQns from "@/components/AskQns";
 import Enquiry from "@/components/Enquiry";
 import HowItWorks from "@/components/HowItWorks";
+import Features from "@/components/Features";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -21,15 +22,14 @@ export default function Home() {
   const [getMe] = useGetMeMutation();
   // console.log("from page" + user);
 
-  const fetchUser = async () => {
-    const response: any = await getMe(" ");
-    console.log(response);
-    dispatch(updateUser({ fields: response?.data?.data?.user }));
-  };
-
   useEffect(() => {
+    const fetchUser = async () => {
+      const response: any = await getMe(" ");
+      console.log(response);
+      dispatch(updateUser({ fields: response?.data?.data?.user }));
+    };
     fetchUser();
-  }, [getMe]);
+  }, [getMe, dispatch]);
 
   return (
     <main className="  ">
@@ -66,10 +66,15 @@ export default function Home() {
         </div>
         <div>
           <Cards />
-          <HowItWorks />
+          {/* <HowItWorks /> */}
+          <Features />
           <AskQns />
           {/* <Enquiry /> */}
           {/* <Faq /> */}
+          <div className="flex">
+            <span>hlo</span>
+            <p className="w-full">hlo</p>
+          </div>
         </div>
       </AnimationWrapper>
     </main>

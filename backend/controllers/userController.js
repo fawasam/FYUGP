@@ -9,6 +9,9 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { createSendResponse } from "./authController.js";
 import { filterReqObj } from "../helpers/filterObj.js";
+import College from "../models/College.js";
+import Enquiry from "../models/Enquiry.js";
+import Advisor from "../models/Advisor.js";
 
 // @desc    Get ALL user
 // @route   GET /api/v1/users
@@ -142,5 +145,26 @@ export const activeUser = asyncErrorHandler(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: user.active,
+  });
+});
+
+// @desc    getAllDataCount
+// @route   DELETE /api/v1/user/:id
+// @access  Public
+
+export const getAllDataCount = asyncErrorHandler(async (req, res, next) => {
+  const users = await User.estimatedDocumentCount();
+  const colleges = await College.estimatedDocumentCount();
+  const enquiries = await Enquiry.estimatedDocumentCount();
+  const advisors = await Advisor.estimatedDocumentCount();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      users,
+      colleges,
+      enquiries,
+      advisors,
+    },
   });
 });

@@ -75,7 +75,7 @@ const AdvisorPage = () => {
   const [changeAvailabilityOfAdvisor] =
     useChangeAvailabilityOfAdvisorMutation();
 
-  const getAllAdvisors = async () => {
+  const getAllAdvisors2 = async () => {
     const res: any = await getAllAdvisor();
     setAdvisors(res?.data?.data?.advisors);
   };
@@ -88,7 +88,7 @@ const AdvisorPage = () => {
         title: "Advisor Deleted Successfully",
       });
       console.log("Advisor Deleted Successfully");
-      getAllAdvisors();
+      getAllAdvisors2();
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -104,14 +104,18 @@ const AdvisorPage = () => {
     toast({
       title: "Successfully Changed",
     });
-    getAllAdvisors();
+    getAllAdvisors2();
   };
 
   useEffect(() => {
+    const getAllAdvisors = async () => {
+      const res: any = await getAllAdvisor();
+      setAdvisors(res?.data?.data?.advisors);
+    };
     getAllAdvisors();
-    if (!user) {
-      redirectTo("/");
-    }
+    // if (!user) {
+    //   redirectTo("/");
+    // }
   }, [user, getAllAdvisor]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">

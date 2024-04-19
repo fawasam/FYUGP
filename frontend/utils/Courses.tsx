@@ -128,7 +128,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: " Major with multiple Disciplines ",
+    pathway: "Major with multiple Disciplines",
     discipline: "Science",
     courses: [
       {

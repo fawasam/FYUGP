@@ -81,7 +81,8 @@ export const updateProgram = asyncErrorHandler(async (req, res, next) => {
     req.body,
     "Dname",
     "headOfDepartment",
-    "Discipline"
+    "Discipline",
+    "syllabus"
   );
 
   const updatedProgram = await Department.findByIdAndUpdate(id, filterObj, {

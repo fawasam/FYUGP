@@ -85,6 +85,12 @@ export const userApi = createApi({
         },
       }),
     }),
+    getCount: builder.mutation<void, void>({
+      query: () => ({
+        url: `/count`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -95,4 +101,5 @@ export const {
   useGetMeMutation,
   useDeleteUserMutation,
   useActiveUserMutation,
+  useGetCountMutation,
 } = userApi;

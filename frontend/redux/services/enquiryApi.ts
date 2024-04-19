@@ -55,6 +55,15 @@ export const enquiryApi = createApi({
         },
       }),
     }),
+    deleteEnquiry: builder.mutation<void, any>({
+      query: ({ id }) => ({
+        url: `/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -63,5 +72,6 @@ export const {
   useGetAllEnquiryMutation,
   useGetEnquiryMutation,
   useReadEnquiryMutation,
+  useDeleteEnquiryMutation,
   useGetAllNewEnquiryMutation,
 } = enquiryApi;

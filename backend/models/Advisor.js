@@ -15,6 +15,12 @@ const advisorSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    booking: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "bookings",
+      },
+    ],
     user: {
       type: Schema.Types.ObjectId,
       ref: "users",

@@ -53,7 +53,7 @@ const AcademicPathways = () => {
         </div>
         <div className="my-6 text-center md:text-left">
           <span className="learn-text ">
-            The Calicut University's Four Year Undergraduate Program (CU-FYUGP)
+            The Calicut University Four Year Undergraduate Program (CU-FYUGP)
             offers different academic pathways for students to customize their
             educational experience based on their interests and career goals.
             These pathways provide students with options to focus on specific
@@ -71,7 +71,7 @@ const AcademicPathways = () => {
               <>
                 <Drawer>
                   <DrawerTrigger key={key}>
-                    <div className=" flex justify-center items-center h-[220px] w-[200px] bg-accent rounded-3xl  text-center">
+                    <div className=" flex justify-center items-center h-[220px] w-[200px] bg-background rounded-3xl  text-center">
                       <h1 className="text-5xl font-light ">{path?.no}</h1>
                     </div>
                   </DrawerTrigger>

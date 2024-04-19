@@ -21,8 +21,6 @@ let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for pass
 
 export const createAdvisor = asyncErrorHandler(async (req, res, next) => {
   const { fullname, user, collegeId, email } = req.body;
-  console.log(fullname, user);
-  console.log(req.user);
 
   if (!fullname || !user || !collegeId || !email) {
     const error = new CustomError("Please provide all field!", 400);

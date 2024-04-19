@@ -33,6 +33,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Image from "next/image";
+import { Input } from "@/components/ui/input";
 
 const AdminColleges = () => {
   const { toast } = useToast();
@@ -45,6 +47,7 @@ const AdminColleges = () => {
 
   const [publishCollege] = usePublishCollegeMutation();
   const [allColleges, setAllColleges] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   let collegesData = useSelector((state: RootState) => state.college);
   let { collegeInfo: colleges, collegeInfo, items } = collegesData;
@@ -53,42 +56,59 @@ const AdminColleges = () => {
     router.back();
   };
 
-  const getAllColleges = async () => {
-    const response: any = await getAllCollege("");
-    dispatch(setCollege(response?.data));
-    setAllColleges(response?.data?.data?.colleges);
-  };
   const handlePublish = async ({ id }: any) => {
     const res: any = await publishCollege({ id });
     toast({
       title: "Successfully Changed",
     });
-    getAllColleges();
+    getAllColleges2();
   };
 
+  const getAllColleges2 = async () => {
+    const response: any = await getAllCollege("");
+    dispatch(setCollege(response?.data));
+    setAllColleges(response?.data?.data?.colleges);
+  };
   useEffect(() => {
-    if (!user) {
-      redirectTo("/");
-    }
+    // if (!user) {
+    //   redirectTo("/");
+    // }
+    const getAllColleges = async () => {
+      const response: any = await getAllCollege("");
+      dispatch(setCollege(response?.data));
+      setAllColleges(response?.data?.data?.colleges);
+    };
     getAllColleges();
   }, [userData, dispatch, router, user, getAllCollege]);
   console.log(allColleges);
 
+  const filteredColleges = allColleges.filter((college) =>
+    college.collegename.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
-      <div className="flex items-center justify-between text-center flex-row">
+      <div className="mb-4 flex items-center justify-between text-center flex-row">
         <h1 className="max-md:hidden mb-4 text-2xl font-semibold">
           All Colleges
         </h1>
+
         <Button>
           <Link
             href={`/profile/admin/${user?.username}/dashboard/colleges/new`}
           >
             {" "}
-            <i className="fi fi-rr-plus mr-2"></i>New
+            <i className="fi fi-rr-plus mr-2"></i>New College
           </Link>
         </Button>
       </div>
+      <Input
+        // className="mt-4"
+        placeholder="Search college"
+        icon={"fi-rr-graduation-cap"}
+        // icon2={"fi-br-paper-plane"}
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
       {isLoading ? (
         <Loader />
       ) : !isSuccess ? (
@@ -98,7 +118,7 @@ const AdminColleges = () => {
         />
       ) : (
         <div className="mt-6">
-          {allColleges?.length == 0 ? (
+          {filteredColleges?.length == 0 ? (
             <NoDataMessage
               message={"No College Data exist"}
               icon={"fi fi-rr-search-alt"}
@@ -118,16 +138,18 @@ const AdminColleges = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {allColleges != null &&
-                    allColleges?.length > 0 &&
-                    allColleges?.map((college, key) => (
+                  {filteredColleges != null &&
+                    filteredColleges?.length > 0 &&
+                    filteredColleges?.map((college, key) => (
                       <TableRow key={key}>
                         <TableCell className="font-medium">
                           <div className="flex flex-col ">
-                            <img
+                            <Image
                               src={college?.picture}
                               className="w-20 object-cover rounded-sm h-10 mb-2"
                               alt={"image"}
+                              width={100}
+                              height={100}
                             />
                             <span>{college?.collegename}</span>
                           </div>

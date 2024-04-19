@@ -7,6 +7,7 @@ const departmentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    syllabus: { type: String },
     email: {
       type: String,
       required: [true, "College email is required"],

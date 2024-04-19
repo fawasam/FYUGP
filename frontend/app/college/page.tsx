@@ -1,27 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useRegisterMutation } from "@/redux/services/authApi";
 import Loader from "@/components/common/Loader";
 import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "@/redux/features/authSlice";
 import AnimationWrapper from "@/components/common/page-animation";
-import useRedirect from "@/hooks/useRedirect";
 import {
   useGetAllCollegeMutation,
   useSearchCollegeMutation,
@@ -29,7 +14,6 @@ import {
 import { setCollege } from "@/redux/features/collegeSlice";
 import { RootState } from "@/redux/store";
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import NoDataMessage from "@/components/common/Nodata";
 
@@ -44,7 +28,7 @@ const College = () => {
   const [searchCollege] = useSearchCollegeMutation();
 
   let collegesData = useSelector((state: RootState) => state.college);
-  let { collegeInfo: colleges, collegeInfo, items } = collegesData;
+  let { collegeInfo: colleges } = collegesData;
 
   const handleSearch = async (e: any) => {
     if (searchKey == "") {
@@ -56,13 +40,12 @@ const College = () => {
       dispatch(setCollege(response?.data));
     }
   };
-  const getAllColleges = async () => {
-    const response: any = await getAllCollege("");
-    dispatch(setCollege(response?.data));
-  };
   useEffect(() => {
+    const getAllColleges = async () => {
+      const response: any = await getAllCollege("");
+      dispatch(setCollege(response?.data));
+    };
     getAllColleges();
-
     clearTimeout(typingTimeout);
 
     if (searchKey !== "") {
@@ -72,7 +55,8 @@ const College = () => {
 
       setTypingTimeout(timeoutId);
     }
-  }, [searchKey, getAllCollege, typingTimeout]);
+  }, [searchKey, typingTimeout, getAllCollege, dispatch]);
+
   return (
     <AnimationWrapper className="sm:w-[70%] w-[90%] m-auto min-h-[100vh]  py-[20px]">
       <section className="max-w-[1060px] m-auto   flex-grow   ">
@@ -128,12 +112,13 @@ const College = () => {
                       <div className=" ">
                         <div className="border w-full h-[200px]  overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                           {college?.picture ? (
-                            <img
+                            <Image
+                              priority
                               src={college?.picture}
                               alt={college?.collegename}
                               className="object-cover w-full h-full  group-hover:opacity-75 border"
-
-                              // width={100}
+                              width={300}
+                              height={300}
                             />
                           ) : (
                             ""

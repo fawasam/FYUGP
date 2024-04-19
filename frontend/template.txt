@@ -24,3 +24,23 @@ import Link from "next/link";
       redirectTo("/");
     }
   }, [userData, dispatch, router]);
+
+
+
+  //search logic
+
+
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredUsers = allUsers.filter((user) =>
+    user.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+       <Input
+        placeholder="Search user"
+        icon={"fi-rr-user"}
+        // icon2={"fi-br-paper-plane"}
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />

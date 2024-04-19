@@ -55,6 +55,8 @@ const Dashboard = () => {
     }
   }, [userData, dispatch, router, user]);
 
+  console.log(user?.degree_info?.pathway);
+
   return (
     <>
       <AnimationWrapper className="w-full h-full  pt-[40px] sm:pt-[100px]  min-h-screen">
@@ -147,7 +149,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <div className="w-[400px] h-[150px] rounded-2xl shadow-xl relative bg-primary-foreground">
-                    <div
+                    {/* <div
                       style={{ width: 80, height: 80 }}
                       className="absolute right-3 top-3"
                     >
@@ -155,7 +157,7 @@ const Dashboard = () => {
                         value={percentage}
                         text={`${percentage}%`}
                       />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

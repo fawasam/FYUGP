@@ -32,18 +32,12 @@ export const communityApi = createApi({
       query: () => ({
         url: "/all",
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${loadUserFromStorage().token}`,
-        },
       }),
     }),
     getCommunityQns: builder.mutation<void, any>({
       query: ({ id }) => ({
         url: `/${id}`,
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${loadUserFromStorage().token}`,
-        },
       }),
     }),
   }),

@@ -15,6 +15,7 @@ import CourseRoute from "./routes/courseRoute.js";
 import EnquiryRoute from "./routes/enquiryRoute.js";
 import AdvisorRoute from "./routes/advisorRoute.js";
 import CommunityRoute from "./routes/communityRoute.js";
+import BookingRouter from "./routes/bookingRoute.js";
 
 //app
 const app = express();
@@ -59,6 +60,7 @@ app.use("/api/v1/upload", UploadRoute);
 app.use("/api/v1/enquiry", EnquiryRoute);
 app.use("/api/v1/college", CollegeRoute);
 app.use("/api/v1/community", CommunityRoute);
+app.use("/api/v1/booking", BookingRouter);
 app.use("/api/v1/college/advisor", AdvisorRoute);
 app.use("/api/v1/college/program", ProgramRoute);
 app.use("/api/v1/college/program/course", CourseRoute);

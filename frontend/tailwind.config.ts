@@ -11,6 +11,8 @@ const config = {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
+  // purge: ["./app/**/*.html", "./app/**/*.ts", "./app/**/*.tsx"],
+
   prefix: "",
   theme: {
     fontFamily: {
@@ -26,6 +28,10 @@ const config = {
     },
     extend: {
       colors: {
+        yellowOne: "#EDF77D",
+        redOne: "#FD5F54",
+        blueOne: "#1E92FF",
+        blueTwo: "#1B998B",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

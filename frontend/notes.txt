@@ -10,8 +10,6 @@ Create the RTK Query API Service
 Add the RTK Query API Service to the Store
 Use RTK Query in the Next.js 13 App Directory
 
-qjpxrfqd
-
 .large-checkbox {
     z-index: 2;
     width: 100%;

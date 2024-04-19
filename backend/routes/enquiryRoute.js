@@ -7,12 +7,16 @@ import {
   getEnquiry,
   readEnquiry,
   getAllNewEnquiry,
+  deleteEnquiry,
 } from "../controllers/enquiryController.js";
 
 router.route("/").post(createEnquiry);
-router.route("/:id").patch(readEnquiry);
+router
+  .route("/:id")
+  .patch(readEnquiry)
+  .delete(deleteEnquiry)
+  .get(getAllEnquiry);
 router.route("/all").get(getAllEnquiry);
 router.route("/new").get(getAllNewEnquiry);
-router.route("/:id").get(getEnquiry);
 
 export default router;

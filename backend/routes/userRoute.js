@@ -7,10 +7,12 @@ import {
   getMe,
   deleteUser,
   activeUser,
+  getAllDataCount,
 } from "../controllers/userController.js";
 import { restrict, protect } from "../controllers/authController.js";
 import { chatWithBot } from "../controllers/botController.js";
 
+router.route("/count").get(getAllDataCount);
 router.route("/users").get(protect, restrict("admin"), getAllUsers);
 router.route("/user/updatePassword").patch(protect, updatePassword);
 router.route("/user/updateMe").patch(protect, updateMe);

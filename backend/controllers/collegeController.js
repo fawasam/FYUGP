@@ -179,10 +179,12 @@ export const getAllColleges = asyncErrorHandler(async (req, res, next) => {
 
 export const getACollege = asyncErrorHandler(async (req, res, next) => {
   const { id } = req.params;
-  const college = await College.findById(id).populate({
-    path: "departments",
-    populate: { path: "coursesOffered" },
-  });
+  const college = await College.findById(id)
+    .populate({
+      path: "departments",
+      populate: { path: "coursesOffered" },
+    })
+    .populate("advisor", "fullname email availability");
   res.status(200).json({
     status: "success",
     data: { college },

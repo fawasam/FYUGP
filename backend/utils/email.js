@@ -11,7 +11,7 @@ const sendEmail = async (options) => {
   });
 
   const emailOptions = {
-    from: `Cineflix support<support@cineflix.com>`,
+    from: `TrackMyDegree support<support@TrackMyDegree.com>`,
     to: options.email,
     subject: options.subject,
     text: options.message,

@@ -71,7 +71,7 @@ function ResetPassword({ params }: { params: { token: string } }) {
   };
 
   return (
-    <div className="md:w-[60%] w-[90%] m-auto">
+    <div className="md:w-[60%] w-[90%]  mt-[160px] m-auto block  md:gap-6">
       <AnimationWrapper>
         <div className="my-10">
           <h1 className="text-2xl text-center underline underline-offset-8">

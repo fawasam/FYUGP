@@ -23,7 +23,6 @@ import useRedirect from "@/hooks/useRedirect";
 import { usePathname } from "next/navigation";
 import AdminDashboard from "./dashboard/page";
 import EditProfile from "./settings/edit-profile/page";
-import AdminUsers from "./dashboard/users/page";
 
 const AdminPage = ({ params }: { params: { username: string } }) => {
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
@@ -50,10 +49,6 @@ const AdminPage = ({ params }: { params: { username: string } }) => {
   switch (pathname) {
     case `/profile/admin/${user.username}/dashboard`:
       content = <AdminDashboard />;
-      break;
-    // case "/dashboard/notifications":
-    case `/profile/admin/${user.username}/dashboard/users`:
-      content = <AdminUsers />;
       break;
     case "/profile/admin/editor":
       content = <h1>Hii3</h1>;

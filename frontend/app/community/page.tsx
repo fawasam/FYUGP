@@ -83,11 +83,6 @@ const CommunityPage = () => {
     setComment(event.target.value);
   };
 
-  const getAllCommunityQuestions = async () => {
-    const res: any = await getAllCommunityQns("");
-    setAllQns(res?.data?.data?.community);
-  };
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -98,23 +93,30 @@ const CommunityPage = () => {
 
   const handleSubmit = async (event: any, id: any) => {
     event.preventDefault();
-    try {
-      const response: any = await createQnsComment({
-        id,
-        data: { comment, user: user?._id },
-      }).unwrap();
-      toast({
-        title: response?.message,
-      });
-      setComment("");
-      getAllCommunityQuestions();
-    } catch (error: any) {
+    if (!user) {
       toast({
         variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        title: "You are not Logged In!",
       });
-      console.log(error?.data?.message);
+    } else {
+      try {
+        const response: any = await createQnsComment({
+          id,
+          data: { comment, user: user?._id },
+        }).unwrap();
+        toast({
+          title: response?.message,
+        });
+        setComment("");
+        getAllCommunityQuestions2();
+      } catch (error: any) {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: error?.data?.message,
+        });
+        console.log(error);
+      }
     }
   };
 
@@ -128,7 +130,7 @@ const CommunityPage = () => {
       });
 
       form.reset();
-      getAllCommunityQuestions();
+      getAllCommunityQuestions2();
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -139,9 +141,19 @@ const CommunityPage = () => {
     }
   };
 
+  const getAllCommunityQuestions2 = async () => {
+    const res: any = await getAllCommunityQns("");
+    setAllQns(res?.data?.data?.community);
+  };
   useEffect(() => {
+    const getAllCommunityQuestions = async () => {
+      const res: any = await getAllCommunityQns("");
+
+      setAllQns(res?.data?.data?.community);
+    };
     getAllCommunityQuestions();
   }, [getAllCommunityQns]);
+
   return (
     <AnimationWrapper className="sm:w-[70%] w-[90%] m-auto min-h-[100vh]  py-[20px]">
       <section className="">
@@ -167,9 +179,12 @@ const CommunityPage = () => {
                 icon={"fi fi-rr-search-alt"}
               />
             ) : (
-              <div className="gap-4  my-8 relative">
-                {allQns.map((q: any, key: any) => (
-                  <div className=" w-full md:w-[80%] h-full my-4 flex flex-row">
+              <div className="gap-4  my-8 relative md:mt-0 mt-20">
+                {allQns?.map((q: any, key: any) => (
+                  <div
+                    className=" w-full md:w-[80%] h-full my-4 flex flex-row"
+                    key={key}
+                  >
                     <div className=" h-fit pr-3  w-full bg-background text-left rounded-sm py-6">
                       <div className="pl-8 items-center justify-center h-full">
                         <h2 className="font-semibold text-2xl mb-2">
@@ -214,7 +229,7 @@ const CommunityPage = () => {
                             ) : (
                               <>
                                 {q?.comments?.map((cmt: any, key: any) => (
-                                  <div className="mt-8 ">
+                                  <div className="mt-8 " key={key}>
                                     {/* comment details  */}
 
                                     <div
@@ -283,7 +298,7 @@ const CommunityPage = () => {
                   </div>
                 ))}
                 {/* Start a new Topic */}
-                <div className="absolute top-0 right-0">
+                <div className="absolute md:top-0 top-[-10] right-0">
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button className="w-full">
@@ -291,64 +306,85 @@ const CommunityPage = () => {
                         Start a new Topic
                       </Button>
                     </DialogTrigger>
-                    <DialogContent>
-                      <Form {...form}>
-                        <form
-                          onSubmit={form.handleSubmit(onSubmit)}
-                          className="w-full"
-                        >
-                          <DialogHeader>
-                            <DialogTitle>
-                              Add New Community Question
-                            </DialogTitle>
-                          </DialogHeader>
-                          <div className=" space-y-4 py-4">
-                            <div className="  items-center gap-4 space-y-4">
-                              <FormField
-                                control={form.control}
-                                name="title"
-                                render={({ field }) => (
-                                  <FormItem className="w-full m-0">
-                                    <FormLabel>Enter Question title</FormLabel>
-                                    <FormControl>
-                                      <Input
-                                        placeholder="Title"
-                                        // defaultValue={title}
-                                        icon={"fi fi-rr-comment-alt"}
-                                        {...field}
-                                      />
-                                    </FormControl>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
-                              <FormField
-                                control={form.control}
-                                name="description"
-                                render={({ field }) => (
-                                  <FormItem className="w-full m-0">
-                                    <FormLabel>
-                                      Enter Question description
-                                    </FormLabel>
-                                    <FormControl>
-                                      <Textarea
-                                        placeholder="Description"
-                                        // defaultValue={}
-                                        // icon={"fi fi-rr-graduation-cap"}
-                                        {...field}
-                                      />
-                                    </FormControl>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
-                            </div>
-                          </div>
-                          <DialogFooter>
-                            <Button>Create New Topic</Button>
-                          </DialogFooter>
-                        </form>
-                      </Form>{" "}
+                    <DialogContent className="">
+                      <DialogHeader className="mt-6">
+                        <DialogTitle className="text-2xl flex item-center justify-center flex-col text-center">
+                          Start a new Topic
+                        </DialogTitle>
+                      </DialogHeader>
+                      {user ? (
+                        <DialogDescription>
+                          <Form {...form}>
+                            <form
+                              onSubmit={form.handleSubmit(onSubmit)}
+                              className="w-full"
+                            >
+                              <DialogHeader>
+                                <DialogTitle>
+                                  Add New Community Question
+                                </DialogTitle>
+                              </DialogHeader>
+                              <div className=" space-y-4 py-4">
+                                <div className="  items-center gap-4 space-y-4">
+                                  <FormField
+                                    control={form.control}
+                                    name="title"
+                                    render={({ field }) => (
+                                      <FormItem className="w-full m-0">
+                                        <FormLabel>
+                                          Enter Question title
+                                        </FormLabel>
+                                        <FormControl>
+                                          <Input
+                                            placeholder="Title"
+                                            // defaultValue={title}
+                                            icon={"fi fi-rr-comment-alt"}
+                                            {...field}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <FormField
+                                    control={form.control}
+                                    name="description"
+                                    render={({ field }) => (
+                                      <FormItem className="w-full m-0">
+                                        <FormLabel>
+                                          Enter Question description
+                                        </FormLabel>
+                                        <FormControl>
+                                          <Textarea
+                                            placeholder="Description"
+                                            // defaultValue={}
+                                            // icon={"fi fi-rr-graduation-cap"}
+                                            {...field}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                </div>
+                              </div>
+                              <DialogFooter>
+                                <Button>Create New Topic</Button>
+                              </DialogFooter>
+                            </form>
+                          </Form>{" "}
+                        </DialogDescription>
+                      ) : (
+                        <DialogDescription className="text-center">
+                          Please Login to Start a New Topic <br />
+                          <Link href={"/auth/login"} className="text-xl mt-4">
+                            {" "}
+                            <Button size={"lg"} className="mt-4 w-full">
+                              Login
+                            </Button>
+                          </Link>
+                        </DialogDescription>
+                      )}
                     </DialogContent>
                   </Dialog>
                 </div>

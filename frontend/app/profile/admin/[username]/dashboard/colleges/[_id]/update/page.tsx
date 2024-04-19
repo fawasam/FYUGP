@@ -26,6 +26,7 @@ import Loader from "@/components/common/Loader";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { Textarea } from "@/components/ui/textarea";
+import Image from "next/image";
 
 const formSchema = z.object({
   collegename: z.string().min(2, {
@@ -80,10 +81,6 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
     },
   });
 
-  const getCollege = async () => {
-    const response: any = await getACollege(params._id);
-    setCollege(response?.data?.data?.college);
-  };
   const goBack = () => {
     router.back();
   };
@@ -151,12 +148,15 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       console.log(error?.data?.message);
     }
   };
+
   useEffect(() => {
+    const getCollege = async () => {
+      const response: any = await getACollege(params._id);
+      setCollege(response?.data?.data?.college);
+    };
     getCollege();
-    if (!user) {
-      redirectTo("/");
-    }
-  }, [userData, dispatch, router, user, getACollege]);
+  }, [getACollege]);
+
   useEffect(() => {
     form.reset({
       collegename: collegename,
@@ -183,11 +183,13 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
             <div className="w-full h-full absolute top-0 left-0 flex items-center justify-center text-white bg-black/30 opacity-0 hover:opacity-100 cursor-pointer">
               Upload Image
             </div>
-            <img
+            <Image
               src={`${picture}`}
               alt=""
               ref={profileImageEle}
               className="h-full object-cover"
+              width={300}
+              height={300}
             />
           </label>
 

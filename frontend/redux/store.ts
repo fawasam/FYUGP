@@ -7,6 +7,7 @@ import { collegeApi } from "./services/collegeApi";
 import { authApi } from "./services/authApi";
 import { userApi } from "./services/userApi";
 import { enquiryApi } from "./services/enquiryApi";
+import { bookingApi } from "./services/bookingApi";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     [collegeApi.reducerPath]: collegeApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [enquiryApi.reducerPath]: enquiryApi.reducer,
+    [bookingApi.reducerPath]: bookingApi.reducer,
     auth: authReducer,
     college: collegeReducer,
   },
@@ -22,7 +24,9 @@ export const store = configureStore({
     getDefaultMiddleware({}).concat(
       collegeApi.middleware,
       authApi.middleware,
-      userApi.middleware
+      userApi.middleware,
+      enquiryApi.middleware,
+      bookingApi.middleware
     ),
 });
 

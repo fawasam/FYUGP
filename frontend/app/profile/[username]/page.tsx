@@ -71,6 +71,7 @@ const Dashboard = () => {
           {pathway ? (
             <div>
               <div className="mt-12  grid grid-cols-1 lg:grid-cols-2">
+                {/* box  one  */}
                 <div className="w-[400px] h-[250px] rounded-2xl  shadow-xl relative bg-primary-foreground">
                   <div className="flex  flex-row justify-between">
                     <div>
@@ -124,8 +125,9 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </div>
+                {/* box  two  */}
                 <div>
-                  <div className="w-[400px] h-[80px] mb-[20px] rounded-2xl  shadow-xl relative  lg:mt-0 mt-10  bg-primary-foreground">
+                  <div className="w-[500px] h-[80px] mb-[20px] rounded-2xl  shadow-xl relative  lg:mt-0 mt-10  bg-primary-foreground">
                     <div className="p-4 flex">
                       <div>
                         <h2 className="text-md font-thin">
@@ -148,7 +150,7 @@ const Dashboard = () => {
                       </Button>
                     </div>
                   </div>
-                  <div className="w-[400px] h-[150px] rounded-2xl shadow-xl relative bg-primary-foreground">
+                  <div className="w-[500px] h-[150px] rounded-2xl shadow-xl relative bg-primary-foreground">
                     {/* <div
                       style={{ width: 80, height: 80 }}
                       className="absolute right-3 top-3"

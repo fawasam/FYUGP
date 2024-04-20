@@ -51,6 +51,16 @@ const components: { title: string; href: string; description: string }[] = [
       "Discussion forum where all students and others can ask and share their thought",
   },
   {
+    title: "Ask Me",
+    href: "/ask",
+    description: "Enquiry and feedbacks",
+  },
+  {
+    title: "FAQ",
+    href: "/faq",
+    description: "Enquiry and feedbacks",
+  },
+  {
     title: "Contact",
     href: "/contact",
     description: "Enquiry and feedbacks",
@@ -175,7 +185,7 @@ const Header = () => {
             </NavigationMenuItem>
             {user?.role == "user" ? (
               <>
-                <NavigationMenuItem>
+                {/* <NavigationMenuItem>
                   <Link href={`/community`} legacyBehavior passHref>
                     <NavigationMenuLink
                       className={navigationMenuTriggerStyle()}
@@ -193,7 +203,7 @@ const Header = () => {
                       <span className=" text-[16px]">Aks me</span>
                     </NavigationMenuLink>
                   </Link>
-                </NavigationMenuItem>
+                </NavigationMenuItem> */}
               </>
             ) : (
               ""

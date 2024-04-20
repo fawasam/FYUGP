@@ -40,6 +40,16 @@ export const communityApi = createApi({
         method: "GET",
       }),
     }),
+
+    likeCommentByUser: builder.mutation<void, any>({
+      query: ({ communityId, commentId, userId }) => ({
+        url: `/${communityId}/${commentId}/${userId}`,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${loadUserFromStorage().token}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -48,4 +58,5 @@ export const {
   useGetAllCommunityQnsMutation,
   useGetCommunityQnsMutation,
   useCreateQnsCommentMutation,
+  useLikeCommentByUserMutation,
 } = communityApi;

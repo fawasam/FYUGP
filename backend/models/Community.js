@@ -17,6 +17,7 @@ const communitySchema = new mongoose.Schema({
         ref: "users",
         required: true,
       },
+      likes: [{ type: Schema.Types.ObjectId, ref: "users", unique: true }],
       createdAt: {
         type: Date,
         default: Date.now,

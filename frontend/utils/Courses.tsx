@@ -765,7 +765,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: " Major with multiple Disciplines ",
+    pathway: "Major with multiple Disciplines",
     discipline: "Commerce",
     courses: [
       {
@@ -1405,7 +1405,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: " Major with multiple Disciplines ",
+    pathway: "Major with multiple Disciplines",
     discipline: "Management",
     courses: [
       {
@@ -2045,7 +2045,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: " Major with multiple Disciplines ",
+    pathway: "Major with multiple Disciplines",
     discipline: "Humanities",
     courses: [
       {
@@ -2685,7 +2685,7 @@ export const Courses: any[] = [
     ],
   },
   {
-    pathway: " Major with multiple Disciplines ",
+    pathway: "Major with multiple Disciplines",
     discipline: "Languages",
     courses: [
       {

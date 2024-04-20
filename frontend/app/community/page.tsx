@@ -41,6 +41,7 @@ import {
   useCreateQnsCommentMutation,
   useCreateQnsMutation,
   useGetAllCommunityQnsMutation,
+  useLikeCommentByUserMutation,
 } from "@/redux/services/communityApi";
 import Loader from "@/components/common/Loader";
 import NoDataMessage from "@/components/common/Nodata";
@@ -66,18 +67,58 @@ const CommunityPage = () => {
   const router = useRouter();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
-  const [showComments, setShowComments] = useState(false);
   const [comment, setComment] = useState("");
+  const [isLiked, setIsLiked] = useState(false);
   const [allQns, setAllQns] = useState<any>([]);
+  const [showComments, setShowComments] = useState<any>(false);
 
   const [createQns] = useCreateQnsMutation();
   const [createQnsComment] = useCreateQnsCommentMutation();
+  const [likeCommentByUser] = useLikeCommentByUserMutation();
 
   const [getAllCommunityQns, { isLoading, isSuccess }] =
     useGetAllCommunityQnsMutation();
 
-  const handleOpenComment = () => {
-    setShowComments(!showComments);
+  const handleOpenComment = (questionId: any) => {
+    setShowComments((prev: any) => ({
+      ...prev,
+      [questionId]: !prev[questionId],
+    }));
+  };
+
+  const handleLikeComment = async (
+    communityId: any,
+    commentId: any,
+    userId: any
+  ) => {
+    if (!userId) {
+      toast({
+        variant: "destructive",
+        title: "Something Went Wrong!",
+        description: "Please Login to add Comment",
+      });
+    } else {
+      try {
+        const res: any = await likeCommentByUser({
+          communityId,
+          commentId,
+          userId,
+        });
+        console.log(res);
+
+        getAllCommunityQuestions2();
+        setIsLiked(!isLiked);
+        toast({
+          title: res?.data?.message,
+        });
+      } catch (error) {
+        toast({
+          variant: "destructive",
+          title: "Something Went Wrong!",
+          // description: error,
+        });
+      }
+    }
   };
   const handleChange = (event: any) => {
     setComment(event.target.value);
@@ -141,6 +182,10 @@ const CommunityPage = () => {
     }
   };
 
+  const isCommentLikedByUser = (commentLikes: any, loggedInUserId: any) => {
+    return commentLikes.includes(loggedInUserId);
+  };
+
   const getAllCommunityQuestions2 = async () => {
     const res: any = await getAllCommunityQns("");
     setAllQns(res?.data?.data?.community);
@@ -166,7 +211,7 @@ const CommunityPage = () => {
         </div>
         {isLoading ? (
           <Loader />
-        ) : isSuccess ? (
+        ) : !isSuccess ? (
           <NoDataMessage
             message={"Community Data Unavailable!"}
             icon={"fi fi-rr-search-alt"}
@@ -195,7 +240,7 @@ const CommunityPage = () => {
                         </span>
                         <div className="border-b w-full h-1 mt-2"></div>
                         <div className="mt-2 flex justify-between">
-                          <div className="flex text-center  items-center space-x-2">
+                          <div className="flex text-center justify-between items-center space-x-2">
                             <Avatar>
                               <AvatarImage
                                 sizes="10px"
@@ -215,14 +260,21 @@ const CommunityPage = () => {
                               </span>
                             </div>
                           </div>
-                          <div className="" onClick={handleOpenComment}>
-                            <i className="fi font-thin fi-rs-comment text-xl mr-1"></i>
-                            <span className="text-thin text-center">
-                              {q?.comments?.length}
-                            </span>
+
+                          {/* comment button  */}
+                          <div className="flex gap-2">
+                            <div
+                              className="mr-2 cursor-pointer"
+                              onClick={() => handleOpenComment(q._id)}
+                            >
+                              <i className="fi font-thin fi-rs-comment text-xl mr-1"></i>
+                              <span className="text-thin text-center">
+                                {q?.comments?.length}
+                              </span>
+                            </div>
                           </div>
                         </div>
-                        {showComments && (
+                        {showComments[q._id] && (
                           <AnimationWrapper>
                             {q?.comments.length < 0 ? (
                               <>no</>
@@ -262,6 +314,31 @@ const CommunityPage = () => {
                                               {formatedTime(cmt?.createdAt)}
                                             </span>
                                           </div>
+                                        </div>
+                                        {/* like details  */}
+                                        <div
+                                          className="ml-2 cursor-pointer"
+                                          onClick={() =>
+                                            handleLikeComment(
+                                              q?._id,
+                                              cmt?._id,
+                                              user?._id
+                                            )
+                                          }
+                                        >
+                                          {isCommentLikedByUser(
+                                            cmt?.likes,
+                                            user?._id
+                                          ) ? (
+                                            <i className="fi font-thin fi-sr-heart text-xl mr-1"></i>
+                                          ) : (
+                                            <i className="fi font-thin fi-rs-heart text-xl mr-1"></i>
+                                          )}
+                                          <span className="text-thin text-center">
+                                            {cmt?.likes?.length
+                                              ? cmt?.likes?.length
+                                              : "0"}
+                                          </span>
                                         </div>
                                       </div>
                                     </div>

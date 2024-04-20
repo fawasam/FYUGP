@@ -19,6 +19,19 @@ import Link from "next/link";
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import { IconSquareRoundedX } from "@tabler/icons-react";
 import useRedirect from "@/hooks/useRedirect";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  generalfoundationcourses,
+  minimumnumberofcourses,
+} from "@/utils/Credits";
 const loadingStates = [
   {
     text: "What is Fourth year UG program",
@@ -140,6 +153,29 @@ const CourseAndCredits = () => {
             credits. The general foundation courses should be completed in the
             first three years of FYUGP.
             <br />
+            <Table className="w-full md:w-1/2 m-auto my-6">
+              <TableCaption> Minimum Number of Courses </TableCaption>
+              <TableHeader className="border-foreground">
+                <TableRow className="border-foreground">
+                  <TableHead>SI NO.</TableHead>
+                  <TableHead>Name of the General Foundation Course</TableHead>
+                  <TableHead className="px-2">No. of Courses</TableHead>
+                  <TableHead className="px-2">Required Credits</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {generalfoundationcourses.map((data, key) => (
+                  <>
+                    <TableRow key={key}>
+                      <TableCell>{data?.no}</TableCell>
+                      <TableCell>{data?.name}</TableCell>
+                      <TableCell>{data?.no_course}</TableCell>
+                      <TableCell>{data?.requiredcredits}</TableCell>
+                    </TableRow>
+                  </>
+                ))}
+              </TableBody>
+            </Table>
             <br />
             <b>
               <u>The four Ability Enhancement Courses</u>
@@ -212,6 +248,31 @@ const CourseAndCredits = () => {
             Project in UG Honours programme and UG Honours with Research
             Programme should be specified by the BoS in each Major discipline.
           </span>
+
+          <Table className="w-full md:w-[80%] m-auto my-6">
+            <TableHeader className="border-foreground">
+              <TableRow className="border-foreground">
+                <TableHead>SI NO.</TableHead>
+                <TableHead>
+                  Categorization of Courses for all Programmes{" "}
+                </TableHead>
+                <TableHead className="px-2">3-year UG</TableHead>
+                <TableHead className="px-2">4-year UG</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {minimumnumberofcourses.map((data, key) => (
+                <>
+                  <TableRow key={key}>
+                    <TableCell>{data?.no}</TableCell>
+                    <TableCell>{data?.catogorization_of_courses}</TableCell>
+                    <TableCell>{data?.no_coursein3YUG}</TableCell>
+                    <TableCell>{data?.no_coursein4YUG}</TableCell>
+                  </TableRow>
+                </>
+              ))}
+            </TableBody>
+          </Table>
         </div>
 
         {/* loader  */}

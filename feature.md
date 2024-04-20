@@ -6,7 +6,8 @@ Provide a clear and concise overview of the new curriculum structure, including 
 
 ### Interactive Course Planner:
 
-Develop an interactive tool that allows users to plan their academic journey by selecting courses, tracking progress, and visualizing their pathway through the four-year program. Integration with academic advisors or counselors for personalized suggestions could be beneficial.
+Develop an interactive tool that allows users to plan their academic journey by selecting courses, tracking progress, and visualizing their pathway through the four-year program.
+Integration with academic advisors or counselors for personalized suggestions could be beneficial.
 
 ### Resource Library:
 

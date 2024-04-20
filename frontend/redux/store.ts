@@ -8,6 +8,7 @@ import { authApi } from "./services/authApi";
 import { userApi } from "./services/userApi";
 import { enquiryApi } from "./services/enquiryApi";
 import { bookingApi } from "./services/bookingApi";
+import { communityApi } from "./services/communityApi";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [enquiryApi.reducerPath]: enquiryApi.reducer,
     [bookingApi.reducerPath]: bookingApi.reducer,
+    [communityApi.reducerPath]: communityApi.reducer,
     auth: authReducer,
     college: collegeReducer,
   },
@@ -26,7 +28,8 @@ export const store = configureStore({
       authApi.middleware,
       userApi.middleware,
       enquiryApi.middleware,
-      bookingApi.middleware
+      bookingApi.middleware,
+      communityApi.middleware
     ),
 });
 

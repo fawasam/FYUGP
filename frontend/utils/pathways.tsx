@@ -9,7 +9,7 @@ export const pathways: { no: string; title: string; description: any }[] = [
   },
   {
     no: "2",
-    title: "Major with Multiple Disciplines ",
+    title: "Major with multiple Disciplines",
     description: {
       __html:
         "This pathway is recommended for students <b>who wish to  develop core competency in multiple disciplines of study.</b> In this case, the credits for the minor pathway shall be distributed among the constituent disciplines/subjects. If students pursuing FYUGP are awarded a Major Degree in a particular discipline, they are eligible to get mentioned their core competencies in other discipline(s) of their choice if they have earned 12 credits from the pathway courses of a particular discipline. It is composed of one Major discipline with <b>68 credits from 17 courses, and two other disciplines, with 12 credits from 3 courses in each discipline</b> .<br/><br/>  Examples:  BSc Physics Major with Chemistry and Mathematics, BA Economics Major with History and  English, BCom Commerce Major with Economics and Statistics ",

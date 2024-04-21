@@ -69,15 +69,18 @@ const AdvisorPage = () => {
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
 
-  const [getAllAdvisorByCollege, { isLoading, isError, isSuccess }] =
-    useGetAllAdvisorByCollegeMutation();
+  const [
+    getAllAdvisorByCollege,
+    { isLoading, isError, isSuccess },
+  ] = useGetAllAdvisorByCollegeMutation();
   const [deleteAdvisor] = useDeleteAdvisorMutation();
   const [getAdvisor] = useGetAdvisorMutation();
 
-  const [changeAvailabilityOfAdvisor] =
-    useChangeAvailabilityOfAdvisorMutation();
+  const [
+    changeAvailabilityOfAdvisor,
+  ] = useChangeAvailabilityOfAdvisorMutation();
 
-  const getAllAdvisorByColleges = async () => {
+  const getAllAdvisorByColleges2 = async () => {
     const res: any = await getAllAdvisorByCollege({ collegeId: user?.college });
     setAdvisors(res?.data?.data?.advisors);
   };
@@ -90,14 +93,14 @@ const AdvisorPage = () => {
         title: "Advisor Deleted Successfully",
       });
       console.log("Advisor Deleted Successfully");
-      getAllAdvisorByColleges();
-    } catch (error: any) {
+      getAllAdvisorByColleges2();
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error.data.message,
+        description: error,
       });
-      console.log(error.data.message);
+      console.log(error);
     }
   };
 
@@ -106,14 +109,20 @@ const AdvisorPage = () => {
     toast({
       title: "Successfully Changed",
     });
-    getAllAdvisorByColleges();
+    getAllAdvisorByColleges2();
   };
 
   useEffect(() => {
+    const getAllAdvisorByColleges = async () => {
+      const res: any = await getAllAdvisorByCollege({
+        collegeId: user?.college,
+      });
+      setAdvisors(res?.data?.data?.advisors);
+    };
     getAllAdvisorByColleges();
-    if (!user) {
-      redirectTo("/");
-    }
+    // if (!user) {
+    //   redirectTo("/");
+    // }
   }, [user, getAllAdvisorByCollege]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">

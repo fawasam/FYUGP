@@ -39,12 +39,14 @@ import Link from "next/link";
 const AdminEnquiry = () => {
   const [enquiries, setEnquiries] = useState<any>({});
 
-  const [getAllEnquiry, { isLoading, isError, isSuccess }] =
-    useGetAllEnquiryMutation();
+  const [
+    getAllEnquiry,
+    { isLoading, isError, isSuccess },
+  ] = useGetAllEnquiryMutation();
   const [readEnquiry] = useReadEnquiryMutation();
   const [deleteEnquiry] = useDeleteEnquiryMutation();
 
-  const getAllEnquiries = async () => {
+  const getAllEnquiries2 = async () => {
     const res: any = await getAllEnquiry("");
     setEnquiries(res?.data?.data?.enquiries);
   };
@@ -52,14 +54,18 @@ const AdminEnquiry = () => {
 
   const handleReaded = async (id: any) => {
     const res = await readEnquiry({ id });
-    getAllEnquiries();
+    getAllEnquiries2();
   };
   const handleDeleteAdvisor = async (id: any) => {
     const res = await deleteEnquiry({ id });
-    getAllEnquiries();
+    getAllEnquiries2();
   };
 
   useEffect(() => {
+    const getAllEnquiries = async () => {
+      const res: any = await getAllEnquiry("");
+      setEnquiries(res?.data?.data?.enquiries);
+    };
     getAllEnquiries();
   }, [getAllEnquiry]);
 

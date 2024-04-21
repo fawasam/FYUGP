@@ -107,7 +107,7 @@ const EditProfile = () => {
         toast({
           title: "Profile Image Updated",
         });
-      } catch (error: any) {
+      } catch (error) {
         toast({
           variant: "destructive",
           title: "Image Upload failed",
@@ -129,23 +129,23 @@ const EditProfile = () => {
         title: "Profile Successfully Updated",
       });
       console.log("Profile Successfully Updated");
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
       console.log(error);
-      console.log(error?.data?.message);
+      console.log(error);
     }
   };
   console.log(user);
 
-  useEffect(() => {
-    if (!user) {
-      redirectTo("/");
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     redirectTo("/");
+  //   }
+  // }, [user]);
 
   return (
     <AnimationWrapper className="w-full sm:mt-16 mt-0">

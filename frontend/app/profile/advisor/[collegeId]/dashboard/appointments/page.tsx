@@ -29,33 +29,42 @@ const Appointments = () => {
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
-  const [getAllBookingByAdvisors, { isLoading, isSuccess }] =
-    useGetAllBookingByAdvisorsMutation();
+  const [
+    getAllBookingByAdvisors,
+    { isLoading, isSuccess },
+  ] = useGetAllBookingByAdvisorsMutation();
   const [publishCollege] = usePublishCollegeMutation();
 
   console.log(user);
 
-  const getAllBookingByAdvisorsFunc = async () => {
+  const getAllBookingByAdvisorsFunc2 = async () => {
     const response: any = await getAllBookingByAdvisors({ id: user?._id });
     console.log(response);
 
     setAppointment(response?.data?.data?.bookings);
   };
+
   const handlePublish = async ({ id }: any) => {
     const res: any = await publishCollege({ id });
     toast({
       title: "Successfully Changed",
     });
-    getAllBookingByAdvisorsFunc();
+    getAllBookingByAdvisorsFunc2();
   };
 
   console.log(appointment);
 
   useEffect(() => {
+    const getAllBookingByAdvisorsFunc = async () => {
+      const response: any = await getAllBookingByAdvisors({ id: user?._id });
+      console.log(response);
+
+      setAppointment(response?.data?.data?.bookings);
+    };
     getAllBookingByAdvisorsFunc();
-    if (!user) {
-      redirectTo("/");
-    }
+    // if (!user) {
+    //   redirectTo("/");
+    // }
   }, [userData, dispatch, router, user, getAllBookingByAdvisors]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">

@@ -143,9 +143,9 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
-      console.log(error?.data?.message);
+      console.log(error);
     }
   };
 

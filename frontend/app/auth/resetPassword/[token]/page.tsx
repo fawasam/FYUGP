@@ -40,8 +40,10 @@ const formSchema = z
 function ResetPassword({ params }: { params: { token: string } }) {
   const { toast } = useToast();
   const dispatch = useDispatch();
-  const [resetPassword, { isLoading, error, isSuccess }] =
-    useResetPasswordMutation();
+  const [
+    resetPassword,
+    { isLoading, error, isSuccess },
+  ] = useResetPasswordMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,13 +62,13 @@ function ResetPassword({ params }: { params: { token: string } }) {
         description: "Successfully rested your password",
       });
       console.log("Reset token sent successfully");
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error.data.message,
+        description: error,
       });
-      console.log(error.data.message);
+      console.log(error);
     }
   };
 

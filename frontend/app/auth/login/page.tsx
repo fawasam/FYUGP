@@ -62,11 +62,11 @@ const Login = () => {
         title: "Successfully signed up",
       });
       console.log("Successfully signed");
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
       console.log(error);
     }

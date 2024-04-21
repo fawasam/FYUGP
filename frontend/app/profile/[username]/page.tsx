@@ -49,11 +49,11 @@ const Dashboard = () => {
     setShow(!show);
   };
   const percentage = 66;
-  useEffect(() => {
-    if (!user) {
-      redirectTo("/");
-    }
-  }, [userData, dispatch, router, user]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     redirectTo("/");
+  //   }
+  // }, [userData, dispatch, router, user]);
 
   console.log(user?.degree_info?.pathway);
 
@@ -76,9 +76,11 @@ const Dashboard = () => {
                   <div className="flex  flex-row justify-between">
                     <div>
                       <div className="  block w-28 h-28  rounded-full object-cover pt-4 pl-4 ">
-                        <img
+                        <Image
                           src={user?.profileImage}
                           alt="image"
+                          width={300}
+                          height={100}
                           // fill
                           className="w-full h-full object-cover rounded-full "
                         />

@@ -96,10 +96,10 @@ const DepartmentDashboard = () => {
     };
 
     GetAprogram();
-    if (!user) {
-      redirectTo("/");
-    }
-  }, [userData, dispatch, router, user]);
+    // if (!user) {
+    //   redirectTo("/");
+    // }
+  }, [userData, dispatch, router, user, getAProgram]);
 
   console.log(loadedpdfFile);
   console.log(pdfFile);

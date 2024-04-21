@@ -56,11 +56,11 @@ const EditProfileForm = () => {
       toast({
         title: "Profile Successfully Updated",
       });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
     }
   };

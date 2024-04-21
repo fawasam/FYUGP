@@ -106,10 +106,6 @@ const StudentCourse = () => {
     },
   });
 
-  const getAllColleges = async () => {
-    const res: any = await getAllCollege("");
-    setColleges(res?.data?.data?.colleges);
-  };
   const handleChangeCollege = async (college: string) => {
     if (college) {
       const res: any = await getAllProgramByCollege({ id: college });
@@ -153,14 +149,13 @@ const StudentCourse = () => {
     });
   }
 
-  console.log(form.watch());
-  console.log(departments);
-  console.log(colleges);
-  console.log(courses[semester]);
-
   useEffect(() => {
+    const getAllColleges = async () => {
+      const res: any = await getAllCollege("");
+      setColleges(res?.data?.data?.colleges);
+    };
     getAllColleges();
-  }, []);
+  }, [getAllCollege]);
 
   return (
     <AnimationWrapper className="w-full h-full  pt-[40px] sm:pt-[100px] ">

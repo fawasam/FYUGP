@@ -100,7 +100,7 @@ const EditProfile = () => {
         toast({
           title: "Profile Image Updated",
         });
-      } catch (error: any) {
+      } catch (error) {
         toast({
           variant: "destructive",
           title: "Image Upload failed",
@@ -120,23 +120,23 @@ const EditProfile = () => {
         title: "Profile Successfully Updated",
       });
       console.log("Profile Successfully Updated");
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
       console.log(error);
-      console.log(error?.data?.message);
+      console.log(error);
     }
   };
   console.log(user);
 
-  useEffect(() => {
-    if (!user) {
-      redirectTo("/");
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     redirectTo("/");
+  //   }
+  // }, [user]);
 
   return (
     <AnimationWrapper>
@@ -155,9 +155,11 @@ const EditProfile = () => {
                 <div className="w-full h-full absolute top-0 left-0 flex items-center justify-center text-white bg-black/30 opacity-0 hover:opacity-100 cursor-pointer">
                   Upload Image
                 </div>
-                <img
+                <Image
                   src={`${profileImage}`}
                   alt=""
+                  width={300}
+                  height={100}
                   ref={profileImageEle}
                   // fill
                 />

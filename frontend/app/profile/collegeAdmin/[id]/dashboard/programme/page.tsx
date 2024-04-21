@@ -101,8 +101,10 @@ const Programme = () => {
   let [createProgram] = useCreateProgramMutation();
   let [deleteProgram] = useDeleteProgramMutation();
   let [updateProgram] = useUpdateProgramMutation();
-  let [getAllProgramByCollege, { isLoading, isError, isSuccess }] =
-    useGetAllProgramByCollegeMutation();
+  let [
+    getAllProgramByCollege,
+    { isLoading, isError, isSuccess },
+  ] = useGetAllProgramByCollegeMutation();
 
   const getAPrograms = async (id: any) => {
     const response: any = await getAProgram(id);
@@ -140,15 +142,15 @@ const Programme = () => {
       toast({
         title: "Successfully added Program",
       });
-      getAllPrograms();
+      getAllPrograms2();
       form.reset();
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
-      console.log(error?.data?.message);
+      console.log(error);
     }
   };
 
@@ -168,17 +170,17 @@ const Programme = () => {
       setDname("");
       setHeadOfDepartment("");
       form.reset();
-      getAllPrograms();
-    } catch (error: any) {
+      getAllPrograms2();
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
-      console.log(error?.data?.message);
+      console.log(error);
     }
   };
-  const getAllPrograms = async () => {
+  const getAllPrograms2 = async () => {
     const response: any = await getAllProgramByCollege({
       id: user?.college,
     });
@@ -193,21 +195,28 @@ const Programme = () => {
         title: "Program Deleted Successfully",
       });
       console.log("Program Deleted Successfully");
-      getAllPrograms();
-    } catch (error: any) {
+      getAllPrograms2();
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error.data.message,
+        description: error,
       });
-      console.log(error.data.message);
+      console.log(error);
     }
   };
   useEffect(() => {
+    const getAllPrograms = async () => {
+      const response: any = await getAllProgramByCollege({
+        id: user?.college,
+      });
+      setAllPrograms(response?.data?.data?.programs);
+    };
+
     getAllPrograms();
-    if (!user) {
-      redirectTo("/");
-    }
+    // if (!user) {
+    //   redirectTo("/");
+    // }
   }, [userData, router, program, user, getAllProgramByCollege]);
 
   useEffect(() => {
@@ -216,7 +225,7 @@ const Programme = () => {
       headOfDepartment: headOfDepartment,
       Discipline: discipline,
     });
-  }, [program]);
+  }, [discipline, dname, headOfDepartment, form2]);
 
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">

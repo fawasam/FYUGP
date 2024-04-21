@@ -69,11 +69,14 @@ const AdvisorPage = () => {
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
-  const [getAllAdvisor, { isLoading, isError, isSuccess }] =
-    useGetAllAdvisorMutation();
+  const [
+    getAllAdvisor,
+    { isLoading, isError, isSuccess },
+  ] = useGetAllAdvisorMutation();
   const [deleteAdvisor] = useDeleteAdvisorMutation();
-  const [changeAvailabilityOfAdvisor] =
-    useChangeAvailabilityOfAdvisorMutation();
+  const [
+    changeAvailabilityOfAdvisor,
+  ] = useChangeAvailabilityOfAdvisorMutation();
 
   const getAllAdvisors2 = async () => {
     const res: any = await getAllAdvisor();
@@ -89,13 +92,13 @@ const AdvisorPage = () => {
       });
       console.log("Advisor Deleted Successfully");
       getAllAdvisors2();
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error.data.message,
+        description: error,
       });
-      console.log(error.data.message);
+      console.log(error);
     }
   };
 

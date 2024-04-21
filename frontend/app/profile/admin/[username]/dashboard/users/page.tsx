@@ -72,7 +72,7 @@ const AdminUsers = () => {
   let [deleteUser] = useDeleteUserMutation();
   let [activeUser] = useActiveUserMutation();
 
-  const getAllUser = async () => {
+  const getAllUser2 = async () => {
     const response: any = await getAllUsers("");
     setAllUsers(response?.data?.data?.users);
   };
@@ -85,14 +85,14 @@ const AdminUsers = () => {
         title: "User Deleted Successfully",
       });
       console.log("User Deleted Successfully");
-      getAllUser();
-    } catch (error: any) {
+      getAllUser2();
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error.data.message,
+        description: error,
       });
-      console.log(error.data.message);
+      console.log(error);
     }
   };
 
@@ -104,14 +104,14 @@ const AdminUsers = () => {
         title: "Changed Successfully",
       });
       console.log("Changed Successfully");
-      getAllUser();
-    } catch (error: any) {
+      getAllUser2();
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error.data.message,
+        description: error,
       });
-      console.log(error.data.message);
+      console.log(error);
     }
   };
 
@@ -119,9 +119,13 @@ const AdminUsers = () => {
     user.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
   useEffect(() => {
-    if (!user) {
-      redirectTo("/");
-    }
+    // if (!user) {
+    //   redirectTo("/");
+    // }
+    const getAllUser = async () => {
+      const response: any = await getAllUsers("");
+      setAllUsers(response?.data?.data?.users);
+    };
     getAllUser();
   }, [userData, dispatch, router, user, getAllUsers, deleteUser, activeUser]);
 
@@ -242,8 +246,8 @@ const AdminUsers = () => {
                                       </DialogTitle>
                                     </DialogHeader>
                                     <DialogDescription className="text-base text-center">
-                                      You want to delete this user "
-                                      {user?.username}"
+                                      You want to delete this user
+                                      {user?.username}
                                       <div className="my-4 space-x-3">
                                         <DialogClose asChild>
                                           <Button

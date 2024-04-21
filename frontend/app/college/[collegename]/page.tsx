@@ -90,13 +90,13 @@ const SingleCollege = ({ params }: { params: { collegename: string } }) => {
       });
       getCollegeData2();
       form.reset();
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
-      console.log(error?.data?.message);
+      console.log(error);
     }
   };
 

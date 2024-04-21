@@ -70,19 +70,20 @@ const ProgramDetails = () => {
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
-  const [getAProgram, { isLoading, isError, isSuccess }] =
-    useGetAProgramMutation();
-
-  const getAllAdvisors = async () => {
-    const res: any = await getAProgram(user?.department);
-    setDepartment(res?.data?.data?.program);
-  };
+  const [
+    getAProgram,
+    { isLoading, isError, isSuccess },
+  ] = useGetAProgramMutation();
 
   useEffect(() => {
+    const getAllAdvisors = async () => {
+      const res: any = await getAProgram(user?.department);
+      setDepartment(res?.data?.data?.program);
+    };
     getAllAdvisors();
-    if (!user) {
-      redirectTo("/");
-    }
+    // if (!user) {
+    //   redirectTo("/");
+    // }
   }, [user, getAProgram]);
   console.log(setDepartment);
 

@@ -66,10 +66,13 @@ const NewProgram = () => {
   const [userPassword, setUserPassword] = useState("");
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
-  const [createProgram, { isLoading, error, isSuccess }] =
-    useCreateProgramMutation();
-  const [generateDepartmentCredentials] =
-    useGenerateDepartmentCredentialsMutation();
+  const [
+    createProgram,
+    { isLoading, error, isSuccess },
+  ] = useCreateProgramMutation();
+  const [
+    generateDepartmentCredentials,
+  ] = useGenerateDepartmentCredentialsMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -122,13 +125,13 @@ const NewProgram = () => {
       });
       nextStep();
       console.log("Successfully added College");
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
-      console.log(error?.data?.message);
+      console.log(error);
     }
   };
   const renderStep = () => {

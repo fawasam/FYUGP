@@ -32,11 +32,11 @@ const Dashboard = () => {
     dispatch(logout());
   };
 
-  useEffect(() => {
-    if (!user) {
-      redirectTo("/");
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     redirectTo("/");
+  //   }
+  // }, [user]);
 
   return (
     <>

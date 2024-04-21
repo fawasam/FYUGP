@@ -31,8 +31,10 @@ const formSchema = z.object({
 function ForgotPassword() {
   const { toast } = useToast();
   const [success, setSuccess] = useState<boolean>(false);
-  const [forgotPassword, { isLoading, error, isSuccess }] =
-    useForgotPasswordMutation();
+  const [
+    forgotPassword,
+    { isLoading, error, isSuccess },
+  ] = useForgotPasswordMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,13 +52,13 @@ function ForgotPassword() {
       });
       setSuccess(true);
       console.log("Reset token sent successfully");
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error.data.message,
+        description: error,
       });
-      console.log(error.data.message);
+      console.log(error);
     }
   };
 

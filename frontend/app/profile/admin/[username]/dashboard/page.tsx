@@ -67,9 +67,9 @@ const AdminDashboard = () => {
     };
     GetCountData();
 
-    if (!user) {
-      redirectTo("/");
-    }
+    // if (!user) {
+    //   redirectTo("/");
+    // }
   }, [userData, dispatch, router, user, getCount]);
 
   return (

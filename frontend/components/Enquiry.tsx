@@ -46,8 +46,10 @@ const Enquiry = () => {
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   const { toast } = useToast();
 
-  const [createEnquiry, { isLoading, isSuccess, isError }] =
-    useCreateEnquiryMutation();
+  const [
+    createEnquiry,
+    { isLoading, isSuccess, isError },
+  ] = useCreateEnquiryMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -67,14 +69,14 @@ const Enquiry = () => {
       });
       console.log("Enquiry sended ");
       form.reset();
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error.data.message,
+        description: error,
       });
       form.reset();
-      console.log(error.data.message);
+      console.log(error);
     }
   };
 

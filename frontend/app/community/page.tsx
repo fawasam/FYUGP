@@ -76,8 +76,10 @@ const CommunityPage = () => {
   const [createQnsComment] = useCreateQnsCommentMutation();
   const [likeCommentByUser] = useLikeCommentByUserMutation();
 
-  const [getAllCommunityQns, { isLoading, isSuccess }] =
-    useGetAllCommunityQnsMutation();
+  const [
+    getAllCommunityQns,
+    { isLoading, isSuccess },
+  ] = useGetAllCommunityQnsMutation();
 
   const handleOpenComment = (questionId: any) => {
     setShowComments((prev: any) => ({
@@ -150,11 +152,11 @@ const CommunityPage = () => {
         });
         setComment("");
         getAllCommunityQuestions2();
-      } catch (error: any) {
+      } catch (error) {
         toast({
           variant: "destructive",
           title: "Uh oh! Something went wrong.",
-          description: error?.data?.message,
+          description: error,
         });
         console.log(error);
       }
@@ -172,13 +174,13 @@ const CommunityPage = () => {
 
       form.reset();
       getAllCommunityQuestions2();
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
-      console.log(error?.data?.message);
+      console.log(error);
     }
   };
 

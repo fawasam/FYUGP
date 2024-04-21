@@ -2,7 +2,6 @@
 import AnimationWrapper from "@/components/common/page-animation";
 import SideNav from "@/components/common/sideNav";
 import React from "react";
-import User from "./[username]/page";
 
 const layout = ({
   children,

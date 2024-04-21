@@ -30,7 +30,7 @@ const CollegeAdminEnquiry = () => {
   const [getACollege, { isLoading, isSuccess }] = useGetACollegeMutation();
   const [publishCollege] = usePublishCollegeMutation();
 
-  const getCollegeData = async () => {
+  const getCollegeData2 = async () => {
     const response: any = await getACollege(user.college);
     setCollege(response?.data?.data?.college);
   };
@@ -39,13 +39,21 @@ const CollegeAdminEnquiry = () => {
     toast({
       title: "Successfully Changed",
     });
-    getCollegeData();
+    getCollegeData2();
   };
 
   useEffect(() => {
-    if (!user) {
-      redirectTo("/");
-    }
+    const getCollegeData = async () => {
+      const response: any = await getACollege(user.college);
+      setCollege(response?.data?.data?.college);
+    };
+    getCollegeData();
+
+    // if (!user) {
+    //   redirectTo("/");
+    // }  // if (!user) {
+    //   redirectTo("/");
+    // }
   }, [userData, dispatch, router, user, getACollege]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">

@@ -27,11 +27,13 @@ const AdminCollege = () => {
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
-  const [getACollege, { isLoading, error, isSuccess }] =
-    useGetACollegeMutation();
+  const [
+    getACollege,
+    { isLoading, error, isSuccess },
+  ] = useGetACollegeMutation();
   const [publishCollege] = usePublishCollegeMutation();
 
-  const getCollegeData = async () => {
+  const getCollegeData2 = async () => {
     const response: any = await getACollege(user.college);
     setCollege(response?.data?.data?.college);
   };
@@ -40,14 +42,18 @@ const AdminCollege = () => {
     toast({
       title: "Successfully Changed",
     });
-    getCollegeData();
+    getCollegeData2();
   };
 
   useEffect(() => {
+    const getCollegeData = async () => {
+      const response: any = await getACollege(user.college);
+      setCollege(response?.data?.data?.college);
+    };
     getCollegeData();
-    if (!user) {
-      redirectTo("/");
-    }
+    // if (!user) {
+    //   redirectTo("/");
+    // }
   }, [userData, dispatch, router, user, getACollege]);
   console.log(college.picture);
 
@@ -66,9 +72,11 @@ const AdminCollege = () => {
       ) : (
         <section className="w-full  ">
           <div className="relative">
-            <img
+            <Image
               src={`${college?.picture ? college?.picture : ""}`}
               alt="image"
+              width={200}
+              height={100}
               className="w-full  h-[250px] object-cover rounded-sm"
             />
             <Link

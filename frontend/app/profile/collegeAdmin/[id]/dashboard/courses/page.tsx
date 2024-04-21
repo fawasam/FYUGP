@@ -46,19 +46,21 @@ const Courses = () => {
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
 
-  const [getAllProgramByCollege, { isLoading, isError, isSuccess }] =
-    useGetAllProgramByCollegeMutation();
+  const [
+    getAllProgramByCollege,
+    { isLoading, isError, isSuccess },
+  ] = useGetAllProgramByCollegeMutation();
   const handleOpenDialog = () => {};
 
-  const getAllCoursesByProgram = async () => {
-    const res: any = await getAllProgramByCollege({ id: user?.college });
-    setCourses(res?.data?.data?.programs);
-  };
   useEffect(() => {
+    const getAllCoursesByProgram = async () => {
+      const res: any = await getAllProgramByCollege({ id: user?.college });
+      setCourses(res?.data?.data?.programs);
+    };
     getAllCoursesByProgram();
-    if (!user) {
-      redirectTo("/");
-    }
+    // if (!user) {
+    //   redirectTo("/");
+    // }
   }, [user, getAllProgramByCollege]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">

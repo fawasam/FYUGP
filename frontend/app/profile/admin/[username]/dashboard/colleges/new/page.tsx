@@ -55,8 +55,10 @@ const CreateCollege = () => {
   const [selectedImage, setSelectedImage] = useState<
     any | string | File | null
   >(null);
-  const [createCollege, { isLoading, error, isSuccess }] =
-    useCreateCollegeMutation();
+  const [
+    createCollege,
+    { isLoading, error, isSuccess },
+  ] = useCreateCollegeMutation();
   const [generateCollegeCredentials] = useGenerateCollegeCredentialsMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -104,13 +106,13 @@ const CreateCollege = () => {
         nextStep();
         console.log("Successfully added College");
       }
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
-      console.log(error?.data?.message);
+      console.log(error);
     }
   };
   const renderStep = () => {

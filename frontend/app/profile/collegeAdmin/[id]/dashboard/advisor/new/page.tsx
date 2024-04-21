@@ -65,8 +65,10 @@ const NewAdvisor = () => {
   const [userPassword, setUserPassword] = useState("");
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
-  const [createAdvisor, { isLoading, error, isSuccess }] =
-    useCreateAdvisorMutation();
+  const [
+    createAdvisor,
+    { isLoading, error, isSuccess },
+  ] = useCreateAdvisorMutation();
   const [generateAdvisorCredentials] = useGenerateAdvisorCredentialsMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -120,13 +122,13 @@ const NewAdvisor = () => {
       });
       nextStep();
       console.log("Successfully added College");
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
-      console.log(error?.data?.message);
+      console.log(error);
     }
   };
   const renderStep = () => {

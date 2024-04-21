@@ -121,29 +121,29 @@ const ProfileDegree = () => {
         title: "Successfully Updated profile",
       });
       router.push(`/profile/${user?.username}`);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        // description: error?.error,
       });
-      console.log(error?.data?.message);
+      console.log(error);
     }
   };
 
-  const getAllCollegeName = async () => {
-    const res: any = await getAllCollege("");
-
-    setCollegeName(res?.data?.data?.colleges);
-  };
   console.log(collegeName);
 
   useEffect(() => {
+    const getAllCollegeName = async () => {
+      const res: any = await getAllCollege("");
+
+      setCollegeName(res?.data?.data?.colleges);
+    };
     getAllCollegeName();
-    if (!user) {
-      redirectTo("/");
-    }
-  }, [dispatch, router, user]);
+    // if (!user) {
+    //   redirectTo("/");
+    // }
+  }, [dispatch, router, getAllCollege]);
 
   useEffect(() => {
     form.reset({
@@ -490,8 +490,9 @@ const ProfileDegree = () => {
                       className="btn-dark w-auto px-10  mt-4 ml-2"
                       onClick={() => {
                         form.trigger(["discipline"]);
-                        const disciplineState =
-                          form.getFieldState("discipline");
+                        const disciplineState = form.getFieldState(
+                          "discipline"
+                        );
                         // if (!disciplineState.isDirty || disciplineState.invalid)
                         //   return;
                         handleSubmit();

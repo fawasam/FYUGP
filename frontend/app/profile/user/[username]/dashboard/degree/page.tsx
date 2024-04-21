@@ -47,11 +47,12 @@ const Dashboard = () => {
     dispatch(logout());
   };
 
-  useEffect(() => {
-    if (!user) {
-      redirectTo("/");
-    }
-  }, [userData, dispatch, router, user]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     redirectTo("/");
+  //   }
+  // }, [userData, dispatch, router, user]);
+
   const {
     degree_info: {
       courses,

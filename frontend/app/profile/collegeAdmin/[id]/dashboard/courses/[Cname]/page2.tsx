@@ -171,9 +171,9 @@
 //       toast({
 //         variant: "destructive",
 //         title: "Uh oh! Something went wrong.",
-//         description: error?.data?.message,
+//         description: error,
 //       });
-//       console.log(error?.data?.message);
+//       console.log(error);
 //     }
 //   };
 //   const onUpdate = async (values: z.infer<typeof formSchema>) => {
@@ -195,9 +195,9 @@
 //       toast({
 //         variant: "destructive",
 //         title: "Uh oh! Something went wrong.",
-//         description: error?.data?.message,
+//         description: error,
 //       });
-//       console.log(error?.data?.message);
+//       console.log(error);
 //     }
 //   };
 

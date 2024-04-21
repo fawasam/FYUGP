@@ -32,8 +32,10 @@ const ChangePassword = () => {
   const dispatch = useDispatch();
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   const { toast } = useToast();
-  const [updatePassword, { isLoading, error, isSuccess }] =
-    useUpdatePasswordMutation();
+  const [
+    updatePassword,
+    { isLoading, error, isSuccess },
+  ] = useUpdatePasswordMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,11 +55,11 @@ const ChangePassword = () => {
       if (response) {
         redirectTo("/profile/user/admin/dashboard");
       }
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
       console.log(error);
     }

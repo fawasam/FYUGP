@@ -10,7 +10,9 @@ const CollegeAdminSideNav: React.FC | any = () => {
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
-  const page = usePathname().split("/").pop();
+  const page = usePathname()
+    .split("/")
+    .pop();
 
   const [pageState, setPageState] = useState<string | any>(
     page?.replace("-", " ")
@@ -19,7 +21,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
   let activeTabLine = useRef<HTMLHRElement>(null);
   let sideBarIcon = useRef<HTMLButtonElement>(null);
   let pageStateTab = useRef<HTMLButtonElement>(null);
-  const isLinkActive = (link: string) => usePathname().includes(link);
+  const IsLinkActive = (link: string) => usePathname().includes(link);
 
   const changePageState = (e: any) => {
     let { offsetWidth, offsetLeft } = e.target;
@@ -82,7 +84,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
               href={`/profile/${user?.role}/${user?.username}/dashboard`}
               onClick={(e: any) => setPageState(e.target.innerText)}
               className={`sidebar-link + ${
-                isLinkActive("/123") ? "active" : " "
+                IsLinkActive("/123") ? "active" : " "
               } `}
             >
               <i className="fi fi-rs-settings"></i>
@@ -95,7 +97,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
                 href={`/profile/${user?.role}/${user?.username}/dashboard/college`}
                 onClick={(e: any) => setPageState(e.target.innerText)}
                 className={`sidebar-link + ${
-                  isLinkActive("/dashboard/college") ? "active" : " "
+                  IsLinkActive("/dashboard/college") ? "active" : " "
                 } `}
               >
                 <i className="fi fi-rr-school"></i>
@@ -111,7 +113,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
               href={`/profile/${user?.role}/${user?.username}/dashboard/programme`}
               onClick={(e: any) => setPageState(e.target.innerText)}
               className={`sidebar-link + ${
-                isLinkActive("/dashboard/programme") ? "active" : " "
+                IsLinkActive("/dashboard/programme") ? "active" : " "
               } `}
             >
               <i className="fi fi-rr-graduation-cap"></i>
@@ -124,7 +126,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
               href={`/profile/${user?.role}/${user?.username}/dashboard/courses`}
               onClick={(e: any) => setPageState(e.target.innerText)}
               className={`sidebar-link + ${
-                isLinkActive("/dashboard/courses") ? "active" : " "
+                IsLinkActive("/dashboard/courses") ? "active" : " "
               } `}
             >
               <div className="relative">
@@ -140,7 +142,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
                 href={`/profile/${user?.role}/${user?.username}/dashboard/advisor`}
                 onClick={(e: any) => setPageState(e.target.innerText)}
                 className={`sidebar-link + ${
-                  isLinkActive("/dashboard/advisor") ? "active" : " "
+                  IsLinkActive("/dashboard/advisor") ? "active" : " "
                 } `}
               >
                 <i className="fi fi fi-sr-calendar-lines-pen"></i>
@@ -156,7 +158,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
               href={`/profile/${user?.role}/${user?.username}/dashboard/enquiry`}
               onClick={(e: any) => setPageState(e.target.innerText)}
               className={`sidebar-link + ${
-                isLinkActive("/dashboard/enquiry") ? "active" : " "
+                IsLinkActive("/dashboard/enquiry") ? "active" : " "
               } `}
             >
               <div className="relative">
@@ -176,7 +178,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
               href={`/profile/${user?.role}/${user?.username}/settings/edit-profile`}
               onClick={(e: any) => setPageState(e.target.innerText)}
               className={`sidebar-link + ${
-                isLinkActive("/edit-profile") ? "active" : " "
+                IsLinkActive("/edit-profile") ? "active" : " "
               } `}
             >
               <i className="fi fi-rr-user "></i>
@@ -188,7 +190,7 @@ const CollegeAdminSideNav: React.FC | any = () => {
               href={`/profile/${user?.role}/${user?.username}/settings/change-password`}
               onClick={(e: any) => setPageState(e.target.innerText)}
               className={`sidebar-link + ${
-                isLinkActive("/change-password") ? "active" : " "
+                IsLinkActive("/change-password") ? "active" : " "
               } `}
             >
               <i className="fi fi-rr-lock"></i>

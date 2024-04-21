@@ -100,8 +100,10 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
   let [deleteCourse] = useDeleteCourseMutation();
   let [createCourse] = useCreateCourseMutation();
   let [updateCourse] = useUpdateCourseMutation();
-  let [getAllCourseByProgram, { isLoading, isError, isSuccess }] =
-    useGetAllCourseByProgramMutation();
+  let [
+    getAllCourseByProgram,
+    { isLoading, isError, isSuccess },
+  ] = useGetAllCourseByProgramMutation();
   let [getAProgram] = useGetAProgramMutation();
   let [getAllProgramByCollege] = useGetAllProgramByCollegeMutation();
 
@@ -155,14 +157,13 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
       toast({
         title: "Successfully added Course",
       });
-      getAllCoursesByProgram();
-    } catch (error: any) {
+      getAllCoursesByProgram2();
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.error,
+        description: error,
       });
-      console.log(error?.data?.message);
       console.log(error);
     }
     setAddOpen(false);
@@ -190,23 +191,23 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
         title: "Successfully updated Program",
       });
       resetData();
-      getAllCoursesByProgram();
-    } catch (error: any) {
+      getAllCoursesByProgram2();
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
-      console.log(error?.data?.message);
+      console.log(error);
     }
     setEditOpen(false);
   };
 
-  const getAllCoursesByProgram = async () => {
+  const getAllCoursesByProgram2 = async () => {
     const response: any = await getAllCourseByProgram({ id: user?.department });
     setAllCourses(response?.data?.data?.course);
   };
-  const getAPrograms = async (id: any) => {
+  const getAPrograms2 = async (id: any) => {
     const response: any = await getAProgram(id);
     setDname(response?.data?.data?.program?.Dname);
   };
@@ -217,15 +218,24 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
         title: "Course Deleted Successfully",
       });
       console.log("Course Deleted Successfully");
-      getAllCoursesByProgram();
-    } catch (error: any) {
+      getAllCoursesByProgram2();
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error.data.message,
+        description: error,
       });
-      console.log(error.data.message);
+      console.log(error);
     }
+  };
+  const resetData = () => {
+    setProgram("");
+    setCourseId("");
+    setCname("");
+    setCode("");
+    setCategory("");
+    setSemester("");
+    form.reset();
   };
 
   useEffect(() => {
@@ -238,12 +248,22 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
   }, [form, code, cname, category, semester, addopen, editopen]);
 
   useEffect(() => {
+    const getAllCoursesByProgram = async () => {
+      const response: any = await getAllCourseByProgram({
+        id: user?.department,
+      });
+      setAllCourses(response?.data?.data?.course);
+    };
+    const getAPrograms = async (id: any) => {
+      const response: any = await getAProgram(id);
+      setDname(response?.data?.data?.program?.Dname);
+    };
     getAPrograms(user?.department);
     getAllCoursesByProgram();
-    resetData();
-    if (!user) {
-      redirectTo("/");
-    }
+    // resetData();
+    // if (!user) {
+    //   redirectTo("/");
+    // }
   }, [
     user,
     getAllProgramByCollege,
@@ -252,17 +272,8 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
     params?.Cname,
     addopen,
     editopen,
+    // resetData,
   ]);
-
-  const resetData = () => {
-    setProgram("");
-    setCourseId("");
-    setCname("");
-    setCode("");
-    setCategory("");
-    setSemester("");
-    form.reset();
-  };
 
   return (
     <AnimationWrapper className="w-full  sm:mt-20 mt-0">
@@ -447,21 +458,21 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
                         <TableCell className="font-medium">
                           {course?.semester}
                         </TableCell>
-                        {course?.course?.map((c: any, key: any) => (
-                          <>
+                        {course?.course?.map((c: any, key2: any) => (
+                          <div key={key2}>
                             <TableCell className="font-medium">
                               {c?.courseCode}
                             </TableCell>
                             <TableCell className="font-medium">
                               {c?.courseName}
                             </TableCell>
-                          </>
+                          </div>
                         ))}
                         <TableCell className="font-medium">
                           {course?.category}
                         </TableCell>
-                        {course?.course?.map((c: any, key: any) => (
-                          <TableCell className="text-right ">
+                        {course?.course?.map((c: any, key3: any) => (
+                          <TableCell className="text-right " key={key3}>
                             <div className="flex">
                               <Dialog>
                                 {/* delete start  */}
@@ -482,8 +493,8 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
                                     </DialogTitle>
                                   </DialogHeader>
                                   <DialogDescription className="text-base text-center">
-                                    You want to delete this course "
-                                    {c?.courseName}"
+                                    You want to delete this course
+                                    {c?.courseName}
                                     <div className="my-4 space-x-3">
                                       <DialogClose asChild>
                                         <Button
@@ -607,7 +618,13 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
                                                     <SelectContent>
                                                       <SelectGroup {...field}>
                                                         {[
-                                                          1, 2, 3, 4, 5, 6, 7,
+                                                          1,
+                                                          2,
+                                                          3,
+                                                          4,
+                                                          5,
+                                                          6,
+                                                          7,
                                                           8,
                                                         ].map((value, key) => (
                                                           <SelectItem

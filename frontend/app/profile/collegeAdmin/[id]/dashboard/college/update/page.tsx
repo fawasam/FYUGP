@@ -50,7 +50,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
   const { toast } = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
-  const [college, setCollege] = useState({});
+  const [college, setCollege] = useState<any>({});
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
@@ -128,7 +128,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
         toast({
           title: "Profile Image Updated",
         });
-      } catch (error: any) {
+      } catch (error) {
         toast({
           variant: "destructive",
           title: "Image Upload failed",
@@ -138,6 +138,10 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       }
     }
   };
+  const getCollege2 = async () => {
+    const response: any = await getACollege(user?.college);
+    setCollege(response?.data?.data?.college);
+  };
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const newValues = { ...values };
@@ -145,31 +149,32 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
         id: user.college,
         data: newValues,
       }).unwrap();
-      await getCollege();
+      await getCollege2();
       // dispatch(setCollege(response));
       toast({
         title: "Successfully added college",
       });
       console.log("Successfully added College");
       goBack();
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error?.data?.message,
+        description: error,
       });
-      console.log(error?.data?.message);
+      console.log(error);
     }
   };
-  const getCollege = async () => {
-    const response: any = await getACollege(user?.college);
-    setCollege(response?.data?.data?.college);
-  };
+
   useEffect(() => {
+    const getCollege = async () => {
+      const response: any = await getACollege(user?.college);
+      setCollege(response?.data?.data?.college);
+    };
     getCollege();
-    if (!user) {
-      redirectTo("/");
-    }
+    // if (!user) {
+    //   redirectTo("/");
+    // }
   }, [userData, dispatch, router, user, getACollege]);
   useEffect(() => {
     form.reset({
@@ -182,7 +187,17 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       website: website,
       about: about,
     });
-  }, [collegename, place, phone, pincode, picture, email, website, about]);
+  }, [
+    collegename,
+    place,
+    phone,
+    pincode,
+    picture,
+    email,
+    website,
+    about,
+    form,
+  ]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
       <h1 className="max-md:hidden  text-2xl font-semibold">Edit College</h1>
@@ -196,10 +211,11 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
             <div className="w-full h-full absolute top-0 left-0 flex items-center justify-center text-white bg-black/30 opacity-0 hover:opacity-100 cursor-pointer">
               Upload Image
             </div>
-            <img
+            <Image
               src={`${picture}`}
               alt=""
-              // fill
+              width={200}
+              height={100}
               ref={profileImageEle}
               className="h-full object-cover"
             />

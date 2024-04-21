@@ -6,6 +6,7 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   icon2?: string;
   icon?: string;
+  disable?: boolean;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(

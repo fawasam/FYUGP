@@ -110,7 +110,7 @@ const SingleCollege = ({ params }: { params: { collegename: string } }) => {
       setCollege(response?.data?.data?.college);
     };
     getCollegeData();
-  }, [getACollege]);
+  }, [getACollege, params.collegename]);
 
   return (
     <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">

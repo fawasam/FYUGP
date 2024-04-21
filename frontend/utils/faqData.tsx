@@ -6,8 +6,9 @@ export const faqData: { Question: string; answer: string }[] = [
   },
 
   {
-    Question: " Is there an entrance exam for the four-year degree program?",
-    answer: "NO",
+    Question: "After FYUG how can apply for PG?",
+    answer:
+      "Students who complete the four-year UG programme need to do only one year of PG programme.The students who exit at the end of the third year need to do two years of PG programme",
   },
   {
     Question:

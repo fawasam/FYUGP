@@ -54,6 +54,7 @@ import {
 } from "@/components/ui/form";
 import Loader from "@/components/common/Loader";
 import NoDataMessage from "@/components/common/Nodata";
+import Link from "next/link";
 
 const formSchema = z.object({
   courseCode: z.string().min(2, {
@@ -76,6 +77,7 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
   const [cname, setCname] = useState("");
   const [category, setCategory] = useState("");
   const [semester, setSemester] = useState("");
+  const [syllabus, setSyllabus] = useState(null);
   const [program, setProgram] = useState("");
   const [code, setCode] = useState("");
   const [allCourses, setAllCourses] = useState<any[]>([]);
@@ -132,6 +134,7 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
     const getAPrograms = async (id: any) => {
       const response: any = await getAProgram(id);
       setAllCourses(response?.data?.data?.program?.coursesOffered);
+      setSyllabus(response?.data?.data?.program?.syllabus);
       setProgram(id);
     };
     getAPrograms(depName);
@@ -146,7 +149,7 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
     });
   }, [form, category, semester]);
 
-  console.log(allCourses);
+  console.log(syllabus);
 
   return (
     <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
@@ -156,6 +159,16 @@ const CollegeProgram = ({ params }: { params: { program: string } }) => {
             <i className="fi fi-rr-book-alt mr-2"></i>
             {depName}
           </h1>
+          {syllabus ? (
+            <Link href={syllabus}>
+              <Button>
+                <i className="fi fi-sr-eye mr-2"></i>
+                View Syllabus
+              </Button>
+            </Link>
+          ) : (
+            "Syllabus Not Found"
+          )}
           {/* add new course  */}
         </div>
 

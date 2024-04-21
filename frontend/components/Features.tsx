@@ -4,6 +4,10 @@ import Image from "next/image";
 import Book from "@/components/assets/book-3.svg";
 import { Button } from "./ui/button";
 import { features } from "@/utils/features";
+import dynamic from "next/dynamic";
+var Lottie = dynamic(() => import("react-lottie"), {
+  ssr: false,
+});
 
 const Features = () => {
   return (
@@ -21,22 +25,32 @@ const Features = () => {
           {features?.map((item, i) => (
             <div
               key={i}
-              className={` hover:drop-shadow-md border-2 border-card-foreground rounded-xl p-6 flex flex-col items-left justify-center ${
+              className={` hover:drop-shadow-md border-2 border-card-foreground rounded-xl p-6 flex flex-col items-center justify-center ${
                 i === 0 || i === 2 ? "row-span-2 bg-blueTwo  " : "bg-redOne "
               } ${item.color ? "bg-${item.color}" : "bg-blueTwo"} `}
             >
               <div
-                className={` mb-4 border-2 border-card-foreground p-6 bg-white w-full rounded-md flex items-center justify-center ${
-                  i == 0 || i == 2 ? "h-full" : ""
+                className={` mb-4 border-2 border-card-foreground  bg-white rounded-md flex items-center justify-center ${
+                  i == 0 || i == 2 ? "h-full" : "w-[200px]"
                 }`}
               >
-                <Image
+                <Lottie
+                  options={{
+                    animationData: item?.image,
+                    loop: true,
+                    autoplay: true,
+                    rendererSettings: {
+                      preserveAspectRatio: "xMidYMid slice",
+                    },
+                  }}
+                />
+                {/* <Image
                   src={item.image}
                   alt="book image"
                   width={100}
                   height={100}
                   className=""
-                />
+                /> */}
               </div>
 
               <h2 className="text-left text-xl text-primary-foreground">

@@ -114,7 +114,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
         toast({
           title: "Profile Image Updated",
         });
-      } catch (error: any) {
+      } catch (error) {
         toast({
           variant: "destructive",
           title: "Image Upload failed",
@@ -139,7 +139,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       if (response) {
         goBack();
       }
-    } catch (error: any) {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
@@ -155,7 +155,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       setCollege(response?.data?.data?.college);
     };
     getCollege();
-  }, [getACollege]);
+  }, [getACollege, params._id]);
 
   useEffect(() => {
     form.reset({
@@ -168,7 +168,17 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
       website: website,
       about: about,
     });
-  }, [collegename, place, phone, pincode, picture, email, website, about]);
+  }, [
+    collegename,
+    place,
+    phone,
+    pincode,
+    picture,
+    email,
+    website,
+    about,
+    form,
+  ]);
 
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">

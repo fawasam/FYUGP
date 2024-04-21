@@ -2,7 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["localhost", "192.168.1.7", "192.168.1.37", "http:192.168.1.37"],
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        pathname: "**",
+      },
+    ],
   },
   webpack: (config) => {
     config.module.rules.push({

@@ -34,6 +34,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html
       lang="en"
@@ -50,6 +51,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            
             <Header />
             <Toaster />
             {/* <div className="mt-8 sm:w-[75%] w-[90%] m-auto pb-6 ">

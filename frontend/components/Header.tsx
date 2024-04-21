@@ -36,8 +36,18 @@ import {
 } from "@/components/ui/navigation-menu";
 import useRedirect from "@/hooks/useRedirect";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+var Lottie = dynamic(() => import("react-lottie"), {
+  ssr: false,
+});
+import BookAnimatedHeader from "@/components/assets/books_animated_3.json";
 
 const components: { title: string; href: string; description: string }[] = [
+  {
+    title: "Pathway",
+    href: "/learn/degree",
+    description: "Degree Pathway step to the Degree",
+  },
   {
     title: "Colleges",
     href: "/college",
@@ -52,7 +62,7 @@ const components: { title: string; href: string; description: string }[] = [
   },
   {
     title: "Ask Me",
-    href: "/ask",
+    href: "/learn/ask",
     description: "Enquiry and feedbacks",
   },
   {
@@ -107,6 +117,15 @@ const Header = () => {
       href: `/`,
     },
   ];
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: BookAnimatedHeader,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
   return (
     <header className="pt-8  w-full m-auto pb-8 border-b flex-no-wrap fixed top-0 z-20  shadow-md shadow-black/5 lg:flex-wrap lg:justify-start  bg-background">
       <div className="flex items-center justify-between  sm:w-[75%] w-[85%] m-auto">
@@ -129,6 +148,8 @@ const Header = () => {
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                         href="/learn/what-is-fyugp"
                       >
+                        <Lottie options={defaultOptions} />
+
                         <div className="mb-2 mt-4 text-lg font-medium">
                           What is FYUGP
                         </div>

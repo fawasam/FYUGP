@@ -108,13 +108,11 @@ export const getAProgram = asyncErrorHandler(async (req, res, next) => {
   const isId = mongoose.Types.ObjectId.isValid(id);
   let program;
   if (isId) {
-    program = await Department.findById(id).populate({
-      path: "coursesOffered",
-    });
+    program = await Department.findById(id).populate("coursesOffered");
   } else {
-    program = await Department.findOne({ Dname: id }).populate({
-      path: "coursesOffered",
-    });
+    program = await Department.findOne({ Dname: id }).populate(
+      "coursesOffered"
+    );
   }
 
   if (!program) {

@@ -55,8 +55,6 @@ const Dashboard = () => {
   //   }
   // }, [userData, dispatch, router, user]);
 
-  console.log(user?.degree_info?.pathway);
-
   return (
     <>
       <AnimationWrapper className="w-full h-full  pt-[40px] sm:pt-[100px]  min-h-screen">
@@ -153,15 +151,46 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <div className="w-[500px] h-[150px] rounded-2xl shadow-xl relative bg-primary-foreground">
-                    {/* <div
-                      style={{ width: 80, height: 80 }}
-                      className="absolute right-3 top-3"
-                    >
-                      <CircularProgressbar
-                        value={percentage}
-                        text={`${percentage}%`}
-                      />
-                    </div> */}
+                    <div className="p-4 flex flex-row justify-between">
+                      <div className="flex flex-col">
+                        <h2 className="text-md ">
+                          Complete your Learning Path
+                        </h2>
+                        <span className="mt-1">
+                          <Link
+                            href={"/learn/what-is-fyugp"}
+                            className="cursor-pointer font-thin"
+                          >
+                            <i className="fi mr-2 fi-rs-caret-right"></i>
+                            Learn FYUGP
+                          </Link>
+                        </span>
+                        <span className="mt-1">
+                          <Link
+                            href={"/learn/degree"}
+                            className="cursor-pointer font-thin"
+                          >
+                            <i className="fi mr-2 fi-rs-caret-right"></i>
+                            Understand Pathway
+                          </Link>
+                        </span>
+                        <span className="mt-1">
+                          <Link
+                            href={"/community"}
+                            className="cursor-pointer font-thin"
+                          >
+                            <i className="fi mr-2 fi-rs-caret-right"></i>
+                            Ask Questions
+                          </Link>
+                        </span>
+                      </div>
+                      {/* <div style={{ width: 60, height: 60 }} className="ml-4">
+                        <CircularProgressbar
+                          value={percentage}
+                          text={`${percentage}%`}
+                        />
+                      </div> */}
+                    </div>
                   </div>
                 </div>
               </div>

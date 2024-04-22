@@ -95,12 +95,13 @@ const AdvisorPage = () => {
       console.log("Advisor Deleted Successfully");
       getAllAdvisorByColleges2();
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
-      console.log(error);
+      console.log(err);
     }
   };
 

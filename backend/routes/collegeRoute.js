@@ -1,6 +1,5 @@
 import express from "express";
 const router = express.Router();
-
 import {
   createCollege,
   addDepartments,
@@ -12,7 +11,6 @@ import {
   publishCollege,
 } from "../controllers/collegeController.js";
 import { protect, restrict } from "../controllers/authController.js";
-
 router.get("/", getAllColleges);
 router.post("/:id/publish", protect, publishCollege);
 router.get("/:id", getACollege);
@@ -36,5 +34,4 @@ router.post(
   restrict("collegeAdmin"),
   addcourse
 );
-
 export default router;

@@ -120,7 +120,6 @@ export const updateCourse = asyncErrorHandler(async (req, res, next) => {
 
 export const getACourse = asyncErrorHandler(async (req, res, next) => {
   const { id } = req.params;
-  console.log("Hello");
   const course = await Course.findById(id).populate("department", "syllabus");
   res.status(200).json({
     status: "success",

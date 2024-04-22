@@ -41,7 +41,8 @@ var Lottie = dynamic(() => import("react-lottie"), {
   ssr: false,
 });
 import BookAnimatedHeader from "@/components/assets/books_animated_3.json";
-
+import Icon from "@/components/assets/1.png";
+import Icon2 from "@/components/assets/2.png";
 const components: { title: string; href: string; description: string }[] = [
   {
     title: "Pathway",
@@ -127,14 +128,24 @@ const Header = () => {
     },
   };
   return (
-    <header className="pt-8  w-full m-auto pb-8 border-b flex-no-wrap fixed top-0 z-20  shadow-md shadow-black/5 lg:flex-wrap lg:justify-start  bg-background">
-      <div className="flex items-center justify-between  sm:w-[75%] w-[85%] m-auto">
-        <Link href={"/"}>
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            TrackMyDegree
-          </span>
+    <header className="md:py-8 py-4 w-full m-auto  border-b flex-no-wrap fixed top-0 z-20  shadow-md shadow-black/5 lg:flex-wrap lg:justify-start  bg-background">
+      <div className="flex items-center justify-between  sm:w-[75%] w-[90%] m-auto">
+        <Link href={"/"} className="flex ">
+          <Image
+            src={theme === "dark" ? Icon : Icon2}
+            alt={"icon"}
+            width={200}
+            height={100}
+            className="w-100 md:w-200"
+          />
+          {/* <div className="flex flex-col">
+            <span className="self-center text-md md:text-2xl font-semibold whitespace-nowrap dark:text-white">
+              MyDegree
+            </span>
+            <span>The student Partner</span>
+          </div> */}
         </Link>
-        <NavigationMenu className="hidden space-x-4 sm:flex">
+        <NavigationMenu className="hidden space-x-4 md:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger className="">

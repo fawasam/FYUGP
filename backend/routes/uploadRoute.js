@@ -24,7 +24,6 @@ const uploadFileController = asyncErrorHandler(async (req, res, next) => {
   }
   const departmentId = req.params.id;
 
-  console.log(departmentId);
   const fullFilePath = `${req.protocol}://${req.get("host")}/${FilePath}`;
 
   const syllabus = fullFilePath;
@@ -38,7 +37,6 @@ const uploadFileController = asyncErrorHandler(async (req, res, next) => {
         new: true,
       }
     );
-    console.log(updatedProgram);
     if (!updatedProgram) {
       const error = new CustomError("Upload error", 404);
       return next(error);
@@ -56,6 +54,7 @@ const uploadFileController = asyncErrorHandler(async (req, res, next) => {
     });
   }
 });
+
 router.post("/image", upload.single("image"), uploadController);
 router.post(
   "/file/:id",

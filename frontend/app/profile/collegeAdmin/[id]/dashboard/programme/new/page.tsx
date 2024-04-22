@@ -126,12 +126,13 @@ const NewProgram = () => {
       nextStep();
       console.log("Successfully added College");
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
-      console.log(error);
+      console.log(err);
     }
   };
   const renderStep = () => {

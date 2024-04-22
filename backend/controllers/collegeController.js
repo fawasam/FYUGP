@@ -1,18 +1,9 @@
 import College from "../models/College.js";
 import "dotenv/config";
-import mongoose, { model } from "mongoose";
 import User from "../models/User.js";
-import { generateUsername } from "../utils/helpers.js";
 import "dotenv/config";
 import { asyncErrorHandler } from "../utils/asyncErrorHandler.js";
-import { signToken } from "../helpers/jwt.js";
 import CustomError from "../utils/CustomeError.js";
-import sendEmail from "../utils/email.js";
-import crypto from "crypto";
-import jwt from "jsonwebtoken";
-import { createSendResponse } from "./authController.js";
-import { filterReqObj } from "../helpers/filterObj.js";
-import { Department } from "../models/Department.js";
 import Course from "../models/Course.js";
 
 // @desc    Create new college
@@ -20,7 +11,7 @@ import Course from "../models/Course.js";
 // @access  Public
 
 export const createCollege = asyncErrorHandler(async (req, res, next) => {
-  const { collegename, place, pincode, phone, departments, email } = req.body;
+  const { collegename, place, email } = req.body;
 
   if (!collegename || !place || !email) {
     const error = new CustomError("Please provide all field!", 400);

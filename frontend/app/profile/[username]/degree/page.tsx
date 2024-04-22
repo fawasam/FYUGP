@@ -122,10 +122,11 @@ const ProfileDegree = () => {
       });
       router.push(`/profile/${user?.username}`);
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        // description: error?.error,
+        description: err?.data?.message,
       });
       console.log(error);
     }

@@ -67,6 +67,7 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
     website,
     about,
   }: any = college;
+  console.log(college);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -140,12 +141,13 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
         goBack();
       }
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
-      console.log(error);
+      console.log(err);
     }
   };
 
@@ -193,14 +195,16 @@ const UpdateCollege = ({ params }: { params: { _id: string } }) => {
             <div className="w-full h-full absolute top-0 left-0 flex items-center justify-center text-white bg-black/30 opacity-0 hover:opacity-100 cursor-pointer">
               Upload Image
             </div>
-            <Image
-              src={`${picture}`}
-              alt=""
-              ref={profileImageEle}
-              className="h-full object-cover"
-              width={300}
-              height={300}
-            />
+            {college?.picture && (
+              <Image
+                src={`${college?.picture}`}
+                alt=""
+                ref={profileImageEle}
+                className="h-full object-cover"
+                width={300}
+                height={300}
+              />
+            )}
           </label>
 
           <input

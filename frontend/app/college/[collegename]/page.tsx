@@ -91,12 +91,13 @@ const SingleCollege = ({ params }: { params: { collegename: string } }) => {
       getCollegeData2();
       form.reset();
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
-      console.log(error);
+      console.log(err);
     }
   };
 

@@ -87,12 +87,13 @@ const AdminUsers = () => {
       console.log("User Deleted Successfully");
       getAllUser2();
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
-      console.log(error);
+      console.log(err);
     }
   };
 
@@ -106,12 +107,13 @@ const AdminUsers = () => {
       console.log("Changed Successfully");
       getAllUser2();
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
-      console.log(error);
+      console.log(err);
     }
   };
 

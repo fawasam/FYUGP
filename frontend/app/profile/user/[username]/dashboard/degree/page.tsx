@@ -82,11 +82,9 @@ const Dashboard = () => {
           {currentCollege != null ? (
             <div className=" mt-6 flex items-center text-center justify-center space-y-6  flex-col">
               <section>
-                <span>
-                  {pathway}-{discipline}
-                </span>
+                <span>{pathway}</span>
                 <br />
-                <span>Major : </span>
+                <span>Major :{discipline} </span>
               </section>
               {/* table of content  */}
               <Table className="">

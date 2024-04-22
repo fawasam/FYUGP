@@ -12,9 +12,9 @@ export const enquiryApi = createApi({
         url: "/",
         method: "POST",
         body: data,
-        headers: {
-          Authorization: `Bearer ${loadUserFromStorage().token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${loadUserFromStorage().token}`,
+        // },
       }),
     }),
 

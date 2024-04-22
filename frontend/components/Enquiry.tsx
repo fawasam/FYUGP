@@ -68,15 +68,22 @@ const Enquiry = () => {
         title: "Enquiry sended  ",
       });
       console.log("Enquiry sended ");
-      form.reset();
+
+      redirectTo("/");
+      form.reset({
+        subject: "",
+        email: "",
+        message: "",
+      });
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
       form.reset();
-      console.log(error);
+      console.log(err);
     }
   };
 
@@ -132,6 +139,7 @@ const Enquiry = () => {
                       <Input
                         placeholder="Email"
                         icon={"fi fi-rr-envelope"}
+                        defaultValue={field?.value}
                         {...field}
                       />
                     </FormControl>

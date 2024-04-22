@@ -8,6 +8,11 @@ const nextConfig = {
         hostname: "localhost",
         pathname: "**",
       },
+      {
+        protocol: "http",
+        hostname: "192.168.1.7",
+        pathname: "**",
+      },
     ],
   },
   webpack: (config) => {

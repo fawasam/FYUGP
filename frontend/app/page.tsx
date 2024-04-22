@@ -17,6 +17,7 @@ import Features from "@/components/Features";
 import BookAnimated from "@/components/assets/books_animated_2.json";
 import Hero from "@/components/assets/hero.json";
 import Link from "next/link";
+
 // import ChatBot from "react-simple-chatbot";
 // import Lottie from "react-lottie";
 import dynamic from "next/dynamic";
@@ -53,11 +54,11 @@ export default function Home() {
       <AnimationWrapper className="mt-[5%] sm:w-[70%] w-[90%] m-auto min-h-[100vh]">
         <div className=" flex flex-col  sm:flex-row justify-between h-1/2 m-auto w-full mt-[150px]">
           <div className="sm:w-1/2 w-full space-y-6  flex items-left justify-center flex-col">
-            <h1 className="text-6xl font-bold  font-display">
-              YOUR DEGREE TRACKER
+            <h1 className="text-4xl md:text-6xl font-bold  font-display">
+              YOUR DEGREE PARTNER
             </h1>
-            <p className=" text-lg leading-8 font-body">
-              The TrackYourDegree is designed to assist students in monitoring,
+            <p className="text-sm md:text-lg leading-8 font-body">
+              The My Degree is designed to assist students in monitoring,
               guiding and managing their academic progress during their fourth
               year of undergraduate studies
             </p>

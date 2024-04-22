@@ -33,8 +33,11 @@ const duplicateKeyErrorHandler = (err) => {
       key = "email";
     } else if (err.keyValue.collegename) {
       key = "collegename";
+    } else if (err.keyValue.phone) {
+      key = "phone";
     }
   }
+
   switch (key) {
     case "email":
       msg = "Email already registered, Please login to your account";
@@ -42,8 +45,11 @@ const duplicateKeyErrorHandler = (err) => {
     case "collegename":
       msg = "Collegename already exists";
       break;
+    case "phone":
+      msg = "Appoinment  already exists";
+      break;
     default:
-      msg = "Duplicate key error";
+      msg = " Already Exist ";
   }
   return new CustomError(msg, 400);
 };

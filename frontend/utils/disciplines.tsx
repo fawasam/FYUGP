@@ -4,5 +4,4 @@ export const disciplines: string[] = [
   "Science",
   "Commerce",
   "Management",
-  "Other",
 ];

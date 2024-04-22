@@ -101,10 +101,11 @@ const EditProfile = () => {
           title: "Profile Image Updated",
         });
       } catch (error) {
+        const err: any = error;
         toast({
           variant: "destructive",
           title: "Image Upload failed",
-          description: error,
+          description: err?.data?.message,
         });
         console.error("Image upload failed:", error);
       }
@@ -120,13 +121,13 @@ const EditProfile = () => {
       });
       console.log("Profile Successfully Updated");
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
-      console.log(error);
-      console.log(error);
+      console.log(err);
     }
   };
 
@@ -156,7 +157,7 @@ const EditProfile = () => {
                 <Image
                   src={`${profileImage}`}
                   alt={`${profileImage}`}
-                  width={100}
+                  width={300}
                   height={100}
                   ref={profileImageEle}
                 />

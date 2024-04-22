@@ -63,12 +63,13 @@ function ResetPassword({ params }: { params: { token: string } }) {
       });
       console.log("Reset token sent successfully");
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
-      console.log(error);
+      console.log(err);
     }
   };
 

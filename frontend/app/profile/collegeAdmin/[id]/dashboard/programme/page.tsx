@@ -145,12 +145,13 @@ const Programme = () => {
       getAllPrograms2();
       form.reset();
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
-      console.log(error);
+      console.log(err);
     }
   };
 
@@ -172,12 +173,13 @@ const Programme = () => {
       form.reset();
       getAllPrograms2();
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
-      console.log(error);
+      console.log(err);
     }
   };
   const getAllPrograms2 = async () => {
@@ -197,12 +199,13 @@ const Programme = () => {
       console.log("Program Deleted Successfully");
       getAllPrograms2();
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
-      console.log(error);
+      console.log(err);
     }
   };
   useEffect(() => {

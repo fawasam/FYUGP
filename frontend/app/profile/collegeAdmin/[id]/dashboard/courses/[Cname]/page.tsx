@@ -154,12 +154,13 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
       resetData();
       getAllCoursesByProgram2();
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
-      console.log(error);
+      console.log(err);
     }
     setOpen(false);
   };
@@ -210,12 +211,13 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
       console.log("Course Deleted Successfully");
       getAllCoursesByProgram2();
     } catch (error) {
+      const err: any = error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: error,
+        description: err?.data?.message,
       });
-      console.log(error);
+      console.log(err);
     }
   };
   useEffect(() => {
@@ -280,14 +282,14 @@ const SingleCourse = ({ params }: { params: { Cname: string } }) => {
                       {course?.semester}
                     </TableCell>
                     {course?.course?.map((c: any, key2: any) => (
-                      <div key={key2}>
-                        <TableCell className="font-medium">
+                      <>
+                        <TableCell className="font-medium" key={key2}>
                           {c?.courseCode}
                         </TableCell>
-                        <TableCell className="font-medium">
+                        <TableCell className="font-medium" key={key2 + 1}>
                           {c?.courseName}
                         </TableCell>
-                      </div>
+                      </>
                     ))}
                     <TableCell className="font-medium">
                       {course?.category}

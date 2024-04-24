@@ -36,10 +36,11 @@ import {
 } from "@/components/ui/navigation-menu";
 import useRedirect from "@/hooks/useRedirect";
 import Image from "next/image";
-import dynamic from "next/dynamic";
-var Lottie = dynamic(() => import("react-lottie"), {
-  ssr: false,
-});
+// import dynamic from "next/dynamic";
+import Lottie from "react-lottie";
+// var Lottie = dynamic(() => import("react-lottie"), {
+//   ssr: false,
+// });
 import BookAnimatedHeader from "@/components/assets/books_animated_3.json";
 import Icon from "@/components/assets/1.png";
 import Icon2 from "@/components/assets/2.png";

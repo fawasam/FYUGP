@@ -4,10 +4,11 @@ import Image from "next/image";
 import Book from "@/components/assets/book-3.svg";
 import { Button } from "./ui/button";
 import { features } from "@/utils/features";
-import dynamic from "next/dynamic";
-var Lottie = dynamic(() => import("react-lottie"), {
-  ssr: false,
-});
+// import dynamic from "next/dynamic";
+import Lottie from "react-lottie";
+// var Lottie = dynamic(() => import("react-lottie"), {
+//   ssr: false,
+// });
 
 const Features = () => {
   return (
@@ -21,7 +22,7 @@ const Features = () => {
         </h3>
       </div>
       <div>
-        <div className="grid grid-cols-2 md:grid-cols-3 auto-rows-[300px] gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 auto-rows-[300px] gap-4">
           {features?.map((item, i) => (
             <div
               key={i}
@@ -31,7 +32,7 @@ const Features = () => {
             >
               <div
                 className={` mb-4 border-2 border-card-foreground  bg-white rounded-md flex items-center justify-center ${
-                  i == 0 || i == 2 ? "h-full" : "w-[200px]"
+                  i == 0 || i == 2 ? "md:h-full h-fit " : "w-[200px]"
                 }`}
               >
                 <Lottie

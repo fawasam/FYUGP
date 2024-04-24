@@ -66,6 +66,8 @@ const AdvisorPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [advisors, setAdvisors] = useState<any>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
@@ -111,15 +113,16 @@ const AdvisorPage = () => {
     getAllAdvisors2();
   };
 
+  const filteredAdvisors = advisors.filter((advisor: any) =>
+    advisor.fullname.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   useEffect(() => {
     const getAllAdvisors = async () => {
       const res: any = await getAllAdvisor();
       setAdvisors(res?.data?.data?.advisors);
     };
     getAllAdvisors();
-    // if (!user) {
-    //   redirectTo("/");
-    // }
   }, [user, getAllAdvisor]);
   return (
     <AnimationWrapper className="w-full sm:mt-20 mt-0">
@@ -129,6 +132,13 @@ const AdvisorPage = () => {
             All Advisor
           </h1>
         </div>
+        <Input
+          placeholder="Search Advisors"
+          icon={"fi-rr-user"}
+          // icon2={"fi-br-paper-plane"}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
         {isLoading ? (
           <Loader />
         ) : !isSuccess ? (
@@ -138,7 +148,7 @@ const AdvisorPage = () => {
           />
         ) : (
           <div className="my-6 space-y-4">
-            {advisors?.length == 0 ? (
+            {filteredAdvisors?.length == 0 ? (
               <NoDataMessage
                 message={"No Advisors exist"}
                 icon={"fi fi-rr-search-alt"}
@@ -158,9 +168,9 @@ const AdvisorPage = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {advisors != null &&
-                      advisors.length > 0 &&
-                      advisors.map((advisor: any, key: any) => (
+                    {filteredAdvisors != null &&
+                      filteredAdvisors.length > 0 &&
+                      filteredAdvisors.map((advisor: any, key: any) => (
                         <TableRow key={key}>
                           <TableCell className="font-medium">
                             {advisor?.fullname}

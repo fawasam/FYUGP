@@ -19,12 +19,12 @@ import Hero from "@/components/assets/hero.json";
 import Link from "next/link";
 
 // import ChatBot from "react-simple-chatbot";
-// import Lottie from "react-lottie";
-import dynamic from "next/dynamic";
-var Lottie = dynamic(() => import("react-lottie"), {
-  ssr: false,
-});
-import lottie from "lottie-web";
+import Lottie from "react-lottie";
+// import dynamic from "next/dynamic";
+// var Lottie = dynamic(() => import("react-lottie"), {
+//   ssr: false,
+// });
+// import lottie from "lottie-web";
 export default function Home() {
   const dispatch = useDispatch();
   let userData = useSelector((state: RootState) => state.auth);

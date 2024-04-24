@@ -22,13 +22,19 @@ const College = () => {
   const { toast } = useToast();
   const [searchKey, setSearchKey] = useState("");
   const [typingTimeout, setTypingTimeout] = useState(0);
-
-  const [getAllCollege, { isLoading, error, isSuccess }] =
-    useGetAllCollegeMutation();
+  const [allColleges, setallColleges] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [
+    getAllCollege,
+    { isLoading, error, isSuccess },
+  ] = useGetAllCollegeMutation();
   const [searchCollege] = useSearchCollegeMutation();
 
   let collegesData = useSelector((state: RootState) => state.college);
   let { collegeInfo: colleges } = collegesData;
+  const filteredColleges = allColleges.filter((college) =>
+    college.collegename.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleSearch = async (e: any) => {
     if (searchKey == "") {
@@ -43,6 +49,10 @@ const College = () => {
   useEffect(() => {
     const getAllColleges = async () => {
       const response: any = await getAllCollege("");
+      console.log(response);
+
+      setallColleges(response?.data?.data?.colleges);
+
       dispatch(setCollege(response?.data));
     };
     getAllColleges();
@@ -55,7 +65,7 @@ const College = () => {
 
       setTypingTimeout(timeoutId);
     }
-  }, [searchKey, typingTimeout, getAllCollege, dispatch]);
+  }, [searchKey, getAllCollege, dispatch]);
 
   return (
     <AnimationWrapper className="sm:w-[70%] w-[90%] m-auto min-h-[100vh]  py-[20px]">
@@ -73,7 +83,9 @@ const College = () => {
               type="text"
               className="px-3 py-2 "
               placeholder="Search..."
-              onChange={(e: any) => setSearchKey(e.target.value)}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              // onChange={(e: any) => setSearchKey(e.target.value)}
             />
             <Button className="px-3 py-2" onClick={handleSearch}>
               Search
@@ -91,8 +103,8 @@ const College = () => {
           />
         ) : (
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-12">
-            {colleges?.length === 0 ? <h2>No college Data</h2> : null}
-            {colleges?.map((college: any, i: number) =>
+            {filteredColleges?.length === 0 ? <h2>No college Data</h2> : null}
+            {filteredColleges?.map((college: any, i: number) =>
               college?.published ? (
                 <div key={i}>
                   {isLoading ? (

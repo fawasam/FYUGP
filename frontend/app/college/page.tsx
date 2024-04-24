@@ -32,7 +32,7 @@ const College = () => {
 
   let collegesData = useSelector((state: RootState) => state.college);
   let { collegeInfo: colleges } = collegesData;
-  const filteredColleges = allColleges.filter((college) =>
+  const filteredColleges = allColleges?.filter((college) =>
     college.collegename.toLowerCase().includes(searchQuery.toLowerCase())
   );
 

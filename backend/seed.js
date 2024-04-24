@@ -6,11 +6,11 @@ dotenv.config({
   path: "./config/config.env",
 });
 async function seedCollegeData(products) {
-  console.log(process.env.MONGO_URI_DEV);
+  console.log(process.env.MONGO_URI_PRODUCTION);
   try {
     // Connect to MongoDB
     await mongoose
-      .connect(process.env.MONGO_URI_DEV, {
+      .connect(process.env.MONGO_URI_PRODUCTION, {
         autoIndex: true,
       })
       .then(() => {

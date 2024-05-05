@@ -65,7 +65,7 @@ const College = () => {
 
       setTypingTimeout(timeoutId);
     }
-  }, [searchKey, getAllCollege, dispatch]);
+  }, [searchKey, getAllCollege, dispatch, typingTimeout]);
 
   return (
     <AnimationWrapper className="sm:w-[70%] w-[90%] m-auto min-h-[100vh]  py-[20px]">

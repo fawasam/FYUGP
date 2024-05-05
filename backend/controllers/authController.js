@@ -86,6 +86,7 @@ export const forgotPassword = asyncErrorHandler(async (req, res, next) => {
   const { email } = req.body;
   //1. get user based on the email
   const user = await User.findOne({ email });
+  // console.log(user);
   if (!user) {
     const error = new CustomError(
       "We could not find the user with given email",
@@ -118,10 +119,11 @@ export const forgotPassword = asyncErrorHandler(async (req, res, next) => {
     user.passwordResetToken = undefined;
     user.passwordResetTokenExpires = undefined;
     user.save({ validateBeforeSave: false });
+    console.log(error);
     return next(
       new CustomError(
-        "There was an error sending password reset email, Please try again later",
-        500
+        "There was an error sending password reset email, Please try again later" +
+          500
       )
     );
   }

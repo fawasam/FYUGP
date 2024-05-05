@@ -5,6 +5,7 @@ import "dotenv/config";
 import { asyncErrorHandler } from "../utils/asyncErrorHandler.js";
 import CustomError from "../utils/CustomeError.js";
 import Course from "../models/Course.js";
+import { filterReqObj } from "../helpers/filterObj.js";
 
 // @desc    Create new college
 // @route   POST /api/users

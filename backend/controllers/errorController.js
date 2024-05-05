@@ -27,7 +27,6 @@ const castErrorHandler = (err) => {
 };
 const duplicateKeyErrorHandler = (err) => {
   let key, msg;
-
   if (err.keyValue) {
     if (err.keyValue.email) {
       key = "email";
@@ -77,7 +76,7 @@ export const errorController = (error, req, res, next) => {
   // console.log(error);
   error.statusCode = error.statusCode || 500;
   error.status = error.status || "error";
-
+  // console.log(error.code === 11000);
   if (process.env.NODE_ENV === "development") {
     devErrors(res, error);
   } else if (process.env.NODE_ENV === "production") {

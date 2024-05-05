@@ -27,7 +27,7 @@ const AcademicPathways = () => {
   return (
     <AnimationWrapper className="w-full  sm:p-[100px] p-[40px] m-auto sm:py-[5%] py-[20px] relative">
       <section className="max-w-[1060px] m-auto   flex-grow">
-        <div className="learn-top-block">
+        {/* <div className="learn-top-block">
           <div className="flex justify-center items-center my-4">
             <Image
               priority
@@ -41,10 +41,10 @@ const AcademicPathways = () => {
           <h1 className="md:text-[48px] text-[32px] font-bold tracking-tighter text-center">
             Different Acedemic Pathways
           </h1>
-        </div>
+        </div> */}
         <div className="flex justify-between items-center  text-center m-auto">
           <div className="">
-            <h3 className="md:text-[40px] text-3xl font-normal leading-10 tracking-tight pt-[100px]">
+            <h3 className="md:text-[40px] text-3xl font-normal leading-10 tracking-tight ">
               Understand the different Pathways.
             </h3>
             <p></p>

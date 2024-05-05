@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-
+import "dotenv/config";
 const sendEmail = async (options) => {
   const transporter = nodemailer.createTransport({
     host: process.env.DEV_EMAIL_HOST,
@@ -11,7 +11,7 @@ const sendEmail = async (options) => {
   });
 
   const emailOptions = {
-    from: `TrackMyDegree support<support@TrackMyDegree.com>`,
+    from: `MyDegree support<support@TrackMyDegree.com>`,
     to: options.email,
     subject: options.subject,
     text: options.message,

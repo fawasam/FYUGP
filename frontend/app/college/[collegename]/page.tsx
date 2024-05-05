@@ -41,6 +41,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreateBookingMutation } from "@/redux/services/bookingApi";
+import Enquiry from "@/components/Enquiry";
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Department name must be at least 2 characters.",
@@ -227,6 +228,7 @@ const SingleCollege = ({ params }: { params: { collegename: string } }) => {
                 )}
               </div>
             </div>
+            {/* consaltants  */}
             <div className="pt-10 flex flex-col ">
               <h3 className="text-lg font-medium  uppercase">consultants</h3>
               <div className="mr-2 mt-2 md:flex block gap-y-4  gap-4">
@@ -347,6 +349,7 @@ const SingleCollege = ({ params }: { params: { collegename: string } }) => {
               </div>
             </div>
           </div>
+          <Enquiry id={college?._id} />
         </section>
       )}
     </AnimationWrapper>

@@ -39,9 +39,12 @@ const formSchema = z.object({
   email: z.string().email({
     message: "please enter your mail address",
   }),
+  college: z.string(),
 });
 
-const Enquiry = () => {
+const Enquiry = ({ id }: any) => {
+  console.log(id);
+
   const dispatch = useDispatch();
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   const { toast } = useToast();
@@ -57,6 +60,7 @@ const Enquiry = () => {
       subject: "",
       email: "",
       message: "",
+      college: id,
     },
   });
 

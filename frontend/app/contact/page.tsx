@@ -1,5 +1,6 @@
 import AnimationWrapper from "@/components/common/page-animation";
 import Enquiry from "@/components/Enquiry";
+import Enquiry2 from "@/components/Enquiry2";
 import Faq from "@/components/Faq";
 import React from "react";
 
@@ -14,7 +15,7 @@ const ContactPage = () => {
             </h1>
           </div>
         </div>
-        <Enquiry />
+        <Enquiry2 />
       </section>
     </AnimationWrapper>
   );

@@ -39,12 +39,9 @@ const formSchema = z.object({
   email: z.string().email({
     message: "please enter your mail address",
   }),
-  college: z.string(),
 });
 
-const Enquiry = ({ id = null }: any) => {
-  console.log(id);
-
+const Enquiry2 = () => {
   const dispatch = useDispatch();
   const { redirectTo, redirectToHomeIfLoggedIn } = useRedirect();
   const { toast } = useToast();
@@ -60,7 +57,6 @@ const Enquiry = ({ id = null }: any) => {
       subject: "",
       email: "",
       message: "",
-      college: id,
     },
   });
   console.log(form.watch());
@@ -188,4 +184,4 @@ const Enquiry = ({ id = null }: any) => {
   );
 };
 
-export default Enquiry;
+export default Enquiry2;

@@ -4,11 +4,11 @@ import Image from "next/image";
 import Book from "@/components/assets/book-3.svg";
 import { Button } from "./ui/button";
 import { features } from "@/utils/features";
-// import Lottie from "react-lottie";
-import dynamic from "next/dynamic";
-var Lottie = dynamic(() => import("react-lottie"), {
-  ssr: false,
-});
+import Lottie from "react-lottie";
+// import dynamic from "next/dynamic";
+// var Lottie = dynamic(() => import("react-lottie"), {
+//   ssr: false,
+// });
 
 const Features = () => {
   return (

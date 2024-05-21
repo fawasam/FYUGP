@@ -56,7 +56,7 @@ export const authApi = createApi({
         method: "POST",
         body: data,
         headers: {
-          Authorization: `Bearer ${loadUserFromStorage().token}`,
+          Authorization: `Bearer ${loadUserFromStorage()?.token}`,
         },
       }),
     }),
@@ -70,7 +70,7 @@ export const authApi = createApi({
         method: "POST",
         body: data,
         headers: {
-          Authorization: `Bearer ${loadUserFromStorage().token}`,
+          Authorization: `Bearer ${loadUserFromStorage()?.token}`,
         },
       }),
     }),
@@ -81,7 +81,7 @@ export const authApi = createApi({
         method: "POST",
         body: data,
         headers: {
-          Authorization: `Bearer ${loadUserFromStorage().token}`,
+          Authorization: `Bearer ${loadUserFromStorage()?.token}`,
         },
       }),
     }),
@@ -101,7 +101,7 @@ export const authApi = createApi({
     }),
     resetPassword: builder.mutation<void, ResetPasswordFormData>({
       query: (data) => ({
-        url: `/resetPassword/${data.token}`,
+        url: `/resetPassword/${data?.token}`,
         method: "PATCH",
         body: data,
       }),

@@ -251,12 +251,12 @@ const Header = () => {
             <NavigationMenuItem>
               <div className="flex space-x-2 items-center text-center">
                 {!isAuthenticated ? (
-                  <Button>
-                    <Link href={"/auth/register"}>
+                  <Link href={"/auth/register"}>
+                    <Button>
                       <i className="fi fi-rr-user mr-2"></i>
                       SignUp
-                    </Link>
-                  </Button>
+                    </Button>
+                  </Link>
                 ) : (
                   <>
                     <NavigationMenuTrigger className=" z-100">
@@ -268,7 +268,7 @@ const Header = () => {
                           width={6}
                           height={6}
                         />
-                        {/* <i className="fi fi-rr-user mr-2"></i> */}
+
                         <span className="ml-2">{user.username}</span>
                       </div>
                     </NavigationMenuTrigger>

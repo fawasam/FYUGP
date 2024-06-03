@@ -27,14 +27,6 @@ app.use(
     xFrameOptions: { action: "deny" },
   })
 );
-const apiKey = process.env.API_KEY;
-
-const corsOptions = {
-  origin: "*",
-  credentials: true,
-  optionSuccessStatus: 200,
-};
-
 //middeleware
 app.use(express.json());
 app.use(cors());
@@ -43,15 +35,6 @@ const __dirname = path.resolve();
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-//api key middleware
-// app.use((req, res, next) => {
-//   const apiKeyHeader = req.headers["api-key"];
-//   if (apiKeyHeader === apiKey) {
-//     next();
-//   } else {
-//     res.status(401).json("Unauthorized");
-//   }
-// });
 
 app.get("/", (req, res) => {
   res.json("Hello, This is FYUGP Management system backend!!");

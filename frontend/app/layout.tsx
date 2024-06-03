@@ -25,11 +25,39 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "My Degree-The Student Partent",
+  title: "My Degree-The Student Partner",
   description: "The My Degree is designed to assist students in monitoring, guiding and managing their academic progress during their fourth year of undergraduate studies",
    icons: {
     icon: `/assets/images/site-logo.svg`,
   },
+   openGraph: {
+    type: "website",
+    url: "https://studentsflow.vercel.app/",
+    title: "My Degree-The Student Partner",
+    description:
+      "The My Degree is designed to assist students in monitoring, guiding and managing their academic progress during their fourth year of undergraduate studies",
+    images: [
+      {
+        url: `/assets/images/social-logo.png`,
+        width: 900,
+        height: 800,
+        alt: "Og Image Alt",
+      },
+    ],
+  },
+  twitter: {
+    site: "@MyDegree-TheStudentPartner",
+    card: "summary_large_image",
+    title: "My Degree-The Student Partner",
+    description:
+      "The My Degree is designed to assist students in monitoring, guiding and managing their academic progress during their fourth year of undergraduate studies",
+    creator: "@fawasam",
+    images: {
+      url: `/assets/images/social-logo.png`,
+      alt: "Preview image for fawasam",
+    },
+  },
+
 };
 
 export default function RootLayout({

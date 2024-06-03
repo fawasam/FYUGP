@@ -44,7 +44,7 @@ export const userApi = createApi({
         url: "/users",
         method: "GET",
         headers: {
-          Authorization: `Bearer ${loadUserFromStorage().token}`,
+          Authorization: `Bearer ${loadUserFromStorage()?.token}`,
         },
       }),
     }),
@@ -53,7 +53,7 @@ export const userApi = createApi({
         url: "/user/getMe",
         method: "GET",
         headers: {
-          Authorization: `Bearer ${loadUserFromStorage().token}`,
+          Authorization: `Bearer ${loadUserFromStorage()?.token}`,
         },
       }),
     }),
@@ -62,7 +62,7 @@ export const userApi = createApi({
         url: `/user/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${loadUserFromStorage().token}`,
+          Authorization: `Bearer ${loadUserFromStorage()?.token}`,
         },
       }),
     }),
@@ -72,7 +72,7 @@ export const userApi = createApi({
         method: "PATCH",
         body: data,
         headers: {
-          Authorization: `Bearer ${loadUserFromStorage().token}`,
+          Authorization: `Bearer ${loadUserFromStorage()?.token}`,
         },
       }),
     }),
@@ -81,7 +81,7 @@ export const userApi = createApi({
         url: `/user/${id}/active`,
         method: "POST",
         headers: {
-          Authorization: `Bearer ${loadUserFromStorage().token}`,
+          Authorization: `Bearer ${loadUserFromStorage()?.token}`,
         },
       }),
     }),

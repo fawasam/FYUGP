@@ -44,7 +44,7 @@ const LearnDegree = () => {
                   )}
                   {item?.link ? (
                     <Link href={item?.link}>
-                      <i className="fi fi-rs-info  cursor-pointer"></i>
+                      <i className="fi fi-rs-info  cursor-pointer ml-2"></i>
                     </Link>
                   ) : (
                     ""
@@ -70,16 +70,20 @@ const LearnDegree = () => {
                         )}
                       </h1>
                     </div>
-                    {show[item2?.no] && (
+                    {show[item2?.no] ? (
                       <p className="mt-4 text-base pl-28">
                         {item2?.description}
                       </p>
+                    ) : (
+                      ""
                     )}
                   </div>
                 ))}
               </div>
-              {show[item?.no] && (
+              {show[item?.no] ? (
                 <p className="mt-4 text-base">{item?.description}</p>
+              ) : (
+                ""
               )}
             </div>
           ))}

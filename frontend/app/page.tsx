@@ -17,28 +17,13 @@ import Features from "@/components/Features";
 import BookAnimated from "@/components/assets/books_animated_2.json";
 import Hero from "@/components/assets/hero.json";
 import Link from "next/link";
+import Lottie from "lottie-react";
 
-// import ChatBot from "react-simple-chatbot";
-import Lottie from "react-lottie";
-// import dynamic from "next/dynamic";
-// var Lottie = dynamic(() => import("react-lottie"), {
-//   ssr: false,
-// });
-// import lottie from "lottie-web";
 export default function Home() {
   const dispatch = useDispatch();
   let userData = useSelector((state: RootState) => state.auth);
   let { userInfo: user, userToken, isAuthenticated } = userData;
   const [getMe] = useGetMeMutation();
-
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: Hero,
-    // rendererSettings: {
-    //   preserveAspectRatio: "xMidYMid slice",
-    // },
-  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -75,15 +60,12 @@ export default function Home() {
             </Link>
           </div>
           <div className="flex items-center justify-end mt-0">
-            {/* <div ref={animationContainer}></div> */}
-            <Lottie options={defaultOptions} height={500} width={500} />
-            {/* <Image
-              priority
-              src={One}
-              alt="Follow us on Twitter"
+            <Lottie
+              animationData={Hero}
+              height={500}
               width={500}
-              height={400}
-            /> */}
+              style={{ height: 500, width: 500 }}
+            />
           </div>
         </div>
         <div>
@@ -93,30 +75,6 @@ export default function Home() {
           <AskQns />
           {/* <Enquiry /> */}
           {/* <Faq /> */}
-          {/* <div className="flex">
-            <ChatBot
-              style={{ fontFamily: "system-ui" }}
-              floating={true}
-              headerTitle={"FYUGP CHAT"}
-              steps={[
-                {
-                  id: "1",
-                  message: "What is your name?",
-                  trigger: "2",
-                },
-                {
-                  id: "2",
-                  user: true,
-                  trigger: "3",
-                },
-                {
-                  id: "3",
-                  message: "Hi {previousValue}, nice to meet you!",
-                  end: true,
-                },
-              ]}
-            />
-          </div> */}
         </div>
       </AnimationWrapper>
     </main>

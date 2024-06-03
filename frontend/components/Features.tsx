@@ -1,14 +1,7 @@
 import React from "react";
 import AnimationWrapper from "./common/page-animation";
-import Image from "next/image";
-import Book from "@/components/assets/book-3.svg";
-import { Button } from "./ui/button";
 import { features } from "@/utils/features";
-import Lottie from "react-lottie";
-// import dynamic from "next/dynamic";
-// var Lottie = dynamic(() => import("react-lottie"), {
-//   ssr: false,
-// });
+import Lottie from "lottie-react";
 
 const Features = () => {
   return (
@@ -35,23 +28,7 @@ const Features = () => {
                   i == 0 || i == 2 ? "md:h-full h-fit " : "w-[200px]"
                 }`}
               >
-                <Lottie
-                  options={{
-                    animationData: item?.image,
-                    loop: true,
-                    autoplay: true,
-                    rendererSettings: {
-                      preserveAspectRatio: "xMidYMid slice",
-                    },
-                  }}
-                />
-                {/* <Image
-                  src={item.image}
-                  alt="book image"
-                  width={100}
-                  height={100}
-                  className=""
-                /> */}
+                <Lottie animationData={item?.image} />
               </div>
 
               <h2 className="text-left text-xl text-primary-foreground">

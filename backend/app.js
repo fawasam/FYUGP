@@ -16,9 +16,17 @@ import EnquiryRoute from "./routes/enquiryRoute.js";
 import AdvisorRoute from "./routes/advisorRoute.js";
 import CommunityRoute from "./routes/communityRoute.js";
 import BookingRouter from "./routes/bookingRoute.js";
-
+import helmet from "helmet";
 //app
 const app = express();
+app.use(
+  helmet({
+    strictTransportSecurity: {
+      maxAge: 123456,
+    },
+    xFrameOptions: { action: "deny" },
+  })
+);
 const apiKey = process.env.API_KEY;
 
 const corsOptions = {
@@ -53,7 +61,6 @@ app.use((req, res, next) => {
   req.requestedAt = new Date().toISOString().slice(0, 10);
   next();
 });
-
 app.use("/api/v1", UserRoute);
 app.use("/api/v1/auth", AuthRoute);
 app.use("/api/v1/upload", UploadRoute);

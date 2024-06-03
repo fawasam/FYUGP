@@ -16,7 +16,7 @@ const Footer = () => {
               <Image
                 src={theme === "dark" ? Icon : Icon2}
                 alt={"icon"}
-                width={200}
+                width={100}
                 height={100}
                 className="w-100 md:w-200"
               />

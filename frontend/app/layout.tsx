@@ -25,8 +25,11 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "FYUG",
-  description: "FYUGP",
+  title: "My Degree-The Student Partent",
+  description: "The My Degree is designed to assist students in monitoring, guiding and managing their academic progress during their fourth year of undergraduate studies",
+   icons: {
+    icon: `/assets/images/site-logo.svg`,
+  },
 };
 
 export default function RootLayout({
@@ -54,9 +57,7 @@ export default function RootLayout({
             
             <Header />
             <Toaster />
-            {/* <div className="mt-8 sm:w-[75%] w-[90%] m-auto pb-6 ">
-              <BreadcrumbSeperator />
-            </div> */}
+        
             <div className="content-container">{children}</div>
             <div className="">
               <Footer />

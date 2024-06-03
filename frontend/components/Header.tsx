@@ -122,9 +122,9 @@ const Header = () => {
           <Image
             src={theme === "dark" ? Icon : Icon2}
             alt={"icon"}
-            width={200}
+            width={100}
             height={100}
-            className="w-100 md:w-200"
+            className="w-40 md:w-200"
           />
           {/* <div className="flex flex-col">
             <span className="self-center text-md md:text-2xl font-semibold whitespace-nowrap dark:text-white">
